@@ -1,30 +1,24 @@
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
 import java.sql.Date;
 import java.time.LocalDate;
 
-@Getter
-@Setter
 public class Pessoa {
-
-    @NotBlank(message = "O nome não pode ser vazio!")
-    @Size(min = 3, max = 120, message = "O nome deve possuir no mínimo 3 letras e no maxímo 120!")
+    @Getter
+    @Setter
     private String nome;
-
-    @Min(value = 0, message = "A idade deve ser no mínimo 0 anos!")
-    @Max(value = 120, message = "A idade deve ser no máximo 120 anos!")
+    @Getter
+    @Setter
     private int idade;
+    @Getter
+    @Setter
     private Date dtCadastro;
 
     //Construtores
     public Pessoa (){
+        this.dtCadastro = Date.valueOf(LocalDate.now());
     }
-    public Pessoa(String nome, int idade, Date dtCadastro) {
+    public Pessoa(String nome, int idade) {
         this.nome = nome;
         this.idade = idade;
         this.dtCadastro = Date.valueOf(LocalDate.now());
@@ -32,10 +26,6 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Pessoa{" +
-                "nome='" + nome + '\'' +
-                ", idade=" + idade +
-                ", dtCadastro=" + dtCadastro +
-                '}';
+        return "nome " + nome + " idade " + idade + " Data de cadastro " + dtCadastro;
     }
 }
