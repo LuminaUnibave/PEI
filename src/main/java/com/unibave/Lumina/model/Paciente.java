@@ -25,6 +25,15 @@ public class Paciente extends Pessoa implements Cadastro {
 
     //Methods
     @Override
+    public String toString(){
+        return "Nome: " + getNome() +
+                "\nData de nascimento: " + getDtNascimento() +
+                "\nEmail: " + getEmail() +
+                "\nAtivo: " + getAtivo() +
+                " \nData de cadastro " + getDtCadastro();
+    }
+
+    @Override
     public void cadastrar() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Digite seu nome: ");

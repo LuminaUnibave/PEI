@@ -1,5 +1,6 @@
 package com.unibave.Lumina;
 
+import com.unibave.Lumina.model.Paciente;
 import com.unibave.Lumina.model.Usuario;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +10,7 @@ public class LuminaApplication {
 
 	public static void main(String[] args) {
         //SpringApplication.run(LuminaApplication.class, args);
-        Usuario usuario = new Usuario();
+        Paciente usuario = new Paciente();
         usuario.cadastrar();
         System.out.println(usuario);
     }
