@@ -1,4 +1,4 @@
-package com.unibave.Lumina;
+package com.unibave.Lumina.view;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
