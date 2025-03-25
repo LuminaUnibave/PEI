@@ -13,16 +13,14 @@ import java.time.LocalDate;
 public class Usuario extends Pessoa implements Cadastro {
 
     private String email;
-    private LocalDate dtNascimento;
 
     //Constructors
     public Usuario(){
         super();
     }
-    public Usuario(String nome, LocalDate dtNascimento, String email){
+    public Usuario(String nome, String email){
         super(nome);
         this.email = email;
-        this.dtNascimento = dtNascimento;
     }
 
     //Methods
@@ -33,8 +31,6 @@ public class Usuario extends Pessoa implements Cadastro {
         setNome(scanner.nextLine());
         System.out.print("Digite seu E-mail: ");
         setEmail(scanner.nextLine());
-        System.out.print("Digite sua data de nascimento: ");
-        setDtNascimento(LocalDate.parse(scanner.nextLine()));
     }
 
     @Override
@@ -48,7 +44,6 @@ public class Usuario extends Pessoa implements Cadastro {
     @Override
     public String toString(){
         return "Nome: " + getNome() +
-                " \nData de nascimento: " + getDtNascimento() +
                 "\nEmail: " + getEmail() +
                 "\nAtivo: " + getAtivo() +
                 " \nData de cadastro " + getDtCadastro();
@@ -61,13 +56,5 @@ public class Usuario extends Pessoa implements Cadastro {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public LocalDate getDtNascimento() {
-        return dtNascimento;
-    }
-
-    public void setDtNascimento(LocalDate dtNascimento) {
-        this.dtNascimento = dtNascimento;
     }
 }
