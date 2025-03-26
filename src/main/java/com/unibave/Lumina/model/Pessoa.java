@@ -1,18 +1,14 @@
 package com.unibave.Lumina.model;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
 
+@MappedSuperclass
 public abstract class Pessoa {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nome;
-    private byte ativo;
-    private LocalDate dtCadastro;
+    protected String nome;
+    protected byte ativo;
+    protected LocalDate dtCadastro;
 
     //Constructors
     public Pessoa (){
@@ -32,10 +28,6 @@ public abstract class Pessoa {
     }
 
     //Getter & Setter
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }

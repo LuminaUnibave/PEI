@@ -1,18 +1,20 @@
 package com.unibave.Lumina.model;
 import java.util.Scanner;
 import com.unibave.Lumina.interfaces.Cadastro;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "pacientes")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "usuario", schema = "lumina")
 public class Usuario extends Pessoa implements Cadastro {
-
-    private String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long idUsuario;
+    protected String email;
 
     //Constructors
     public Usuario(){
@@ -26,11 +28,7 @@ public class Usuario extends Pessoa implements Cadastro {
     //Methods
     @Override
     public void cadastrar() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Digite seu nome: ");
-        setNome(scanner.nextLine());
-        System.out.print("Digite seu E-mail: ");
-        setEmail(scanner.nextLine());
+
     }
 
     @Override
@@ -50,6 +48,10 @@ public class Usuario extends Pessoa implements Cadastro {
     }
 
     //Getter & Setter
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -9,10 +9,14 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 @Entity
-@Table(name = "pacientes")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "paciente" , schema = "lumina")
 public class Paciente extends Pessoa implements Cadastro {
-    private String email;
-    private LocalDate dtNascimento;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long idPaciente;
+    protected String email;
+    protected LocalDate dtNascimento;
     //Constructors
     public Paciente(){
         super();
@@ -53,6 +57,10 @@ public class Paciente extends Pessoa implements Cadastro {
     }
 
     //Getter & Setter
+    public Long getIdPaciente() {
+        return idPaciente;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -60,6 +68,7 @@ public class Paciente extends Pessoa implements Cadastro {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public LocalDate getDtNascimento() {
         return dtNascimento;
     }
