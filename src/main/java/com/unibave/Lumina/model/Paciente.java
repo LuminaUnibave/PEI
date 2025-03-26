@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 @Entity
@@ -30,6 +31,7 @@ public class Paciente extends Pessoa implements Cadastro {
     //Methods
     @Override
     public String toString(){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return "Nome: " + getNome() +
                 "\nData de nascimento: " + getDtNascimento() +
                 "\nEmail: " + getEmail() +

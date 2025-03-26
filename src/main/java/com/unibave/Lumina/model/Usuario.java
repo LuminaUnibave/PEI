@@ -1,4 +1,5 @@
 package com.unibave.Lumina.model;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import com.unibave.Lumina.interfaces.Cadastro;
 import jakarta.persistence.*;
@@ -41,6 +42,7 @@ public class Usuario extends Pessoa implements Cadastro {
 
     @Override
     public String toString(){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return "Nome: " + getNome() +
                 "\nEmail: " + getEmail() +
                 "\nAtivo: " + getAtivo() +
