@@ -3,12 +3,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @MappedSuperclass
 public abstract class Pessoa {
+
     protected String nome;
     protected byte ativo;
     protected LocalDate dtCadastro;
+    public DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     //Constructors
     public Pessoa (){

@@ -18,6 +18,8 @@ public class Paciente extends Pessoa implements Cadastro {
     protected Long idPaciente;
     protected String email;
     protected LocalDate dtNascimento;
+
+
     //Constructors
     public Paciente(){
         super();
@@ -30,24 +32,17 @@ public class Paciente extends Pessoa implements Cadastro {
 
     //Methods
     @Override
-    public String toString(){
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return "Nome: " + getNome() +
-                "\nData de nascimento: " + getDtNascimento() +
-                "\nEmail: " + getEmail() +
-                "\nAtivo: " + getAtivo() +
-                " \nData de cadastro " + getDtCadastro();
-    }
-
-    @Override
     public void cadastrar() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Digite seu nome: ");
         setNome(scanner.nextLine());
         System.out.print("Digite seu E-mail: ");
         setEmail(scanner.nextLine());
-        System.out.print("Digite sua data de nascimento: ");
-        setDtNascimento(LocalDate.parse(scanner.nextLine()));
+        System.out.print("Digite sua data de nascimento: (dd/mm/aaaa) ");
+        String dataInput = scanner.nextLine();
+        DateTimeFormatter inputFormato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataFormatada = LocalDate.parse(dataInput, inputFormato);
+        setDtNascimento(dataFormatada);
     }
 
     @Override
@@ -56,6 +51,14 @@ public class Paciente extends Pessoa implements Cadastro {
 
     @Override
     public void excluir() {
+    }
+    @Override
+    public String toString(){
+        return "Nome: " + getNome() +
+                "\nData de nascimento: " + getDtNascimento().format(formataData) +
+                "\nEmail: " + getEmail() +
+                "\nAtivo: " + getAtivo() +
+                " \nData de cadastro " + getDtCadastro().format(formataData);
     }
 
     //Getter & Setter

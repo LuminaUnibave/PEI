@@ -1,10 +1,8 @@
 package com.unibave.Lumina.model;
-
 import com.unibave.Lumina.model.Paciente;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
-
+import java.time.format.DateTimeFormatter;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PacienteTest {
@@ -16,12 +14,13 @@ class PacienteTest {
             paciente1.setNome("Lucca");
             paciente1.setDtNascimento(LocalDate.parse("2004-08-11"));
             paciente1.setEmail("luccapmuller@gmail.com");
+            DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             //Assert
             assertEquals("Nome: Lucca"+
-                    "\nData de nascimento: 2004-08-11"+
+                    "\nData de nascimento: " + paciente1.getDtNascimento().format(formataData) +
                     "\nEmail: luccapmuller@gmail.com" +
                     "\nAtivo: 1"+
-                    " \nData de cadastro "+ LocalDate.now(), paciente1.toString());
+                    " \nData de cadastro " + paciente1.getDtCadastro().format(formataData) , paciente1.toString());
         }
 }

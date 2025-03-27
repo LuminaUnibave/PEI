@@ -42,11 +42,10 @@ public class Usuario extends Pessoa implements Cadastro {
 
     @Override
     public String toString(){
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return "Nome: " + getNome() +
                 "\nEmail: " + getEmail() +
                 "\nAtivo: " + getAtivo() +
-                " \nData de cadastro " + getDtCadastro();
+                " \nData de cadastro " + getDtCadastro().format(formataData);
     }
 
     //Getter & Setter

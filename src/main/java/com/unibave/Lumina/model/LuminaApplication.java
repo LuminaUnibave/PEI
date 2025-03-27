@@ -8,5 +8,11 @@ public class LuminaApplication {
 
 	public static void main(String[] args) {
         SpringApplication.run(LuminaApplication.class, args);
+       // Paciente paciente = new Paciente();
+       // paciente.cadastrar();
+        //System.out.println(paciente.toString());;
     }
+
+
+
 }
