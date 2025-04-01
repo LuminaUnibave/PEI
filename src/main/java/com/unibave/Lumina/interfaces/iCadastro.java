@@ -1,6 +1,6 @@
 package com.unibave.Lumina.interfaces;
 
-public interface Cadastro {
+public interface iCadastro {
     void cadastrar();
     void atualizar();
     void excluir();

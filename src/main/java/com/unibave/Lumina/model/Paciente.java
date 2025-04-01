@@ -1,9 +1,7 @@
 package com.unibave.Lumina.model;
 
-import com.unibave.Lumina.interfaces.Cadastro;
+import com.unibave.Lumina.interfaces.iCadastro;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +10,7 @@ import java.util.Scanner;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "paciente" , schema = "lumina")
-public class Paciente extends Pessoa implements Cadastro {
+public class Paciente extends Pessoa implements iCadastro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long idPaciente;

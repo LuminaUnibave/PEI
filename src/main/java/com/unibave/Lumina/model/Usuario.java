@@ -1,17 +1,11 @@
 package com.unibave.Lumina.model;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
-import com.unibave.Lumina.interfaces.Cadastro;
+import com.unibave.Lumina.interfaces.iCadastro;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuario", schema = "lumina")
-public class Usuario extends Pessoa implements Cadastro {
+public class Usuario extends Pessoa implements iCadastro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long idUsuario;
