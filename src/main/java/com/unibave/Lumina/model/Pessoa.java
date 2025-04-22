@@ -8,19 +8,21 @@ import java.time.format.DateTimeFormatter;
 @MappedSuperclass
 public abstract class Pessoa {
 
+    @Column(name = "nome", nullable = false, unique = false)
     protected String nome;
-    protected byte ativo;
+    @Column(name = "situacao", nullable = false, unique = false)
+    protected byte situacao;
+    @Column(name = "dt_cadastro", nullable = false, unique = false, updatable = false)
     protected LocalDate dtCadastro;
-    public DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     //Constructors
     public Pessoa (){
-        this.ativo = 1;
+        this.situacao = 1;
         this.dtCadastro = LocalDate.now();
     }
     public Pessoa(String nome) {
         this.nome = nome;
-        this.ativo = 1;
+        this.situacao = 1;
         this.dtCadastro = LocalDate.now();
     }
 
@@ -34,23 +36,20 @@ public abstract class Pessoa {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public byte getAtivo() {
-        return ativo;
+    public byte getSituacao() {
+        return situacao;
     }
-
-    public void setAtivo(byte ativo) {
-        this.ativo = ativo;
+    public void setSituacao(byte situacao) {
+        this.situacao = situacao;
     }
 
     public LocalDate getDtCadastro() {
         return dtCadastro;
     }
-
     public void setDtCadastro(LocalDate dtCadastro) {
         this.dtCadastro = dtCadastro;
     }

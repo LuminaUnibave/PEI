@@ -1,6 +1,6 @@
 package com.unibave.Lumina.model;
 
-import com.unibave.Lumina.interfaces.iCadastro;
+import com.unibave.Lumina.interfaces.ICadastro;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -10,11 +10,14 @@ import java.util.Scanner;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "paciente" , schema = "lumina")
-public class Paciente extends Pessoa implements iCadastro {
+public class Paciente extends Pessoa implements ICadastro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_paciente", nullable = false, unique = true)
     protected Long idPaciente;
+    @Column(name = "email", nullable = true, unique = false)
     protected String email;
+    @Column(name = "dt_nascimento", nullable = false, unique = false)
     protected LocalDate dtNascimento;
 
 
@@ -43,22 +46,6 @@ public class Paciente extends Pessoa implements iCadastro {
         setDtNascimento(dataFormatada);
     }
 
-    @Override
-    public void atualizar() {
-    }
-
-    @Override
-    public void excluir() {
-    }
-    @Override
-    public String toString(){
-        return "Nome: " + getNome() +
-                "\nData de nascimento: " + getDtNascimento().format(formataData) +
-                "\nEmail: " + getEmail() +
-                "\nAtivo: " + getAtivo() +
-                " \nData de cadastro " + getDtCadastro().format(formataData);
-    }
-
     //Getter & Setter
     public Long getIdPaciente() {
         return idPaciente;
@@ -67,7 +54,6 @@ public class Paciente extends Pessoa implements iCadastro {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -75,7 +61,6 @@ public class Paciente extends Pessoa implements iCadastro {
     public LocalDate getDtNascimento() {
         return dtNascimento;
     }
-
     public void setDtNascimento(LocalDate dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
