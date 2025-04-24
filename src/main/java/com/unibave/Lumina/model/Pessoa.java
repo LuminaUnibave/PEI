@@ -28,7 +28,7 @@ public abstract class Pessoa {
     //Methods
     @Override
     public String toString() {
-        return "nome " + nome + " Data de cadastro " + dtCadastro;
+        return "Nome " + nome + ", data de cadastro " + dtCadastro;
     }
 
     //Getter & Setter
@@ -37,18 +37,16 @@ public abstract class Pessoa {
     }
 
     public void setNome(String nome) {
-        if (nome == null) {
+        if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome não pode ser nulo");
         }
-        if (nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome não pode ser vazio");
-        }
-        if (nome.length() > 50) { // Limite arbitrário, ajuste conforme necessidade
-            throw new IllegalArgumentException("Nome não pode ter mais que 100 caracteres");
+
+        if (nome.length() > 255) { // Limite arbitrário, ajuste conforme necessidade
+            throw new IllegalArgumentException("Nome não pode ter mais que 255 caracteres");
         }
         // Verificar se contém apenas caracteres válidos
-        if (!nome.matches("[a-zA-ZÀ-ÿ\\s]+")) {
-            throw new IllegalArgumentException("Nome deve conter apenas letras e espaços");
+        if (!nome.matches("[a-zA-ZÀ-ÿ\\s.-]+")) {
+            throw new IllegalArgumentException("Caracter inválido.");
         }
         this.nome = nome.trim();
     }
@@ -58,10 +56,11 @@ public abstract class Pessoa {
     }
 
     public void setAtivo(byte ativo) {
-        if (ativo != 0 && ativo != 1) {
-            throw new IllegalArgumentException("Ativo deve ser 0 (inativo) ou 1 (ativo)");
-        }
+        if (!String.valueOf(ativo).matches("[0-1]")) {//regex permite a expansão da lista no futuro
+            throw new IllegalArgumentException("Valor não permitido: " + ativo);
+        } else{
         this.ativo = ativo;
+        }
     }
 
     public LocalDate getDtCadastro() {
@@ -69,11 +68,8 @@ public abstract class Pessoa {
     }
 
     public void setDtCadastro(LocalDate dtCadastro) {
-        if (dtCadastro == null) {
-            throw new IllegalArgumentException("Data de cadastro não pode ser nula");
-        }
-        if (dtCadastro.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Data de cadastro não pode ser futura");
+        if (!dtCadastro.equals(LocalDate.now())) {
+            throw new IllegalArgumentException("Data inválida.");
         }
         this.dtCadastro = dtCadastro;
     }
