@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/pacienrte")
+@RequestMapping("/paciente")
 public class PacienteController {
     private final PacienteService pacienteService;
 
@@ -15,7 +15,7 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
 
-    @GetMapping("/{nome}")
+    @GetMapping("/nome/{nome}")
     public Optional<Paciente> buscarNome(String nome){
         return pacienteService.buscarNome(nome);
     }
