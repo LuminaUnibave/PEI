@@ -14,6 +14,7 @@ public abstract class Pessoa {
     public DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     //Constructors
+
     public Pessoa (){
         this.ativo = 1;
         this.dtCadastro = LocalDate.now();
@@ -27,7 +28,7 @@ public abstract class Pessoa {
     //Methods
     @Override
     public String toString() {
-        return "nome " + nome + " Data de cadastro " + dtCadastro;
+        return "Nome " + nome + ", data de cadastro " + dtCadastro;
     }
 
     //Getter & Setter
@@ -36,7 +37,18 @@ public abstract class Pessoa {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo");
+        }
+
+        if (nome.length() > 255) { // Limite arbitrário, ajuste conforme necessidade
+            throw new IllegalArgumentException("Nome não pode ter mais que 255 caracteres");
+        }
+        // Verificar se contém apenas caracteres válidos
+        if (!nome.matches("[a-zA-ZÀ-ÿ\\s.-]+")) {
+            throw new IllegalArgumentException("Caracter inválido.");
+        }
+        this.nome = nome.trim();
     }
 
     public byte getAtivo() {
@@ -44,7 +56,11 @@ public abstract class Pessoa {
     }
 
     public void setAtivo(byte ativo) {
+        if (!String.valueOf(ativo).matches("[0-1]")) {//regex permite a expansão da lista no futuro
+            throw new IllegalArgumentException("Valor não permitido: " + ativo);
+        } else{
         this.ativo = ativo;
+        }
     }
 
     public LocalDate getDtCadastro() {
@@ -52,6 +68,9 @@ public abstract class Pessoa {
     }
 
     public void setDtCadastro(LocalDate dtCadastro) {
+        if (!dtCadastro.equals(LocalDate.now())) {
+            throw new IllegalArgumentException("Data inválida.");
+        }
         this.dtCadastro = dtCadastro;
     }
 }
