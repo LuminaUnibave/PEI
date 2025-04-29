@@ -16,13 +16,13 @@ public class PacienteController {
     }
 
     @GetMapping("/nome/{nome}")
-    public Optional<Paciente> buscarNome(String nome){
+    public Optional<Paciente> buscarNome(@PathVariable("nome") String nome){
         return pacienteService.buscarNome(nome);
     }
 
     // GET /paciente/{id}
     @GetMapping("/{id}")
-    public Optional<Paciente> buscarPorId(@PathVariable Long id) {
+    public Optional<Paciente> buscarPorId(@PathVariable("id") Long id) {
         return pacienteService.buscarPorId(id);
     }
     // POST
@@ -33,7 +33,7 @@ public class PacienteController {
 
     // DELETE /paciente/{id}
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
+    public void deletar(@PathVariable("id") Long id) {
         pacienteService.deletar(id);
     }
 }
