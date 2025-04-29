@@ -8,20 +8,22 @@ import java.time.format.DateTimeFormatter;
 @MappedSuperclass
 public abstract class Pessoa {
 
+    @Column(name = "nome", nullable = false, unique = false)
     protected String nome;
-    protected byte ativo;
+    @Column(name = "situacao", nullable = false, unique = false)
+    protected byte situacao;
+    @Column(name = "dt_cadastro", nullable = false, unique = false, updatable = false)
     protected LocalDate dtCadastro;
-    public DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     //Constructors
 
     public Pessoa (){
-        this.ativo = 1;
+        this.situacao = 1;
         this.dtCadastro = LocalDate.now();
     }
     public Pessoa(String nome) {
         this.nome = nome;
-        this.ativo = 1;
+        this.situacao = 1;
         this.dtCadastro = LocalDate.now();
     }
 
@@ -35,7 +37,6 @@ public abstract class Pessoa {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome não pode ser nulo");
@@ -51,22 +52,21 @@ public abstract class Pessoa {
         this.nome = nome.trim();
     }
 
-    public byte getAtivo() {
-        return ativo;
+    public byte getSituacao() {
+        return situacao;
     }
 
-    public void setAtivo(byte ativo) {
-        if (!String.valueOf(ativo).matches("[0-1]")) {//regex permite a expansão da lista no futuro
-            throw new IllegalArgumentException("Valor não permitido: " + ativo);
-        } else{
-        this.ativo = ativo;
+    public void setSituacao(byte situacao) {
+        if (!String.valueOf(situacao).matches("[0-1]")) {//regex permite a expansão da lista no futuro
+            throw new IllegalArgumentException("Valor não permitido: " + situacao);
+        } else {
+            this.situacao = situacao;
         }
     }
 
     public LocalDate getDtCadastro() {
         return dtCadastro;
     }
-
     public void setDtCadastro(LocalDate dtCadastro) {
         if (!dtCadastro.equals(LocalDate.now())) {
             throw new IllegalArgumentException("Data inválida.");
