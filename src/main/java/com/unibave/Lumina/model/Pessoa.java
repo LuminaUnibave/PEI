@@ -43,8 +43,13 @@ public abstract class Pessoa {
     public byte getSituacao() {
         return situacao;
     }
+
     public void setSituacao(byte situacao) {
-        this.situacao = situacao;
+        if (!String.valueOf(situacao).matches("[0-1]")) {//regex permite a expansão da lista no futuro
+            throw new IllegalArgumentException("Valor não permitido: " + situacao);
+        } else {
+            this.situacao = situacao;
+        }
     }
 
     public LocalDate getDtCadastro() {
