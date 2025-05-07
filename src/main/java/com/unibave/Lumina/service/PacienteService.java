@@ -24,8 +24,8 @@ public class PacienteService {
         return pacienteRepository.findById(id);
     }
     // Metodo para buscar pelo nome
-    public Optional<Paciente> buscarNome(String nome){
-        return pacienteRepository.findByNome(nome);
+    public Optional<Paciente> buscarNome(String nome) {
+        return pacienteRepository.buscarPorNome(nome);
     }
     // Método para salvar um novo produto (ou atualizar, se já existir)
     public Paciente salvar(Paciente paciente){

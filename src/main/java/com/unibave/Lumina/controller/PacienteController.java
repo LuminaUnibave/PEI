@@ -15,11 +15,11 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
 
-    @GetMapping("/nome/{nome}")
-    public Optional<Paciente> buscarNome(@PathVariable("nome") String nome){
+    @GetMapping
+    public Optional<Paciente> buscarNome(@RequestParam("nome") String nome) {
         return pacienteService.buscarNome(nome);
     }
-
+    
     // GET /paciente/{id}
     @GetMapping("/{id}")
     public Optional<Paciente> buscarPorId(@PathVariable("id") Long id) {
