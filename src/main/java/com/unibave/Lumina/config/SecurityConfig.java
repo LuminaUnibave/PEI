@@ -10,7 +10,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        System.out.println(">>> SecurityConfig carregado!");
+        System.out.println("\n<!> Segurança Desabilitada <!>\n");
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
