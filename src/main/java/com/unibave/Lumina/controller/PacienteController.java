@@ -4,6 +4,7 @@ import com.unibave.Lumina.model.Paciente;
 import com.unibave.Lumina.service.PacienteService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -16,7 +17,7 @@ public class PacienteController {
     }
 
     @GetMapping
-    public Optional<Paciente> buscarNome(@RequestParam("nome") String nome) {
+    public List<Paciente> buscarNome(@RequestParam("nome") String nome) {
         return pacienteService.buscarNome(nome);
     }
     
