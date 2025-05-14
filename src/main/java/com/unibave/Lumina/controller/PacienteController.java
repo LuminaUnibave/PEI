@@ -26,6 +26,7 @@ public class PacienteController {
     public Optional<Paciente> buscarPorId(@PathVariable("id") Long id) {
         return pacienteService.buscarPorId(id);
     }
+
     // POST
     @PostMapping
     public Paciente salvar(@RequestBody Paciente paciente) {
