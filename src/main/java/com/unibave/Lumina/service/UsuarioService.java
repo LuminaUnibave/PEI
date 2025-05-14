@@ -5,6 +5,7 @@ import com.unibave.Lumina.model.Usuario;
 import com.unibave.Lumina.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,8 +25,8 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
     // Metodo para buscar pelo nome
-    public Optional<Usuario> buscarNome(String nome){
-        return usuarioRepository.findByNome(nome);
+    public List<Usuario> buscarNome(String nome){
+        return usuarioRepository.findByNomeContainingIgnoreCase(nome);
     }
     // Método para salvar um novo produto (ou atualizar, se já existir)
     public Usuario salvar(Usuario usuario){
