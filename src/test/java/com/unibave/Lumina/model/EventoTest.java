@@ -8,11 +8,13 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EventoTest {
+
     private Evento evento;
 
     @BeforeEach
     void setUp() {
         evento = new Evento();
+        System.out.println("Cria um novo evento");
     }
 
     // Testes para setData
