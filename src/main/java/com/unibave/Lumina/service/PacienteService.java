@@ -2,6 +2,7 @@ package com.unibave.Lumina.service;
 
 import com.unibave.Lumina.model.Paciente;
 import com.unibave.Lumina.repository.PacienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class PacienteService {
     private final PacienteRepository pacienteRepository;
 
+    @Autowired
     public PacienteService(PacienteRepository pacienteRepository) {
         this.pacienteRepository = pacienteRepository;
     }

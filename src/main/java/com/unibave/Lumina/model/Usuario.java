@@ -17,6 +17,7 @@ public class Usuario extends Pessoa {
     //Methods
     @Override
     public String toString(){
+        //String com interpolação para a classe Usuario
         return STR."id_usuario, nome, email, senha, situacao, dt_cadastro = [\{getIdUsuario()}, \{getNome()}, \{getEmail()}, \{getSenha()}, \{getSituacao()}, \{getDtCadastro()}]";
     }
     //Constructors

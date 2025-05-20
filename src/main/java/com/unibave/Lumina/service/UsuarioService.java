@@ -3,6 +3,8 @@ package com.unibave.Lumina.service;
 import com.unibave.Lumina.model.Paciente;
 import com.unibave.Lumina.model.Usuario;
 import com.unibave.Lumina.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,12 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    @Autowired
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //!Aviso!
@@ -30,6 +35,7 @@ public class UsuarioService {
     }
     // Método para salvar um novo produto (ou atualizar, se já existir)
     public Usuario salvar(Usuario usuario){
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         System.out.println("Usuario salvo: "+ usuario.toString());
         return usuarioRepository.save(usuario);
     }

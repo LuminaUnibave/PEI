@@ -26,6 +26,7 @@ public class Paciente extends Pessoa {
     //Methods
     @Override
     public String toString(){
+        //String com interpolação para a classe Usuario
         return STR."id_paciente, nome, cpf_cnpj, dt_nascimento, crtSus, email, situacao, dt_cadastro = [\{getIdPaciente()}, \{getNome()}, \{getCpfCnpj()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}]";
     }
 
