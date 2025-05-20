@@ -14,7 +14,6 @@ public class EventoTest {
     @BeforeEach
     void setUp() {
         evento = new Evento();
-        System.out.println("Cria um novo evento");
     }
 
     // Testes para setData

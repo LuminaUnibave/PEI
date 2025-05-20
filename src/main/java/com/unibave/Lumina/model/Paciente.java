@@ -1,25 +1,33 @@
 package com.unibave.Lumina.model;
 
-import com.unibave.Lumina.interfaces.ICadastro;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+
+import static java.lang.StringTemplate.STR;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "paciente" , schema = "lumina")
-public class Paciente extends Pessoa implements ICadastro {
+public class Paciente extends Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente", nullable = false, unique = true)
     protected Long idPaciente;
-    @Column(name = "email", nullable = true, unique = false)
-    protected String email;
+    @Column(name = "cpf_cnpj", nullable = true, unique = true)
+    protected String cpfCnpj;
     @Column(name = "dt_nascimento", nullable = false, unique = false)
     protected LocalDate dtNascimento;
+    @Column(name = "crt_sus", nullable = true, unique = true)
+    protected String crtSus;
+    @Column(name = "email", nullable = true, unique = false)
+    protected String email;
 
+    //Methods
+    @Override
+    public String toString(){
+        return STR."id_paciente, nome, cpf_cnpj, dt_nascimento, crtSus, email, situacao, dt_cadastro = [\{getIdPaciente()}, \{getNome()}, \{getCpfCnpj()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}]";
+    }
 
     //Constructors
     public Paciente(){
@@ -29,21 +37,7 @@ public class Paciente extends Pessoa implements ICadastro {
         super(nome);
         this.email = email;
         this.dtNascimento = dtNascimento;
-    }
-
-    //Methods
-    @Override
-    public void cadastrar() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Digite seu nome: ");
-        setNome(scanner.nextLine());
-        System.out.print("Digite seu E-mail: ");
-        setEmail(scanner.nextLine());
-        System.out.print("Digite sua data de nascimento: (dd/mm/aaaa) ");
-        String dataInput = scanner.nextLine();
-        DateTimeFormatter inputFormato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataFormatada = LocalDate.parse(dataInput, inputFormato);
-        setDtNascimento(dataFormatada);
+        this.cpfCnpj = cpfCnpj;
     }
 
     //Getter & Setter
@@ -64,4 +58,19 @@ public class Paciente extends Pessoa implements ICadastro {
     public void setDtNascimento(LocalDate dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
+
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
+    }
+
+    public String getCrtSus() {
+        return crtSus;
+    }
+    public void setCrtSus(String crtSus) {
+        this.crtSus = crtSus;
+    }
+
 }

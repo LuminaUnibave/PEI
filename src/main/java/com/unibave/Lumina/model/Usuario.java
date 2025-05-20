@@ -1,18 +1,24 @@
 package com.unibave.Lumina.model;
-import com.unibave.Lumina.interfaces.ICadastro;
 import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuario", schema = "lumina")
-public class Usuario extends Pessoa implements ICadastro {
+public class Usuario extends Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario", nullable = false, unique = true)
     protected Long idUsuario;
     @Column(name = "email", nullable = true, unique = false)
     protected String email;
+    @Column(name = "senha", nullable = false, unique = false)
+    protected  String senha;
 
+    //Methods
+    @Override
+    public String toString(){
+        return STR."id_usuario, nome, email, senha, situacao, dt_cadastro = [\{getIdUsuario()}, \{getNome()}, \{getEmail()}, \{getSenha()}, \{getSituacao()}, \{getDtCadastro()}]";
+    }
     //Constructors
     public Usuario(){
         super();
@@ -20,11 +26,6 @@ public class Usuario extends Pessoa implements ICadastro {
     public Usuario(String nome, String email){
         super(nome);
         this.email = email;
-    }
-
-    //Methods
-    @Override
-    public void cadastrar() {
     }
 
     //Getter & Setter
@@ -38,4 +39,12 @@ public class Usuario extends Pessoa implements ICadastro {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
 }

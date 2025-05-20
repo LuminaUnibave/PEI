@@ -30,6 +30,7 @@ public class UsuarioService {
     }
     // Método para salvar um novo produto (ou atualizar, se já existir)
     public Usuario salvar(Usuario usuario){
+        System.out.println("Usuario salvo: "+ usuario.toString());
         return usuarioRepository.save(usuario);
     }
     // Método para deletar produto por ID

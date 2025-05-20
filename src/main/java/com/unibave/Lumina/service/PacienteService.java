@@ -22,12 +22,13 @@ public class PacienteService {
     public Optional<Paciente> buscarPorId(Long id) {
         return pacienteRepository.findById(id);
     }
-    // Metodo para buscar pelo nome
+    // Metodo para buscar pelo nome (Like + IgnoreCase)
     public List<Paciente> buscarNome(String nome) {
         return pacienteRepository.findByNomeContainingIgnoreCase(nome);
     }
     // Método para salvar um novo produto (ou atualizar, se já existir)
     public Paciente salvar(Paciente paciente){
+        System.out.println("Paciente salvo: "+ paciente.toString());
         return pacienteRepository.save(paciente);
     }
     // Método para deletar produto por ID

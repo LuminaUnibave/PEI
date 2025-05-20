@@ -38,39 +38,20 @@ public abstract class Pessoa {
         return nome;
     }
     public void setNome(String nome) {
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome não pode ser nulo");
-        }
-
-        if (nome.length() > 255) { // Limite arbitrário, ajuste conforme necessidade
-            throw new IllegalArgumentException("Nome não pode ter mais que 255 caracteres");
-        }
-        // Verificar se contém apenas caracteres válidos
-        if (!nome.matches("[a-zA-ZÀ-ÿ\\s.-]+")) {
-            throw new IllegalArgumentException("Caracter inválido.");
-        }
         this.nome = nome.trim();
     }
 
     public byte getSituacao() {
         return situacao;
     }
-
     public void setSituacao(byte situacao) {
-        if (!String.valueOf(situacao).matches("[0-1]")) {//regex permite a expansão da lista no futuro
-            throw new IllegalArgumentException("Valor não permitido: " + situacao);
-        } else {
             this.situacao = situacao;
-        }
     }
 
     public LocalDate getDtCadastro() {
         return dtCadastro;
     }
     public void setDtCadastro(LocalDate dtCadastro) {
-        if (!dtCadastro.equals(LocalDate.now())) {
-            throw new IllegalArgumentException("Data inválida.");
-        }
         this.dtCadastro = dtCadastro;
     }
 }
