@@ -1,6 +1,5 @@
 package com.unibave.Lumina.service;
 
-import com.unibave.Lumina.model.Paciente;
 import com.unibave.Lumina.model.Usuario;
 import com.unibave.Lumina.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
