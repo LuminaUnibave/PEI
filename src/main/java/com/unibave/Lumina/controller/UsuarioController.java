@@ -1,8 +1,6 @@
 package com.unibave.Lumina.controller;
 
-import com.unibave.Lumina.model.Paciente;
 import com.unibave.Lumina.model.Usuario;
-import com.unibave.Lumina.service.PacienteService;
 import com.unibave.Lumina.service.UsuarioService;
 import org.springframework.web.bind.annotation.*;
 
