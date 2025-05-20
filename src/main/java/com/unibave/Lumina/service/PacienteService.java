@@ -20,7 +20,7 @@ public class PacienteService {
 
     // <!> Adicionar mais metodos para demais funcionalidades <!>
 
-    // Método para buscar produto por ID
+    // Método para buscar paciente por ID
     public Optional<Paciente> buscarPorId(Long id) {
         return pacienteRepository.findById(id);
     }
@@ -28,12 +28,12 @@ public class PacienteService {
     public List<Paciente> buscarNome(String nome) {
         return pacienteRepository.findByNomeContainingIgnoreCase(nome);
     }
-    // Método para salvar um novo produto (ou atualizar, se já existir)
+    // Método para salvar um novo paciente (ou atualizar, se já existir)
     public Paciente salvar(Paciente paciente){
-        System.out.println("Paciente salvo: "+ paciente.toString());
+        System.out.println(STR."Paciente salvo: \{paciente}");//Mensagem no terminal de que foi incluido o paciente com sucesso
         return pacienteRepository.save(paciente);
     }
-    // Método para deletar produto por ID
+    // Método para deletar paciente por ID
     public void deletar(Long id) {
         pacienteRepository.deleteById(id);
     }

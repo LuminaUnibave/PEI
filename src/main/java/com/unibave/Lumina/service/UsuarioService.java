@@ -25,7 +25,7 @@ public class UsuarioService {
     // Adicionar mais metodos para demais funcionalidades
     //!Aviso!
 
-    // Método para buscar produto por ID
+    // Método para buscar usuario por ID
     public Optional<Usuario> buscarPorId(Long id) {
         return usuarioRepository.findById(id);
     }
@@ -33,13 +33,13 @@ public class UsuarioService {
     public List<Usuario> buscarNome(String nome){
         return usuarioRepository.findByNomeContainingIgnoreCase(nome);
     }
-    // Método para salvar um novo produto (ou atualizar, se já existir)
+    // Método para salvar um novo usuario (ou atualizar, se já existir)
     public Usuario salvar(Usuario usuario){
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        System.out.println("Usuario salvo: "+ usuario.toString());
+        System.out.println(STR."Usuario salvo: \{usuario}");//Mensagem no terminal de que foi incluido o usuario com sucesso
         return usuarioRepository.save(usuario);
     }
-    // Método para deletar produto por ID
+    // Método para deletar usuario por ID
     public void deletar(Long id) {
         usuarioRepository.deleteById(id);
     }
