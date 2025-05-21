@@ -14,8 +14,8 @@ public class Paciente extends Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente", nullable = false, unique = true)
     protected Long idPaciente;
-    @Column(name = "cpf_cnpj", nullable = true, unique = true)
-    protected String cpfCnpj;
+    @Column(name = "cpf", nullable = true, unique = true)
+    protected String cpf;
     @Column(name = "dt_nascimento", nullable = false, unique = false)
     protected LocalDate dtNascimento;
     @Column(name = "crt_sus", nullable = true, unique = true)
@@ -27,18 +27,18 @@ public class Paciente extends Pessoa {
     @Override
     public String toString(){
         //String com interpolação para a classe Usuario
-        return STR."id_paciente, nome, cpf_cnpj, dt_nascimento, crtSus, email, situacao, dt_cadastro = [\{getIdPaciente()}, \{getNome()}, \{getCpfCnpj()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}]";
+        return STR."nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro = [\{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}]";
     }
 
     //Constructors
     public Paciente(){
         super();
     }
-    public Paciente(String nome, LocalDate dtNascimento, String email, String cpfCnpj, String crtSus){
+    public Paciente(String nome, LocalDate dtNascimento, String email, String cpf, String crtSus){
         super(nome);
         this.email = email;
         this.dtNascimento = dtNascimento;
-        this.cpfCnpj = cpfCnpj;
+        this.cpf = cpf;
         this.crtSus = crtSus;
     }
 
@@ -61,11 +61,11 @@ public class Paciente extends Pessoa {
         this.dtNascimento = dtNascimento;
     }
 
-    public String getCpfCnpj() {
-        return cpfCnpj;
+    public String getCpf() {
+        return cpf;
     }
-    public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getCrtSus() {

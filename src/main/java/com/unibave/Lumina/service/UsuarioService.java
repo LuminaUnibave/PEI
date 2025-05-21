@@ -20,9 +20,7 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //!Aviso!
-    // Adicionar mais metodos para demais funcionalidades
-    //!Aviso!
+    // <!> Adicionar mais metodos para demais funcionalidades <!>
 
     // Método para buscar usuario por ID
     public Optional<Usuario> buscarPorId(Long id) {

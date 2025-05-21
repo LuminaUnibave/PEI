@@ -27,12 +27,6 @@ public abstract class Pessoa {
         this.dtCadastro = LocalDate.now();
     }
 
-    //Methods
-    @Override
-    public String toString() {
-        return "Nome " + nome + ", data de cadastro " + dtCadastro;
-    }
-
     //Getter & Setter
     public String getNome() {
         return nome;
