@@ -29,7 +29,7 @@ public class PacienteService {
     }
     // Método para salvar um novo paciente (ou atualizar, se já existir)
     public Paciente salvar(Paciente paciente){
-        System.out.println(STR."Paciente salvo: \{paciente}");//Mensagem no terminal de que foi incluido o paciente com sucesso
+        System.out.println(STR."\nPaciente salvo: \{paciente}\n");
         return pacienteRepository.save(paciente);
     }
     // Método para deletar paciente por ID

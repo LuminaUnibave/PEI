@@ -35,7 +35,7 @@ public class UsuarioService {
     // Método para salvar um novo usuario (ou atualizar, se já existir)
     public Usuario salvar(Usuario usuario){
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        System.out.println(STR."Usuario salvo: \{usuario}");//Mensagem no terminal de que foi incluido o usuario com sucesso
+        System.out.println(STR."\nUsuario salvo: \{usuario}\n");
         return usuarioRepository.save(usuario);
     }
     // Método para deletar usuario por ID

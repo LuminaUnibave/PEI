@@ -34,11 +34,12 @@ public class Paciente extends Pessoa {
     public Paciente(){
         super();
     }
-    public Paciente(String nome, LocalDate dtNascimento, String email){
+    public Paciente(String nome, LocalDate dtNascimento, String email, String cpfCnpj, String crtSus){
         super(nome);
         this.email = email;
         this.dtNascimento = dtNascimento;
         this.cpfCnpj = cpfCnpj;
+        this.crtSus = crtSus;
     }
 
     //Getter & Setter

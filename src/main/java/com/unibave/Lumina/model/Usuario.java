@@ -24,9 +24,10 @@ public class Usuario extends Pessoa {
     public Usuario(){
         super();
     }
-    public Usuario(String nome, String email){
+    public Usuario(String nome, String email, String senha){
         super(nome);
         this.email = email;
+        this.senha = senha;
     }
 
     //Getter & Setter
