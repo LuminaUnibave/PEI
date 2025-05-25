@@ -2,55 +2,61 @@ package com.unibave.Lumina.controller;
 
 import com.unibave.Lumina.model.Agendamento;
 import com.unibave.Lumina.service.AgendamentoService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.Scanner;
+import java.util.List;
 
+@RestController
+@RequestMapping("/agendamentos") // Rota base para agendamentos
 public class AgendamentoController {
-    private final AgendamentoService service = new AgendamentoService();
-    private final Scanner scanner = new Scanner(System.in);
 
-    public void menuAgendamento() {
-        System.out.println("1 - Agendar Consulta ou Visita");
-        System.out.println("2 - Listar Agendamentos");
-        System.out.print("Escolha uma opção: ");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
+    private final AgendamentoService agendamentoService;
 
-        switch (opcao) {
-            case 1 -> agendar();
-            case 2 -> listar();
-            default -> System.out.println("Opção inválida!");
-        }
+    public AgendamentoController(AgendamentoService agendamentoService) {
+        this.agendamentoService = agendamentoService;
     }
 
-    private void agendar() {
-        System.out.print("Nome do Paciente: ");
-        String nome = scanner.nextLine();
-
-        System.out.print("Tipo (Consulta ou Visita): ");
-        String tipo = scanner.nextLine();
-
-        System.out.print("Data e hora (formato: DD-mm-YYYY HH:mm): ");
-        LocalDateTime dataHora = LocalDateTime.parse(scanner.nextLine());
-
-        System.out.print("Observações: ");
-        String obs = scanner.nextLine();
-
-        Agendamento agendamento = new Agendamento();
-        agendamento.setNome(nome);
-        agendamento.setTipoVisita(tipo);
-        agendamento.setDataHora(dataHora);
-        agendamento.setObservacoes(obs);
-
-        service.agendar(agendamento);
-        System.out.println("Agendamento realizado com sucesso!");
+    // Pega todos os agendamentos
+    @GetMapping
+    public List<Agendamento> listarTodos() {
+        return agendamentoService.listarTodos();
     }
 
-    private void listar() {
-        System.out.println("Agendamentos:");
-        for (var agendamentos : service.listarAgendamentos()) {
-            System.out.println(agendamentos.getTipoVisita() + " - " + agendamentos.getNome() + " - " + agendamentos.getDataHora() + " - " + agendamentos.getObservacoes());
-        }
+    // Pega um agendamento pelo id
+    @GetMapping("/{id}")
+    public ResponseEntity<Agendamento> buscarPorId(@PathVariable Long id) {
+        return agendamentoService.buscarPorID(id)
+                .map(ResponseEntity::ok)  // Se encontrar, retorna o agendamento
+                .orElse(ResponseEntity.notFound().build());  // Retorna erro 404
+    }
+
+    // Cria um novo agendamento
+    @PostMapping
+    public ResponseEntity<Agendamento> criar(@RequestBody Agendamento agendamento) {
+        Agendamento salvo = agendamentoService.salvar(agendamento);
+        return ResponseEntity.ok(salvo); // Retorna o agendamento criado
+    }
+
+    // Atualiza um agendamento existente
+    @PutMapping("/{id}")
+    public ResponseEntity<Agendamento> atualizar(@PathVariable Long id, @RequestBody Agendamento agendamento) {
+        return agendamentoService.buscarPorID(id)
+                .map(existente -> {
+                    agendamento.setIdAgendamento(id); // Define o id para atualizar
+                    return ResponseEntity.ok(agendamentoService.salvar(agendamento));  // Salva e retorna
+                })
+                .orElse(ResponseEntity.notFound().build()); // Retorna erro 404
+    }
+
+    // Deleta um agendamento pelo id
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deletar(@PathVariable Long id) {
+        return agendamentoService.buscarPorID(id)
+                .map(a -> {
+                    agendamentoService.deletar(id); // Deleta o agendamento
+                    return ResponseEntity.noContent().build(); // Retorna sucesso sem conteúdo 204
+                })
+                .orElse(ResponseEntity.notFound().build()); // Retorna erro 404
     }
 }
