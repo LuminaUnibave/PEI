@@ -27,7 +27,7 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
     // Metodo para buscar pelo nome
-    public List<Usuario> buscarNome(String nome){
+    public List<Usuario> buscarPorNome(String nome){
         return usuarioRepository.findByNomeContainingIgnoreCase(nome);
     }
     // Método para salvar um novo usuario (ou atualizar, se já existir)

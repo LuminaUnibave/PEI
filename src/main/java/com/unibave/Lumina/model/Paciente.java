@@ -1,5 +1,6 @@
 package com.unibave.Lumina.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -26,7 +27,6 @@ public class Paciente extends Pessoa {
     //Methods
     @Override
     public String toString(){
-        //String com interpolação para a classe Usuario
         return STR."nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro = [\{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}]";
     }
 

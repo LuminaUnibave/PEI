@@ -11,19 +11,18 @@ public abstract class Pessoa {
     @Column(name = "nome", nullable = false, unique = false)
     protected String nome;
     @Column(name = "situacao", nullable = false, unique = false)
-    protected byte situacao;
+    protected Situacao situacao;
     @Column(name = "dt_cadastro", nullable = false, unique = false, updatable = false)
     protected LocalDate dtCadastro;
 
     //Constructors
-
     public Pessoa (){
-        this.situacao = 1;
+        this.situacao = Situacao.ATIVO;
         this.dtCadastro = LocalDate.now();
     }
     public Pessoa(String nome) {
         this.nome = nome;
-        this.situacao = 1;
+        this.situacao = Situacao.ATIVO;
         this.dtCadastro = LocalDate.now();
     }
 
@@ -35,10 +34,10 @@ public abstract class Pessoa {
         this.nome = nome.trim();
     }
 
-    public byte getSituacao() {
+    public Situacao getSituacao() {
         return situacao;
     }
-    public void setSituacao(byte situacao) {
+    public void setSituacao(Situacao situacao) {
             this.situacao = situacao;
     }
 

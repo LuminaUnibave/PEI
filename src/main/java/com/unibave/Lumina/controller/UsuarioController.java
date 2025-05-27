@@ -16,14 +16,13 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping
-    public List<Usuario> buscarNome(@RequestParam("nome") String nome) {
-        return usuarioService.buscarNome(nome);
+    //GETS
+    @GetMapping("/nome/{nome}")
+    public List<Usuario> buscarPorNome(@RequestParam("nome") String nome) {
+        return usuarioService.buscarPorNome(nome);
     }
-
-    // GET /paciente/{id}
-    @GetMapping("/{id}")
-    public Optional<Usuario> buscarPorId(@PathVariable("id") Long id) {
+    @GetMapping("/id") // /usuario/{id}
+    public Optional<Usuario> buscarPorId(@RequestParam("id") Long id) {
         return usuarioService.buscarPorId(id);
     }
 
@@ -33,9 +32,9 @@ public class UsuarioController {
         return usuarioService.salvar(usuario);
     }
 
-    // DELETE /paciente/{id}
-    @DeleteMapping("/{id}")
-    public void deletar(@PathVariable("id") Long id) {
+    // DELETE /usuario/{id}
+    @DeleteMapping("/id")
+    public void deletar(@RequestParam("id") Long id) {
         usuarioService.deletar(id);
     }
 }

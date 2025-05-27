@@ -20,7 +20,7 @@ class UsuarioTest {
         usuario.setEmail("teste@teste.com");
         usuario.setSenha("1234");
         System.out.println("Usuario cadastrado: " + usuario);
-        assertEquals(STR."nome, email, senha, situacao, dt_cadastro = [Teste, teste@teste.com, 1234, 1, \{LocalDate.now()}]", usuario.toString());
+        assertEquals(STR."nome, email, senha, situacao, dt_cadastro = [Teste, teste@teste.com, 1234, ATIVO, \{LocalDate.now()}]", usuario.toString());
         System.out.println("toString validado");
     }
 
@@ -29,7 +29,7 @@ class UsuarioTest {
     void construtor(){
         usuarioConstrutor = new Usuario("teste", "teste@teste.com", "abcd");
         System.out.println("\nUsuario do construtor: " + usuarioConstrutor);
-        assertEquals(STR."nome, email, senha, situacao, dt_cadastro = [teste, teste@teste.com, abcd, 1, \{LocalDate.now()}]", usuarioConstrutor.toString());
+        assertEquals(STR."nome, email, senha, situacao, dt_cadastro = [teste, teste@teste.com, abcd, ATIVO, \{LocalDate.now()}]", usuarioConstrutor.toString());
         System.out.println("toString validado");
     }
 }

@@ -24,7 +24,7 @@ public class PacienteService {
         return pacienteRepository.findById(id);
     }
     // Metodo para buscar pelo nome (Like + IgnoreCase)
-    public List<Paciente> buscarNome(String nome) {
+    public List<Paciente> buscarPorNome(String nome) {
         return pacienteRepository.findByNomeContainingIgnoreCase(nome);
     }
     // Método para salvar um novo paciente (ou atualizar, se já existir)

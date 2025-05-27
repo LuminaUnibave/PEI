@@ -16,14 +16,13 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
 
-    @GetMapping
-    public List<Paciente> buscarNome(@RequestParam("nome") String nome) {
-        return pacienteService.buscarNome(nome);
+    //GETS
+    @GetMapping("/nome")
+    public List<Paciente> buscarPorNome(@RequestParam("nome") String nome) {
+        return pacienteService.buscarPorNome(nome);
     }
-    
-    // GET /paciente/{id}
-    @GetMapping("/{id}")
-    public Optional<Paciente> buscarPorId(@PathVariable("id") Long id) {
+    @GetMapping("/id") // /paciente/{id}
+    public Optional<Paciente> buscarPorId(@RequestParam("id") Long id) {
         return pacienteService.buscarPorId(id);
     }
 
@@ -34,8 +33,8 @@ public class PacienteController {
     }
 
     // DELETE /paciente/{id}
-    @DeleteMapping("/{id}")
-    public void deletar(@PathVariable("id") Long id) {
+    @DeleteMapping("/id")
+    public void deletar(@RequestParam("id") Long id) {
         pacienteService.deletar(id);
     }
 }

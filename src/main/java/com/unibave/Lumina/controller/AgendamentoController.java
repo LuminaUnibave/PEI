@@ -1,14 +1,16 @@
 package com.unibave.Lumina.controller;
 
 import com.unibave.Lumina.model.Agendamento;
+import com.unibave.Lumina.model.Paciente;
 import com.unibave.Lumina.service.AgendamentoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/agendamentos") // Rota base para agendamentos
+@RequestMapping("/agendamento") // Rota base para agendamento
 public class AgendamentoController {
 
     private final AgendamentoService agendamentoService;
@@ -17,46 +19,37 @@ public class AgendamentoController {
         this.agendamentoService = agendamentoService;
     }
 
-    // Pega todos os agendamentos
+    //GET
+    @GetMapping("/tpvisita")
+    public List<Agendamento> buscarPorTpVisita(@RequestParam("tp_visita") Agendamento.TpVisita tpVisita){
+        return agendamentoService.buscarTpVisita(tpVisita);
+    }
+    @GetMapping("/paciente/id")
+    public List<Agendamento> buscarPorPacienteId(@RequestParam("id") Long id) {
+        return agendamentoService.buscarPorPacienteId(id);
+        }
+    @GetMapping("/paciente/nome")
+    public List<Agendamento> buscarPorPacienteNome(@RequestParam("nome") String nome){
+        return agendamentoService.buscarPorPacienteNome(nome);
+    }
     @GetMapping
     public List<Agendamento> listarTodos() {
         return agendamentoService.listarTodos();
     }
-
-    // Pega um agendamento pelo id
-    @GetMapping("/{id}")
-    public ResponseEntity<Agendamento> buscarPorId(@PathVariable Long id) {
-        return agendamentoService.buscarPorID(id)
-                .map(ResponseEntity::ok)  // Se encontrar, retorna o agendamento
-                .orElse(ResponseEntity.notFound().build());  // Retorna erro 404
+    @GetMapping("/id")
+    public Optional<Agendamento> buscarPorId(@RequestParam("id") Long id){
+        return agendamentoService.buscarPorId(id);
     }
 
-    // Cria um novo agendamento
+    //POST
     @PostMapping
-    public ResponseEntity<Agendamento> criar(@RequestBody Agendamento agendamento) {
-        Agendamento salvo = agendamentoService.salvar(agendamento);
-        return ResponseEntity.ok(salvo); // Retorna o agendamento criado
+    public Agendamento salvar(@RequestBody Agendamento agendamento){
+        return agendamentoService.salvar(agendamento);
     }
 
-    // Atualiza um agendamento existente
-    @PutMapping("/{id}")
-    public ResponseEntity<Agendamento> atualizar(@PathVariable Long id, @RequestBody Agendamento agendamento) {
-        return agendamentoService.buscarPorID(id)
-                .map(existente -> {
-                    agendamento.setIdAgendamento(id); // Define o id para atualizar
-                    return ResponseEntity.ok(agendamentoService.salvar(agendamento));  // Salva e retorna
-                })
-                .orElse(ResponseEntity.notFound().build()); // Retorna erro 404
-    }
-
-    // Deleta um agendamento pelo id
+    // DELETE /agendamento/{id}
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletar(@PathVariable Long id) {
-        return agendamentoService.buscarPorID(id)
-                .map(a -> {
-                    agendamentoService.deletar(id); // Deleta o agendamento
-                    return ResponseEntity.noContent().build(); // Retorna sucesso sem conteúdo 204
-                })
-                .orElse(ResponseEntity.notFound().build()); // Retorna erro 404
+    public void deletar(@PathVariable("id") Long id) {
+        agendamentoService.deletar(id);
     }
 }
