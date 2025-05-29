@@ -1,9 +1,8 @@
 package com.unibave.Lumina.model;
+import com.unibave.Lumina.Enums.Situacao;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @MappedSuperclass
 public abstract class Pessoa {

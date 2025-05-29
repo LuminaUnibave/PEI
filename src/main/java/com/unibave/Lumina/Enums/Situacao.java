@@ -1,4 +1,4 @@
-package com.unibave.Lumina.model;
+package com.unibave.Lumina.Enums;
 
 public enum Situacao {
     EXCLUIDO,
