@@ -1,11 +1,32 @@
 package com.unibave.Lumina.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "evento", schema = "lumina")
 public class Evento {
-    private LocalDate data;
-    private String titulo;
-    private String descricao;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_evento")
+    protected long idEvento;
+    @Column(name = "dt_evento", nullable = false)
+    protected LocalDate data;
+    @Column(name = "nome_evento")
+    protected String nome;
+    @Column(name = "descricao_evento")
+    protected String descricao;
+
+    public Evento() {
+    }
+
+    public Evento(long idEvento, LocalDate data, String nome, String descricao) {
+        this.idEvento = idEvento;
+        this.data = data;
+        this.nome = nome;
+        this.descricao = descricao;
+    }
 
     public LocalDate getData() {
         return data;
@@ -21,18 +42,18 @@ public class Evento {
         this.data = data;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getNome() {
+        return nome;
     }
 
-    public void setTitulo(String titulo) {
+    public void setNome(String titulo) {
         if(titulo == null || titulo.trim().isEmpty()){//verifica que o título não é vazio
             throw new IllegalArgumentException("Título não pode ser vazio.");
         }
         if(titulo.length() > 255){//verifica o tamanho do título
             throw new IllegalArgumentException("Título não pode exceder o tamanho.");
         }
-        this.titulo = titulo;
+        this.nome = titulo;
     }
 
     public String getDescricao() {
@@ -46,8 +67,12 @@ public class Evento {
         this.descricao = descricao;
     }
 
+    public long getIdEvento() {
+        return idEvento;
+    }
+
     @Override
-    public java.lang.String toString() {
-        return getData() + " - " + getTitulo() + ": " + getDescricao();
+    public String toString() {
+        return STR."\{getData()} - \{getNome()}: \{getDescricao()}";
     }
 }

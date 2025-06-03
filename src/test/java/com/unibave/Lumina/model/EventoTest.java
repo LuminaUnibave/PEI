@@ -49,15 +49,15 @@ public class EventoTest {
     @DisplayName("setTitulo deve aceitar título válido")
     void testSetTituloValido() {
         String titulo = "Reunião de Equipe";
-        assertDoesNotThrow(() -> evento.setTitulo(titulo));
-        assertEquals(titulo, evento.getTitulo());
+        assertDoesNotThrow(() -> evento.setNome(titulo));
+        assertEquals(titulo, evento.getNome());
     }
 
     @Test
     @DisplayName("setTitulo deve lançar exceção para título nulo")
     void testSetTituloNulo() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            evento.setTitulo(null);
+            evento.setNome(null);
         });
         assertEquals("Título não pode ser vazio.", exception.getMessage());
     }
@@ -66,7 +66,7 @@ public class EventoTest {
     @DisplayName("setTitulo deve lançar exceção para título vazio")
     void testSetTituloVazio() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            evento.setTitulo("");
+            evento.setNome("");
         });
         assertEquals("Título não pode ser vazio.", exception.getMessage());
     }
@@ -76,7 +76,7 @@ public class EventoTest {
     void testSetTituloMuitoLongo() {
         String tituloLongo = "A".repeat(256);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            evento.setTitulo(tituloLongo);
+            evento.setNome(tituloLongo);
         });
         assertEquals("Título não pode exceder o tamanho.", exception.getMessage());
     }
