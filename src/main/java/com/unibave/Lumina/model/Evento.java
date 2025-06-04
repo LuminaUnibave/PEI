@@ -12,48 +12,49 @@ public class Evento {
     @Column(name = "id_evento")
     protected long idEvento;
     @Column(name = "dt_evento", nullable = false)
-    protected LocalDate data;
+    protected LocalDate dataEvento;
     @Column(name = "nome_evento")
-    protected String nome;
-    @Column(name = "descricao_evento")
+    protected String nomeEvento;
+    @Column(name = "descricao_evento"
+    )
     protected String descricao;
 
     public Evento() {
     }
 
-    public Evento(long idEvento, LocalDate data, String nome, String descricao) {
+    public Evento(long idEvento, LocalDate data, String nomeEvento, String descricao) {
         this.idEvento = idEvento;
-        this.data = data;
-        this.nome = nome;
+        this.dataEvento = data;
+        this.nomeEvento = nomeEvento;
         this.descricao = descricao;
     }
 
     public LocalDate getData() {
-        return data;
+        return dataEvento;
     }
 
     public void setData(LocalDate data) {
-        if(data == null){//verifica que a data não é nula
+        if(data == null){//verifica que a dataEvento não é nula
             throw new IllegalArgumentException("Data não pode ser nula.");
         }
-        if(data.isBefore(LocalDate.now())){//impede o cadastro de um evento em uma data já passada
+        if(data.isBefore(LocalDate.now())){//impede o cadastro de um evento em uma dataEvento já passada
             throw new IllegalArgumentException("Evento não pode ser no passado.");
         }
-        this.data = data;
+        this.dataEvento = data;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeEvento() {
+        return nomeEvento;
     }
 
-    public void setNome(String titulo) {
-        if(titulo == null || titulo.trim().isEmpty()){//verifica que o título não é vazio
+    public void setNomeEvento(String nomeEvento) {
+        if(nomeEvento == null || nomeEvento.trim().isEmpty()){//verifica que o título não é vazio
             throw new IllegalArgumentException("Título não pode ser vazio.");
         }
-        if(titulo.length() > 255){//verifica o tamanho do título
+        if(nomeEvento.length() > 255){//verifica o tamanho do título
             throw new IllegalArgumentException("Título não pode exceder o tamanho.");
         }
-        this.nome = titulo;
+        this.nomeEvento = nomeEvento;
     }
 
     public String getDescricao() {
@@ -73,6 +74,6 @@ public class Evento {
 
     @Override
     public String toString() {
-        return STR."\{getData()} - \{getNome()}: \{getDescricao()}";
+        return STR."\{getData()} - \{getNomeEvento()}: \{getDescricao()}";
     }
 }

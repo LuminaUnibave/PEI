@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class EventoTest {
 
@@ -49,15 +48,15 @@ public class EventoTest {
     @DisplayName("setTitulo deve aceitar título válido")
     void testSetTituloValido() {
         String titulo = "Reunião de Equipe";
-        assertDoesNotThrow(() -> evento.setNome(titulo));
-        assertEquals(titulo, evento.getNome());
+        assertDoesNotThrow(() -> evento.setNomeEvento(titulo));
+        assertEquals(titulo, evento.getNomeEvento());
     }
 
     @Test
     @DisplayName("setTitulo deve lançar exceção para título nulo")
     void testSetTituloNulo() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            evento.setNome(null);
+            evento.setNomeEvento(null);
         });
         assertEquals("Título não pode ser vazio.", exception.getMessage());
     }
@@ -66,7 +65,7 @@ public class EventoTest {
     @DisplayName("setTitulo deve lançar exceção para título vazio")
     void testSetTituloVazio() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            evento.setNome("");
+            evento.setNomeEvento("");
         });
         assertEquals("Título não pode ser vazio.", exception.getMessage());
     }
@@ -76,7 +75,7 @@ public class EventoTest {
     void testSetTituloMuitoLongo() {
         String tituloLongo = "A".repeat(256);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            evento.setNome(tituloLongo);
+            evento.setNomeEvento(tituloLongo);
         });
         assertEquals("Título não pode exceder o tamanho.", exception.getMessage());
     }

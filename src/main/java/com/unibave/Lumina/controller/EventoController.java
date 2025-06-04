@@ -22,8 +22,8 @@ public class EventoController {
         return eventoService.buscarPorData(data);
     }
 
-    @GetMapping("/nome")
-    public List<Evento> buscarPorNome(@RequestParam("nome") String nome){
+    @GetMapping("/nomeEvento")
+    public List<Evento> buscarPorNome(@RequestParam("nomeEvento") String nome){
         return eventoService.buscarPorNome(nome);
     }
 
