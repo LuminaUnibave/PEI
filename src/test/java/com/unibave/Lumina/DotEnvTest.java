@@ -13,7 +13,7 @@ class DotEnvTest {
 
     Caso seja necessario altere  ou melhore os testes.
      */
-    private static Dotenv dotenv; //Atributo da classe de teste para ser inicializado posteriormente no setUp
+    private static Dotenv dotenv; //Atributo da classe de teste para ser inicializado posteriormente. no setUp
 
     @BeforeAll
     static void loadEnv() {
