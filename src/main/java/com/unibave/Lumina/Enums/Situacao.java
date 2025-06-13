@@ -4,5 +4,6 @@ public enum Situacao {
     EXCLUIDO,
     INATIVO,
     ATIVO,
-    PENDENTE
+    PENDENTE,
+    FINALIZADO
 }

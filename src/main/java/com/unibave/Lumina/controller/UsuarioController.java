@@ -17,11 +17,11 @@ public class UsuarioController {
     }
 
     //GETS
-    @GetMapping("/nome")
+    @GetMapping("/buscar/nome")
     public List<Usuario> buscarPorNome(@RequestParam("nome") String nome) {
         return usuarioService.buscarPorNome(nome);
     }
-    @GetMapping("/id") // /usuario/{id}
+    @GetMapping("/buscar/id") // /usuario/{id}
     public Optional<Usuario> buscarPorId(@RequestParam("id") Long id) {
         return usuarioService.buscarPorId(id);
     }
@@ -33,7 +33,7 @@ public class UsuarioController {
     }
 
     // DELETE /usuario/{id}
-    @DeleteMapping("/id")
+    @DeleteMapping("deletar/id")
     public void deletar(@RequestParam("id") Long id) {
         usuarioService.deletar(id);
     }

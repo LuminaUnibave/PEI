@@ -48,8 +48,8 @@ public class AgendamentoController {
     }
 
     // DELETE /agendamento/{id}
-    @DeleteMapping("/{id}")
-    public void deletar(@PathVariable("id") Long id) {
+    @DeleteMapping("deletar/id")
+    public void deletar(@RequestParam("id")Long id) {
         agendamentoService.deletar(id);
     }
 }

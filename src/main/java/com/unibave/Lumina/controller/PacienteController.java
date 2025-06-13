@@ -17,11 +17,11 @@ public class PacienteController {
     }
 
     //GETS
-    @GetMapping("/nome")
+    @GetMapping("/buscar/nome")
     public List<Paciente> buscarPorNome(@RequestParam("nome") String nome) {
         return pacienteService.buscarPorNome(nome);
     }
-    @GetMapping("/id") // /paciente/{id}
+    @GetMapping("/buscar/id")
     public Optional<Paciente> buscarPorId(@RequestParam("id") Long id) {
         return pacienteService.buscarPorId(id);
     }
@@ -33,7 +33,7 @@ public class PacienteController {
     }
 
     // DELETE /paciente/{id}
-    @DeleteMapping("/id")
+    @DeleteMapping("/deletar/id")
     public void deletar(@RequestParam("id") Long id) {
         pacienteService.deletar(id);
     }

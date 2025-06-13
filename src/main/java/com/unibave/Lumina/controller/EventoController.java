@@ -20,21 +20,21 @@ public class EventoController {
         this.eventoRepository = eventoRepository;
     }
 
-    @GetMapping("/data")
+    @GetMapping("/buscar/data")
     public List<Evento> buscarPorData(@RequestParam("data") LocalDate data){
         return eventoService.buscarPorDataEvento(data);
     }
 
-    @GetMapping("/nomeEvento")
+    @GetMapping("/buscar/nomeEvento")
     public List<Evento> buscarPorNome(@RequestParam("nomeEvento") String nome){
         return eventoService.buscarPorNomeEvento(nome);
     }
 
-    @GetMapping("/id")
+    @GetMapping("/buscar/id")
     public List<Evento> buscarPorID(@RequestParam("id")Long id){
         return eventoService.buscarPorIdEvento(id);
     }
-    @GetMapping("/filtro")
+    @GetMapping("/buscar/data/filtro")
     public List<Evento> filtrarPorData(
             @RequestParam("inicio") String inicio,
             @RequestParam("fim") String fim) {
@@ -48,7 +48,7 @@ public class EventoController {
     @PostMapping
     public Evento salvar(@RequestBody Evento evento){return eventoService.salvar(evento);}
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/deletar/id")
     public void deletar(@RequestParam("id")Long id){
         eventoService.deletar(id);
     }
