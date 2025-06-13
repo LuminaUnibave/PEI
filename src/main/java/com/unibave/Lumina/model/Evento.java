@@ -34,12 +34,6 @@ public class Evento {
     }
 
     public void setData(LocalDate data) {
-        if(data == null){//verifica que a dataEvento não é nula
-            throw new IllegalArgumentException("Data não pode ser nula.");
-        }
-        if(data.isBefore(LocalDate.now())){//impede o cadastro de um evento em uma dataEvento já passada
-            throw new IllegalArgumentException("Evento não pode ser no passado.");
-        }
         this.dataEvento = data;
     }
 
@@ -48,12 +42,6 @@ public class Evento {
     }
 
     public void setNomeEvento(String nomeEvento) {
-        if(nomeEvento == null || nomeEvento.trim().isEmpty()){//verifica que o título não é vazio
-            throw new IllegalArgumentException("Título não pode ser vazio.");
-        }
-        if(nomeEvento.length() > 255){//verifica o tamanho do título
-            throw new IllegalArgumentException("Título não pode exceder o tamanho.");
-        }
         this.nomeEvento = nomeEvento;
     }
 
@@ -62,9 +50,6 @@ public class Evento {
     }
 
     public void setDescricao(String descricao) {
-        if(descricao != null && descricao.length() > 255){//verifica o tamanho da descrição
-            throw new IllegalArgumentException("Descrição não pode exceder o tamanho.");
-        }
         this.descricao = descricao;
     }
 
