@@ -32,12 +32,12 @@ public class Agendamento {
         this.dataCriacaoAgendamento = LocalDate.now();
     }
 
-    public Agendamento(Paciente paciente, TpVisita tpVisita, LocalDateTime dataAgendamento, String observacoes, LocalDate dataCriacaoAgendamento){
+    public Agendamento(Paciente paciente, TpVisita tpVisita, LocalDateTime dataAgendamento, String observacoes){
         this.paciente = paciente;
         this.tpVisita = tpVisita;
         this.dtAgendamento = dataAgendamento;
         this.observacao = observacoes;
-        this.dataCriacaoAgendamento = dataCriacaoAgendamento;
+        this.dataCriacaoAgendamento = LocalDate.now();
     }
     //Methods
     @Override
