@@ -27,7 +27,7 @@ public class PacienteController {
     }
 
     // POST
-    @PostMapping
+    @PostMapping("/salvar")
     public Paciente salvar(@RequestBody Paciente paciente) {
         return pacienteService.salvar(paciente);
     }

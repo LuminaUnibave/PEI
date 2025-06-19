@@ -42,7 +42,7 @@ public class AgendamentoController {
     }
 
     //POST
-    @PostMapping
+    @PostMapping("/salvar")
     public Agendamento salvar(@RequestBody Agendamento agendamento){
         return agendamentoService.salvar(agendamento);
     }
