@@ -27,7 +27,7 @@ public class UsuarioController {
     }
 
     // POST
-    @PostMapping
+    @PostMapping("/salvar")
     public Usuario salvar(@RequestBody Usuario usuario) {
         return usuarioService.salvar(usuario);
     }

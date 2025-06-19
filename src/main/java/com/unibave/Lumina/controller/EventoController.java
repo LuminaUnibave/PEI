@@ -45,7 +45,7 @@ public class EventoController {
         return eventoRepository.findByDataEventoBetween(dataInicio, dataFim);
     }
 
-    @PostMapping
+    @PostMapping("/salvar")
     public Evento salvar(@RequestBody Evento evento){return eventoService.salvar(evento);}
 
     @DeleteMapping("/deletar/id")

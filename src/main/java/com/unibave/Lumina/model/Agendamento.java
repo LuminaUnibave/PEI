@@ -25,7 +25,7 @@ public class Agendamento {
     @Column(name = "observacao")
     private String observacao;
     @Column(name = "dt_criacao", nullable = false, updatable = false)
-    private LocalDate dataCriacaoAgendamento = LocalDate.now();
+    private LocalDate dataCriacaoAgendamento;
 
     //Constructors
     public Agendamento() {

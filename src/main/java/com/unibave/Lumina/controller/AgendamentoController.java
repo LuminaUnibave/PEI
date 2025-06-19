@@ -20,15 +20,15 @@ public class AgendamentoController {
     }
 
     //GET
-    @GetMapping("/tpvisita")
+    @GetMapping("buscar/tpvisita")
     public List<Agendamento> buscarPorTpVisita(@RequestParam("tp_visita") Agendamento.TpVisita tpVisita){
         return agendamentoService.buscarTpVisita(tpVisita);
     }
-    @GetMapping("/paciente/id")
+    @GetMapping("buscar/paciente/id")
     public List<Agendamento> buscarPorPacienteId(@RequestParam("id") Long id) {
         return agendamentoService.buscarPorPacienteId(id);
         }
-    @GetMapping("/paciente/nome")
+    @GetMapping("buscar/paciente/nome")
     public List<Agendamento> buscarPorPacienteNome(@RequestParam("nome") String nome){
         return agendamentoService.buscarPorPacienteNome(nome);
     }
@@ -42,7 +42,7 @@ public class AgendamentoController {
     }
 
     //POST
-    @PostMapping
+    @PostMapping("/salvar")
     public Agendamento salvar(@RequestBody Agendamento agendamento){
         return agendamentoService.salvar(agendamento);
     }
