@@ -147,6 +147,7 @@
 				</configuration>
 			</plugin>
 
+			<!-- Plugin frontend-maven-plugin -->
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
@@ -154,25 +155,30 @@
 				<configuration>
 					<workingDirectory>src/main/frontend</workingDirectory>
 					<installDirectory>target</installDirectory>
-					<nodeVersion>v20.13.1</nodeVersion> <!-- Use your installed version -->
-					<npmVersion>10.7.0</npmVersion> <!-- Use your installed version -->
+					<nodeVersion>v22.17.1</nodeVersion>
+					<npmVersion>10.7.0</npmVersion>
 				</configuration>
 				<executions>
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-					</execution>
 					<execution>
 						<id>npm install</id>
 						<goals>
 							<goal>npm</goal>
 						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm run dev</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run dev</arguments>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 
 	</build>
