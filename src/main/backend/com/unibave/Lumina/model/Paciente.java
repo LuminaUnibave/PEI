@@ -1,10 +1,11 @@
 package com.unibave.Lumina.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import static java.lang.StringTemplate.STR;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -22,6 +23,9 @@ public class Paciente extends Pessoa {
     protected String crtSus;
     @Column(name = "email", nullable = true, unique = false)
     protected String email;
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    List<Agendamento> agendamentoList;
 
     //Methods
     @Override
@@ -74,4 +78,7 @@ public class Paciente extends Pessoa {
         this.crtSus = crtSus;
     }
 
+    public List<Agendamento> getAgendamentoList() {
+        return agendamentoList;
+    }
 }

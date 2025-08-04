@@ -1,5 +1,5 @@
 package com.unibave.Lumina.model;
-import com.unibave.Lumina.Enums.Situacao;
+import com.unibave.Lumina.enums.Situacao;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,6 +13,8 @@ public abstract class Pessoa {
     protected Situacao situacao;
     @Column(name = "dt_cadastro", nullable = false, unique = false, updatable = false)
     protected LocalDate dtCadastro;
+
+
 
     //Constructors
     public Pessoa (){

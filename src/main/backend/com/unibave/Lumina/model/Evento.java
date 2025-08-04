@@ -1,6 +1,6 @@
 package com.unibave.Lumina.model;
 
-import com.unibave.Lumina.Enums.Situacao;
+import com.unibave.Lumina.enums.Situacao;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
