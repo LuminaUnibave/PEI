@@ -1,6 +1,6 @@
 package com.unibave.Lumina.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ public class Agendamento {
     @Column(name = "id_agendamento")
     private Long idAgendamento;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnoreProperties({"agendamentos"})
     @JoinColumn(name = "id_paciente")
     private Paciente paciente;
     @Enumerated(EnumType.STRING)
