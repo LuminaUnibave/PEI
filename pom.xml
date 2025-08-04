@@ -137,6 +137,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<jvmArguments>--enable-preview</jvmArguments>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -145,7 +146,41 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<!-- Plugin frontend-maven-plugin -->
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.14.1</version>
+				<configuration>
+					<workingDirectory>src/main/frontend</workingDirectory>
+					<installDirectory>target</installDirectory>
+					<nodeVersion>v22.17.1</nodeVersion>
+					<npmVersion>10.7.0</npmVersion>
+				</configuration>
+				<executions>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm run dev</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run dev</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+
 	</build>
 
 </project>
