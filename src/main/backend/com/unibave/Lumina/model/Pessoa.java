@@ -1,51 +1,30 @@
 package com.unibave.Lumina.model;
 import com.unibave.Lumina.enums.Situacao;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class Pessoa {
 
-    @Column(name = "nome", nullable = false, unique = false)
+    @Column(name = "nome", nullable = false)
     protected String nome;
-    @Column(name = "situacao", nullable = false, unique = false)
+
+    @Column(name = "situacao", nullable = false)
+    @Enumerated(EnumType.STRING)
     protected Situacao situacao;
-    @Column(name = "dt_cadastro", nullable = false, unique = false, updatable = false)
-    protected LocalDate dtCadastro;
 
+    @Column(name = "dt_cadastro", nullable = false, updatable = false)
+    protected LocalDateTime dtCadastro = LocalDateTime.now();
 
-
-    //Constructors
-    public Pessoa (){
-        this.situacao = Situacao.ATIVO;
-        this.dtCadastro = LocalDate.now();
-    }
-    public Pessoa(String nome) {
-        this.nome = nome;
-        this.situacao = Situacao.ATIVO;
-        this.dtCadastro = LocalDate.now();
-    }
-
-    //Getter & Setter
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome.trim();
-    }
-
-    public Situacao getSituacao() {
-        return situacao;
-    }
-    public void setSituacao(Situacao situacao) {
-            this.situacao = situacao;
-    }
-
-    public LocalDate getDtCadastro() {
-        return dtCadastro;
-    }
-    public void setDtCadastro(LocalDate dtCadastro) {
-        this.dtCadastro = dtCadastro;
-    }
+    @Column(name = "dt_modificao", nullable = false)
+    private LocalDateTime dtModificacao = LocalDateTime.now();
 }

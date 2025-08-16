@@ -1,14 +1,12 @@
 package com.unibave.Lumina.DTOs.Paciente;
 
-import com.unibave.Lumina.DTOs.Agendamento.AgendamentoDto;
-import com.unibave.Lumina.DTOs.Agendamento.AgendamentoPacienteDto;
 import com.unibave.Lumina.enums.Situacao;
-import com.unibave.Lumina.model.Agendamento;
 import com.unibave.Lumina.model.Paciente;
 import lombok.Value;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +19,9 @@ public class PacienteDto implements Serializable {
     String crtSus;
     String email;
     Situacao situacao;
-    LocalDate dtCadastro;
+    LocalDateTime dtCadastro;
+    LocalDateTime dtModificacao;
+
     List<PacienteAgendamentoDto> agendamentoList;
 
     public static PacienteDto fromEntity(Paciente paciente) {
@@ -34,6 +34,7 @@ public class PacienteDto implements Serializable {
                 paciente.getEmail(),
                 paciente.getSituacao(),
                 paciente.getDtCadastro(),
+                paciente.getDtModificacao(),
                 paciente.getAgendamentoList() == null ? null :
                         paciente.getAgendamentoList().stream()
                                 .map(PacienteAgendamentoDto::fromEntity)

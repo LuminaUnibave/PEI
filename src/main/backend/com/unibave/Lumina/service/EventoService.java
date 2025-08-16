@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.unibave.Lumina.model.Evento;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,8 +16,8 @@ public class EventoService {
         this.eventoRepository = eventoRepository;
     }
 
-    public List<Evento> buscarPorDataEvento(LocalDate data){
-        return eventoRepository.findByDataEvento(data);
+    public List<Evento> buscarPorDataEvento(LocalDateTime data){
+        return eventoRepository.findByDtEvento(data);
     }
     public List<Evento> buscarPorNomeEvento(String nome){
         return eventoRepository.findByNomeEvento(nome);
@@ -35,10 +36,10 @@ public class EventoService {
             if(evento.getDescricao() != null &&  evento.getDescricao().length() > 255){//verifica o tamanho da descrição
                 throw new IllegalArgumentException("Descrição não pode exceder o tamanho.");
             }
-            if(evento.getData() == null){//verifica que a dataEvento não é nula
+            if(evento.getDtEvento() == null){//verifica que a dataEvento não é nula
                 throw new IllegalArgumentException("Data não pode ser nula.");
             }
-            if(evento.getData().isBefore(LocalDate.now())){//impede o cadastro de um evento em uma dataEvento já passada
+            if(evento.getDtEvento().isBefore(LocalDateTime.now())){//impede o cadastro de um evento em uma dtEvento já passada
                 throw new IllegalArgumentException("Evento não pode ser no passado.");
             }
         } catch (IllegalArgumentException e){

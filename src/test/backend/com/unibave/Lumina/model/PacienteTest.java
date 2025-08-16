@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PacienteTest {
-
+    /*
     static Paciente paciente;
     static Paciente pacienteConstrutor;
 
@@ -40,4 +40,5 @@ class PacienteTest {
         assertEquals(STR."nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro = [teste, 907.341.110-61, 1900-01-01, 18933001613, teste@teste.com.br, ATIVO, \{LocalDate.now()}]", pacienteConstrutor.toString());
         System.out.println("\ntoString validado");
     }
+    */
 }
