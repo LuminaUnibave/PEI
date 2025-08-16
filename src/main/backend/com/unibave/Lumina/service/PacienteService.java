@@ -49,8 +49,8 @@ public class PacienteService {
         // Converter DTO para entidade
         Paciente paciente = new Paciente();
         paciente.setNome(pacienteDto.getNome());
-        paciente.setCpf(pacienteDto.getCpf());
         paciente.setDtNascimento(pacienteDto.getDtNascimento());
+        paciente.setCpf(pacienteDto.getCpf());
         paciente.setCrtSus(pacienteDto.getCrtSus());
         paciente.setEmail(pacienteDto.getEmail());
 

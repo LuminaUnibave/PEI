@@ -2,11 +2,18 @@ package com.unibave.Lumina.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "paciente" , schema = "lumina")
@@ -30,55 +37,6 @@ public class Paciente extends Pessoa {
     //Methods
     @Override
     public String toString(){
-        return STR."nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro = [\{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}]";
-    }
-
-    //Constructors
-    public Paciente(){
-        super();
-    }
-    public Paciente(String nome, LocalDate dtNascimento, String email, String cpf, String crtSus){
-        super(nome);
-        this.email = email;
-        this.dtNascimento = dtNascimento;
-        this.cpf = cpf;
-        this.crtSus = crtSus;
-    }
-
-    //Getter & Setter
-    public Long getIdPaciente() {
-        return idPaciente;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getDtNascimento() {
-        return dtNascimento;
-    }
-    public void setDtNascimento(LocalDate dtNascimento) {
-        this.dtNascimento = dtNascimento;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getCrtSus() {
-        return crtSus;
-    }
-    public void setCrtSus(String crtSus) {
-        this.crtSus = crtSus;
-    }
-
-    public List<Agendamento> getAgendamentoList() {
-        return agendamentoList;
+        return STR."id_paciente, nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro = [\{getIdPaciente()}, \{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}]";
     }
 }

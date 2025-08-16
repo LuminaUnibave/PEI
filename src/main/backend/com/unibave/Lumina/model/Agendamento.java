@@ -2,10 +2,18 @@ package com.unibave.Lumina.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "agendamento", schema = "lumina")
 public class Agendamento {
@@ -24,62 +32,18 @@ public class Agendamento {
     private LocalDateTime dtAgendamento;
     @Column(name = "observacao")
     private String observacao;
+    @Column(name = "anexo")
+    private Anexo anexo;
+    @Column(name = "id_usuario")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario usuario;
     @Column(name = "dt_criacao", nullable = false, updatable = false)
     private LocalDate dataCriacaoAgendamento;
 
-    //Constructors
-    public Agendamento() {
-        this.dataCriacaoAgendamento = LocalDate.now();
-    }
-
-    public Agendamento(Paciente paciente, TpVisita tpVisita, LocalDateTime dataAgendamento, String observacoes){
-        this.paciente = paciente;
-        this.tpVisita = tpVisita;
-        this.dtAgendamento = dataAgendamento;
-        this.observacao = observacoes;
-        this.dataCriacaoAgendamento = LocalDate.now();
-    }
     //Methods
     @Override
     public String toString() {
-        return STR."paciente_id, tp_visita, dt_agendamento, observacao, dt_criacao = [\{paciente.getIdPaciente()}, \{getTpVisita()}, \{getDtAgendamento()}, \{getObservacao()}, \{getDataCriacaoAgendamento()}]";
-    }
-
-    //Getter & Setter
-    public Long getIdAgendamento() {
-        return idAgendamento;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public TpVisita getTpVisita() {
-        return tpVisita;
-    }
-    public void setTpVisita(TpVisita tpVisita) {
-        this.tpVisita = tpVisita;
-    }
-
-    public LocalDateTime getDtAgendamento() {
-        return dtAgendamento;
-    }
-    public void setDtAgendamento(LocalDateTime dtAgendamento) {
-        this.dtAgendamento = dtAgendamento;
-    }
-
-    public String getObservacao() {
-        return observacao;
-    }
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
-    public LocalDate getDataCriacaoAgendamento() {
-        return dataCriacaoAgendamento;
+        return STR."id_agendamento, id_paciente, tp_visita, dt_agendamento, observacao, id_usuario, dt_criacao = [\{getIdAgendamento()},\{paciente.getIdPaciente()}, \{getTpVisita()}, \{getDtAgendamento()}, \{getObservacao()}, \{usuario.getIdUsuario()}, \{getDataCriacaoAgendamento()}]";
     }
 
     //Enum Tipo de Visita (somente para a classe)
