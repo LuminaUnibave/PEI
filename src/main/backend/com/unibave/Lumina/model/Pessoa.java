@@ -7,19 +7,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @MappedSuperclass
 public abstract class Pessoa {
 
     @Column(name = "nome", nullable = false)
     protected String nome;
+
     @Column(name = "situacao", nullable = false)
     @Enumerated(EnumType.STRING)
     protected Situacao situacao;
+
     @Column(name = "dt_cadastro", nullable = false, updatable = false)
-    protected LocalDate dtCadastro;
+    protected LocalDateTime dtCadastro = LocalDateTime.now();
+
+    @Column(name = "dt_modificao", nullable = false)
+    private LocalDateTime dtModificacao = LocalDateTime.now();
 }

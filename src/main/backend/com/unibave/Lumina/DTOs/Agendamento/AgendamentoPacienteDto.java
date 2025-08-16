@@ -6,6 +6,7 @@ import lombok.Value;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Value
 public class AgendamentoPacienteDto implements Serializable {
@@ -16,7 +17,8 @@ public class AgendamentoPacienteDto implements Serializable {
     String crtSus;
     String email;
     Situacao situacao;
-    LocalDate dtCadastro;
+    LocalDateTime dtCadastro;
+    LocalDateTime dtModificacao;
 
     public static AgendamentoPacienteDto fromEntity(Paciente paciente) {
         if (paciente == null) {
@@ -30,7 +32,8 @@ public class AgendamentoPacienteDto implements Serializable {
                 paciente.getCrtSus(),
                 paciente.getEmail(),
                 paciente.getSituacao(),
-                paciente.getDtCadastro()
+                paciente.getDtCadastro(),
+                paciente.getDtModificacao()
         );
     }
 }

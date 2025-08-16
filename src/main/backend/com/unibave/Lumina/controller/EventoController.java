@@ -6,6 +6,7 @@ import com.unibave.Lumina.service.EventoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class EventoController {
     }
 
     @GetMapping("/buscar/data")
-    public List<Evento> buscarPorData(@RequestParam("data") LocalDate data){
+    public List<Evento> buscarPorData(@RequestParam("data") LocalDateTime data){
         return eventoService.buscarPorDataEvento(data);
     }
 
@@ -39,10 +40,10 @@ public class EventoController {
             @RequestParam("inicio") String inicio,
             @RequestParam("fim") String fim) {
 
-        LocalDate dataInicio = LocalDate.parse(inicio);
-        LocalDate dataFim = LocalDate.parse(fim);
+        LocalDateTime dataInicio = LocalDateTime.parse(inicio);
+        LocalDateTime dataFim = LocalDateTime.parse(fim);
 
-        return eventoRepository.findByDataEventoBetween(dataInicio, dataFim);
+        return eventoRepository.findByDtEventoBetween(dataInicio, dataFim);
     }
 
     @PostMapping("/salvar")

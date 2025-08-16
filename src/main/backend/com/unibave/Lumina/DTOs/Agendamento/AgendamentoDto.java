@@ -4,7 +4,6 @@ import com.unibave.Lumina.model.Agendamento;
 import lombok.Value;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Value
@@ -14,7 +13,9 @@ public class AgendamentoDto implements Serializable {
     Agendamento.TpVisita tpVisita;
     String observacao;
     LocalDateTime dtAgendamento;
-    LocalDate dataCriacaoAgendamento;
+    LocalDateTime dtCriacao;
+    LocalDateTime dtModificacao;
+
 
     public static AgendamentoDto fromEntity(Agendamento agendamento) {
         if (agendamento == null) {
@@ -27,7 +28,8 @@ public class AgendamentoDto implements Serializable {
                 agendamento.getTpVisita(),
                 agendamento.getObservacao(),
                 agendamento.getDtAgendamento(),
-                agendamento.getDataCriacaoAgendamento()
+                agendamento.getDtCriacao(),
+                agendamento.getDtModificacao()
         );
     }
 }

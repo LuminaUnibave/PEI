@@ -22,14 +22,19 @@ public class Paciente extends Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente", nullable = false, unique = true)
     protected Long idPaciente;
-    @Column(name = "cpf", nullable = true, unique = true)
+
+    @Column(name = "cpf", unique = true)
     protected String cpf;
-    @Column(name = "dt_nascimento", nullable = false, unique = false)
+
+    @Column(name = "dt_nascimento", nullable = false)
     protected LocalDate dtNascimento;
-    @Column(name = "crt_sus", nullable = true, unique = true)
+
+    @Column(name = "crt_sus", unique = true)
     protected String crtSus;
-    @Column(name = "email", nullable = true, unique = false)
+
+    @Column(name = "email")
     protected String email;
+
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     @JsonManagedReference
     List<Agendamento> agendamentoList;
@@ -37,6 +42,6 @@ public class Paciente extends Pessoa {
     //Methods
     @Override
     public String toString(){
-        return STR."id_paciente, nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro = [\{getIdPaciente()}, \{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}]";
+        return STR."id_paciente, nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro, dt_modificao = [\{getIdPaciente()}, \{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}, \{getDtModificacao()}]";
     }
 }
