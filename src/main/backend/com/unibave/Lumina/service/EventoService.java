@@ -1,6 +1,7 @@
 package com.unibave.Lumina.service;
 
 import com.unibave.Lumina.repository.EventoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.unibave.Lumina.model.Evento;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class EventoService {
     private final EventoRepository eventoRepository;
 
+    @Autowired
     public EventoService(EventoRepository eventoRepository) {
         this.eventoRepository = eventoRepository;
     }

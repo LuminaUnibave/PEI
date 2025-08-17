@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,7 +19,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "paciente" , schema = "lumina")
-public class Paciente extends Pessoa {
+public class Paciente extends Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente", nullable = false, unique = true)
@@ -34,6 +36,10 @@ public class Paciente extends Pessoa {
 
     @Column(name = "email")
     protected String email;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     @JsonManagedReference
