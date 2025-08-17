@@ -21,7 +21,6 @@ public class PacienteDto implements Serializable {
     Situacao situacao;
     LocalDateTime dtCadastro;
     LocalDateTime dtModificacao;
-
     List<PacienteAgendamentoDto> agendamentoList;
 
     public static PacienteDto fromEntity(Paciente paciente) {

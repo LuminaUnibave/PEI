@@ -5,7 +5,9 @@ import com.unibave.Lumina.exception.ResourceNotFoundException;
 import com.unibave.Lumina.model.Agendamento;
 import com.unibave.Lumina.model.Paciente;
 import com.unibave.Lumina.repository.AgendamentoRepository;
+import com.unibave.Lumina.repository.AnexoRepository;
 import com.unibave.Lumina.repository.PacienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,35 +18,28 @@ public class AgendamentoService {
 
     private final AgendamentoRepository agendamentoRepository;
     private final PacienteRepository pacienteRepository;
+    private final AnexoRepository anexoRepository;
 
+    @Autowired
     public AgendamentoService(AgendamentoRepository agendamentoRepository,
-                              PacienteRepository pacienteRepository) {
+                              PacienteRepository pacienteRepository, AnexoRepository anexoRepository) {
         this.agendamentoRepository = agendamentoRepository;
         this.pacienteRepository = pacienteRepository;
+        this.anexoRepository = anexoRepository;
+    }
+
+    //GET
+    //AGENDAMENTO
+    @Transactional(readOnly = true)
+    public AgendamentoDto buscarPorId(Long id) {
+        return agendamentoRepository.findById(id)
+                .map(AgendamentoDto::fromEntity)
+                .orElseThrow(() -> new ResourceNotFoundException("Agendamento não encontrado com ID: " + id));
     }
 
     @Transactional(readOnly = true)
     public List<AgendamentoDto> buscarTpVisita(Agendamento.TpVisita tpVisita) {
         return agendamentoRepository.findByTpVisita(tpVisita)
-                .stream()
-                .map(AgendamentoDto::fromEntity)
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public List<AgendamentoDto> buscarPorPacienteId(Long idPaciente) {
-        if (!pacienteRepository.existsById(idPaciente)) {
-            throw new ResourceNotFoundException("Paciente não encontrado com ID: " + idPaciente);
-        }
-        return agendamentoRepository.findByPacienteIdPaciente(idPaciente)
-                .stream()
-                .map(AgendamentoDto::fromEntity)
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public List<AgendamentoDto> buscarPorPacienteNome(String nome) {
-        return agendamentoRepository.findByPacienteNomeContainingIgnoreCase(nome)
                 .stream()
                 .map(AgendamentoDto::fromEntity)
                 .toList();
@@ -58,13 +53,28 @@ public class AgendamentoService {
                 .toList();
     }
 
+    //AGENDAMENTO/PACIENTE
     @Transactional(readOnly = true)
-    public AgendamentoDto buscarPorId(Long id) {
-        return agendamentoRepository.findById(id)
+    public List<AgendamentoDto> buscarPorPacienteId(Long idPaciente) {
+        if (!pacienteRepository.existsById(idPaciente)) {
+            throw new ResourceNotFoundException("Paciente não encontrado com ID: " + idPaciente);
+        }
+        return agendamentoRepository.findByPaciente_IdPaciente(idPaciente)
+                .stream()
                 .map(AgendamentoDto::fromEntity)
-                .orElseThrow(() -> new ResourceNotFoundException("Agendamento não encontrado com ID: " + id));
+                .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<AgendamentoDto> buscarPorPacienteNome(String nome) {
+        return agendamentoRepository.findByPaciente_NomeContainingIgnoreCase(nome)
+                .stream()
+                .map(AgendamentoDto::fromEntity)
+                .toList();
+    }
+
+
+    //POST
     @Transactional
     public AgendamentoDto salvar(AgendamentoDto agendamentoDto) {
         Paciente paciente = pacienteRepository.findById(agendamentoDto.getPaciente().getIdPaciente())
@@ -81,6 +91,7 @@ public class AgendamentoService {
         return AgendamentoDto.fromEntity(agendamentoSalvo);
     }
 
+    //DELETE
     @Transactional
     public void deletar(Long id) {
         if (!agendamentoRepository.existsById(id)) {

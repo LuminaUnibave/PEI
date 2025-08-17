@@ -5,6 +5,7 @@ import com.unibave.Lumina.enums.TipoEntidade;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "anexo", schema = "lumina")
-public class Anexo {
+public class Anexo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_anexo", nullable = false, unique = true)

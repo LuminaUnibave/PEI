@@ -9,8 +9,11 @@ import java.util.List;
 
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, Long> {
+    //Find By idEvento
+    List<Evento> findByIdEvento(Long idEvento);
+    //Find By nomeEvento
+    List<Evento> findByNomeEvento(String nomeEvento);
+    //Find By dtEvento
     List<Evento> findByDtEvento(LocalDateTime dtEvento);
-    List<Evento> findByNomeEvento(String nome);
-    List<Evento> findByIdEvento(Long id);
     List<Evento> findByDtEventoBetween(LocalDateTime dataInicio, LocalDateTime dataFim);
 }
