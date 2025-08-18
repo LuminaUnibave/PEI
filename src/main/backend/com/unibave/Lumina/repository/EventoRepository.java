@@ -1,18 +1,25 @@
 package com.unibave.Lumina.repository;
 
-import com.unibave.Lumina.DTOs.Evento.EventoDto;
+import com.unibave.Lumina.enums.Situacao;
 import com.unibave.Lumina.model.Evento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, Long> {
-
-    List<Evento> findByIdEvento(Long id);
-    List<Evento> findByNomeEvento(String nome);
-    List<EventoDto> findByDtEventoBetween(LocalDateTime dataInicio, LocalDateTime dataFim);
-    List<Evento> findByDtEvento(LocalDateTime data);
+    //Find By idEvento
+    Optional<Evento> findById(Long id);
+    //Find By nomeEvento
+    List<Evento> findByNomeEvento(String nomeEvento);
+    //Find By stEvento
+    List<Evento> findByStEvento(Situacao stEvento);
+    //Find By dtEvento
+    List<Evento> findByDtEvento(LocalDateTime dtEvento);
+    List<Evento> findByDtEventoBefore(LocalDateTime dtEventoBefore);
+    List<Evento> findByDtEventoAfter(LocalDateTime dtEventoAfter);
+    List<Evento> findByDtEventoBetween(LocalDateTime dataInicio, LocalDateTime dataFim);
 }

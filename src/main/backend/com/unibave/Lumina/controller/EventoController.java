@@ -5,10 +5,12 @@ import com.unibave.Lumina.model.Evento;
 import com.unibave.Lumina.repository.EventoRepository;
 import com.unibave.Lumina.service.EventoService;
 import org.springframework.http.ResponseEntity;
+import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/evento")
@@ -34,8 +36,8 @@ public class EventoController {
     }
 
     @GetMapping("/buscar/id")
-    public ResponseEntity<List<EventoDto>> buscarPorId(@RequestParam("idEvento") Long idEvento){
-        List<EventoDto> evento = eventoService.buscarPorIdEvento(idEvento);
+    public ResponseEntity<Optional<EventoDto>> buscarPorId(@RequestParam("id") Long id){
+        Optional<EventoDto> evento = eventoService.buscarPorId(id);
         return ResponseEntity.ok(evento);
     }
 

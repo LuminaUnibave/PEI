@@ -3,17 +3,20 @@ package com.unibave.Lumina.service;
 import com.unibave.Lumina.DTOs.Evento.EventoDto;
 import com.unibave.Lumina.exception.ResourceNotFoundException;
 import com.unibave.Lumina.repository.EventoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.unibave.Lumina.model.Evento;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventoService {
     private final EventoRepository eventoRepository;
 
+    @Autowired
     public EventoService(EventoRepository eventoRepository) {
         this.eventoRepository = eventoRepository;
     }
@@ -75,6 +78,10 @@ public class EventoService {
         Evento eventoSalvo = eventoRepository.save(evento);
         return eventoRepository.save(eventoSalvo);
     }
+  
+    @Transactional
+    public Optional<Evento> buscarPorId(Long id){
+        return eventoRepository.findById(id);
 
     @Transactional
     public void deletar(Long id) {
