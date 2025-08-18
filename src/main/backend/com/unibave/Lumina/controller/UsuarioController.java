@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuario")
@@ -21,8 +20,8 @@ public class UsuarioController {
     }
 
     //GETS
-    @GetMapping("/buscar/id") // /usuario/{id}
-    public ResponseEntity<UsuarioDto> buscarPorId(@PathVariable Long id) {
+    @GetMapping("/buscar/id")
+    public ResponseEntity<UsuarioDto> buscarPorId(@RequestParam Long id) {
         return ResponseEntity.ok(usuarioService.buscarPorId(id));
     }
 
@@ -46,17 +45,17 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscarPorDtCadastro(data));
     }
 
-    @GetMapping("/cadastro/antes")
+    @GetMapping("/cadastroAntes")
     public ResponseEntity<List<UsuarioDto>> buscarPorDtCadastroAntes(@RequestParam LocalDateTime data) {
         return ResponseEntity.ok(usuarioService.buscarPorDtCadastroAntes(data));
     }
 
-    @GetMapping("/cadastro/depois")
+    @GetMapping("/cadastroDepois")
     public ResponseEntity<List<UsuarioDto>> buscarPorDtCadastroDepois(@RequestParam LocalDateTime data) {
         return ResponseEntity.ok(usuarioService.buscarPorDtCadastroDepois(data));
     }
 
-    @GetMapping("/cadastro/entre")
+    @GetMapping("/cadastroEntre")
     public ResponseEntity<List<UsuarioDto>> buscarPorDtCadastroEntre(@RequestParam LocalDateTime inicio,
                                                                      @RequestParam LocalDateTime fim) {
         return ResponseEntity.ok(usuarioService.buscarPorDtCadastroEntre(inicio, fim));
@@ -64,14 +63,14 @@ public class UsuarioController {
 
     //POST
 
-    @PostMapping
+    @PostMapping("/salvar")
     public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
         return ResponseEntity.ok(usuarioService.salvar(usuario));
     }
 
     //DELETE
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    @DeleteMapping("/deletar/id")
+    public ResponseEntity<Void> deletar(@RequestParam Long id) {
         usuarioService.deletar(id);
         return ResponseEntity.noContent().build();
     }
