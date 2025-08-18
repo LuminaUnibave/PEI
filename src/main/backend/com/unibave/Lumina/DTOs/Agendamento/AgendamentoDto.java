@@ -11,7 +11,7 @@ import java.util.List;
 
 @Value
 public class AgendamentoDto implements Serializable {
-    Long idAgendamento;
+    Long id;
     AgendamentoPacienteDto paciente;
     Agendamento.TpVisita tpVisita;
     String observacao;
@@ -28,7 +28,7 @@ public class AgendamentoDto implements Serializable {
         }
 
         return new AgendamentoDto(
-                agendamento.getIdAgendamento(),
+                agendamento.getId(),
                 AgendamentoPacienteDto.fromEntity(agendamento.getPaciente()),
                 agendamento.getTpVisita(),
                 agendamento.getObservacao(),

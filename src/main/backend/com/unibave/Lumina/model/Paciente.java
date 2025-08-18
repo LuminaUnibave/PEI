@@ -1,5 +1,7 @@
 package com.unibave.Lumina.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,7 +25,7 @@ public class Paciente extends Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente", nullable = false, unique = true)
-    protected Long idPaciente;
+    protected Long id;
 
     @Column(name = "cpf", unique = true)
     protected String cpf;
@@ -39,6 +41,7 @@ public class Paciente extends Pessoa implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
+    @JsonIgnore
     private Usuario usuario;
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
@@ -48,6 +51,6 @@ public class Paciente extends Pessoa implements Serializable {
     //Methods
     @Override
     public String toString(){
-        return STR."id_paciente, nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro, dt_modificao = [\{getIdPaciente()}, \{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}, \{getDtModificacao()}]";
+        return STR."id_paciente, nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro, dt_modificao = [\{getId()}, \{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}, \{getDtModificacao()}]";
     }
 }

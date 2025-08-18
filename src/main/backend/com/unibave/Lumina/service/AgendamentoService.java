@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 public class AgendamentoService {
 
@@ -55,11 +57,11 @@ public class AgendamentoService {
 
     //AGENDAMENTO/PACIENTE
     @Transactional(readOnly = true)
-    public List<AgendamentoDto> buscarPorPacienteId(Long idPaciente) {
-        if (!pacienteRepository.existsById(idPaciente)) {
-            throw new ResourceNotFoundException("Paciente não encontrado com ID: " + idPaciente);
+    public List<AgendamentoDto> buscarPorPacienteId(Long id) {
+        if (!pacienteRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Paciente não encontrado com ID: " + id);
         }
-        return agendamentoRepository.findByPaciente_IdPaciente(idPaciente)
+        return agendamentoRepository.findByPaciente_id(id)
                 .stream()
                 .map(AgendamentoDto::fromEntity)
                 .toList();
@@ -77,7 +79,7 @@ public class AgendamentoService {
     //POST
     @Transactional
     public AgendamentoDto salvar(AgendamentoDto agendamentoDto) {
-        Paciente paciente = pacienteRepository.findById(agendamentoDto.getPaciente().getIdPaciente())
+        Paciente paciente = pacienteRepository.findById(agendamentoDto.getPaciente().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado"));
 
         Agendamento agendamento = new Agendamento();

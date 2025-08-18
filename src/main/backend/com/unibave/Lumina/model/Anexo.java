@@ -4,6 +4,7 @@ import com.unibave.Lumina.enums.Extensao;
 import com.unibave.Lumina.enums.TipoEntidade;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class Anexo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_anexo", nullable = false, unique = true)
-    private Long idAnexo;
+    private Long id;
 
     @Column(name = "extensao", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -36,8 +37,13 @@ public class Anexo implements Serializable {
     @Column(name = "nm_anexo")
     private String nomeAnexo;
 
-    @Column(name = "dt_upload", nullable = false)
-    private LocalDateTime dataUpload = LocalDateTime.now();
+    @Column(name = "dt_upload", nullable = false, updatable = true)
+    @CreatedDate
+    private LocalDateTime dataUpload;
+
+    @Version
+    @Column(name = "version", nullable = false)
+    protected Long version = 0L;
 
     @ManyToOne
     @JoinColumn(name = "id_evento")

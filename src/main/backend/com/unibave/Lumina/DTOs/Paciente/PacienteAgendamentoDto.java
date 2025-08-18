@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Value
 public class PacienteAgendamentoDto implements Serializable {
-    Long idAgendamento;
+    Long id;
     Agendamento.TpVisita tpVisita;
     String observacao;
     LocalDateTime dtAgendamento;
@@ -22,7 +22,7 @@ public class PacienteAgendamentoDto implements Serializable {
             return null;
         }
         return new PacienteAgendamentoDto(
-                agendamento.getIdAgendamento(),
+                agendamento.getId(),
                 agendamento.getTpVisita(),
                 agendamento.getObservacao(),
                 agendamento.getDtAgendamento(),

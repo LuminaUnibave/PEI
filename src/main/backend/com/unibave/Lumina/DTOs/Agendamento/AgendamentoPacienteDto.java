@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Value
 public class AgendamentoPacienteDto implements Serializable {
-    Long idPaciente;
+    Long id;
     String nome;
     String cpf;
     LocalDate dtNascimento;
@@ -25,7 +25,7 @@ public class AgendamentoPacienteDto implements Serializable {
             return null;
         }
         return new AgendamentoPacienteDto(
-                paciente.getIdPaciente(),
+                paciente.getId(),
                 paciente.getNome(),
                 paciente.getCpf(),
                 paciente.getDtNascimento(),

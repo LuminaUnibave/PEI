@@ -8,6 +8,7 @@ import com.unibave.Lumina.model.Evento;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventoService {
@@ -24,8 +25,8 @@ public class EventoService {
     public List<Evento> buscarPorNomeEvento(String nome){
         return eventoRepository.findByNomeEvento(nome);
     }
-    public List<Evento> buscarPorIdEvento(Long id){
-        return eventoRepository.findByIdEvento(id);
+    public Optional<Evento> buscarPorIdEvento(Long id){
+        return eventoRepository.findById(id);
     }
     public Evento salvar(Evento evento){
         try{
