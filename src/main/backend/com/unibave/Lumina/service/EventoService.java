@@ -1,6 +1,8 @@
 package com.unibave.Lumina.service;
 
 import com.unibave.Lumina.DTOs.Evento.EventoDto;
+import com.unibave.Lumina.DTOs.Paciente.PacienteDto;
+import com.unibave.Lumina.enums.Situacao;
 import com.unibave.Lumina.exception.ResourceNotFoundException;
 import com.unibave.Lumina.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,28 +23,55 @@ public class EventoService {
         this.eventoRepository = eventoRepository;
     }
 
-    @Transactional(readOnly = true) // @Transaction -- gerenciamento de transações (Spring/JPA/Hibernate)
-    public List<EventoDto> buscarPorIdEvento(Long id) {
-       if(eventoRepository.existsById(id)) {
-       throw new ResourceNotFoundException("Evento não encontrado com o ID: " + id);
-       }
-       return eventoRepository.findById(id)
-               .stream()
-               .map(EventoDto::fromEntity) // Converte cada objeto Evento num objeto do DTO
-               .toList();
+    @Transactional
+    public Optional<EventoDto> buscarPorId(Long id) {
+        return eventoRepository.findById(id)
+                .map(EventoDto::fromEntity);
     }
 
     @Transactional(readOnly = true)
-    public List<EventoDto> buscarPorDataEvento(LocalDateTime data) {
-        return eventoRepository.findByDtEvento(data)
+    public List<EventoDto> buscarPorNomeEvento(String nomeEvento) {
+        return eventoRepository.findByNomeEventoContainingIgnoreCase(nomeEvento)
                 .stream()
                 .map(EventoDto::fromEntity)
                 .toList();
     }
 
     @Transactional(readOnly = true)
-    public List<EventoDto> buscarPorNomeEvento(String nome) {
-        return eventoRepository.findByNomeEvento(nome)
+    public List<EventoDto> buscarPorStEvento(Situacao stEvento) {
+        return eventoRepository.findByStEvento(stEvento)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorDtEvento(LocalDateTime dtEvento) {
+        return eventoRepository.findByDtEvento(dtEvento)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorDtEventoAntes(LocalDateTime dtEventoAntes) {
+        return eventoRepository.findByDtEventoBefore(dtEventoAntes)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorDtEventoDepois(LocalDateTime dtEventoDepois) {
+        return eventoRepository.findByDtEventoAfter(dtEventoDepois)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorDtEventoEntre(LocalDateTime dtEventoDepois,  LocalDateTime dtEventoAntes) {
+        return eventoRepository.findByDtEventoBetween(dtEventoDepois, dtEventoAntes)
                 .stream()
                 .map(EventoDto::fromEntity)
                 .toList();
@@ -78,10 +107,6 @@ public class EventoService {
         Evento eventoSalvo = eventoRepository.save(evento);
         return eventoRepository.save(eventoSalvo);
     }
-  
-    @Transactional
-    public Optional<Evento> buscarPorId(Long id){
-        return eventoRepository.findById(id);
 
     @Transactional
     public void deletar(Long id) {

@@ -1,6 +1,7 @@
 package com.unibave.Lumina.controller;
 
 import com.unibave.Lumina.DTOs.Evento.EventoDto;
+import com.unibave.Lumina.enums.Situacao;
 import com.unibave.Lumina.model.Evento;
 import com.unibave.Lumina.repository.EventoRepository;
 import com.unibave.Lumina.service.EventoService;
@@ -16,23 +17,10 @@ import java.util.Optional;
 @RequestMapping("/evento")
 public class EventoController {
     private final EventoService eventoService;
-    private final EventoRepository eventoRepository;
 
 
-    public EventoController(EventoService eventoService, EventoRepository eventoRepository) {
+    public EventoController(EventoService eventoService) {
         this.eventoService = eventoService;
-        this.eventoRepository = eventoRepository;
-    }
-
-    @GetMapping("/buscar/data")
-    public List<EventoDto> buscarPorData(@RequestParam("data") LocalDateTime data){
-        return eventoService.buscarPorDataEvento(data);
-    }
-
-    @GetMapping("/buscar/nomeEvento")
-    public ResponseEntity<List<EventoDto>> buscarPorNome(@RequestParam("nomeEvento") String nome){
-        List<EventoDto> eventoDtos = eventoService.buscarPorNomeEvento(nome);
-        return ResponseEntity.ok(eventoDtos);
     }
 
     @GetMapping("/buscar/id")
@@ -41,15 +29,36 @@ public class EventoController {
         return ResponseEntity.ok(evento);
     }
 
-    @GetMapping("/buscar/data/filtro")
-    public List<EventoDto> filtrarPorData(
-            @RequestParam("inicio") String inicio,
-            @RequestParam("fim") String fim) {
+    @GetMapping("/buscar/nomeEvento")
+    public ResponseEntity<List<EventoDto>> buscarPorNome(@RequestParam("nomeEvento") String nome){
+        List<EventoDto> eventoDtos = eventoService.buscarPorNomeEvento(nome);
+        return ResponseEntity.ok(eventoDtos);
+    }
 
-        LocalDateTime dataInicio = LocalDateTime.parse(inicio);
-        LocalDateTime dataFim = LocalDateTime.parse(fim);
+    @GetMapping("/buscar/stEvento")
+    public ResponseEntity<List<EventoDto>> buscarPorStEvento(@RequestParam("stEvento") Situacao stEvento){
+        List<EventoDto> eventoDtos = eventoService.buscarPorStEvento(stEvento);
+        return ResponseEntity.ok(eventoDtos);
+    }
 
-        return eventoRepository.findByDtEventoBetween(dataInicio, dataFim);
+    @GetMapping("/buscar/dtEvento")
+    public List<EventoDto> buscarPorDtEvento(@RequestParam("dtEvento") LocalDateTime dtEvento){
+        return eventoService.buscarPorDtEvento(dtEvento);
+    }
+
+    @GetMapping("/buscar/dtEventoAntes")
+    public List<EventoDto> buscarPorDtEventoAntes(@RequestParam("dtEventoAntes") LocalDateTime dtEventoAntes){
+        return eventoService.buscarPorDtEventoAntes(dtEventoAntes);
+    }
+
+    @GetMapping("/buscar/dtEventoDepois")
+    public List<EventoDto> buscarPorDtEventoDepois(@RequestParam("dtEventoDepois") LocalDateTime dtEventoDepois){
+        return eventoService.buscarPorDtEventoDepois(dtEventoDepois);
+    }
+
+    @GetMapping("/buscar/dtEventoEntre")
+    public List<EventoDto> buscarPorDtEventoEntre(@RequestParam("dtEventoEntre") LocalDateTime dtEventoDepois, LocalDateTime dtEventoAntes){
+        return eventoService.buscarPorDtEventoEntre(dtEventoDepois, dtEventoAntes);
     }
 
     @PostMapping("/salvar")

@@ -6,7 +6,7 @@ import com.unibave.Lumina.model.Evento;
 import java.time.LocalDateTime;
 
 public record EventoDto(
-        Long idEvento,
+        Long id,
         String nmEvento,
         LocalDateTime dtEvento,
         Situacao stEvento,
@@ -18,7 +18,7 @@ public record EventoDto(
         }
 
         return new EventoDto(
-                evento.getIdEvento(),
+                evento.getId(),
                 evento.getNomeEvento(),
                 evento.getDtEvento(),
                 evento.getStEvento(),

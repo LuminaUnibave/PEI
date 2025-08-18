@@ -64,12 +64,6 @@ public class Agendamento implements Serializable {
     @Column(name = "version", nullable = false)
     protected Long version = 0L;
 
-    //Methods
-    @Override
-    public String toString() {
-        return STR."id_agendamento, id_paciente, tp_visita, dt_agendamento, observacao, id_usuario, dt_criacao, dt_modificao = [\{getId()},\{paciente.getId()}, \{getTpVisita()}, \{getDtAgendamento()}, \{getObservacao()}, \{usuario.getId()}, \{getDtCriacao()}, \{getDtModificacao()}]";
-    }
-
     //Enum Tipo de Visita (somente para a classe)
     public enum TpVisita {
         VISITA,

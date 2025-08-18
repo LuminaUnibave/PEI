@@ -3,15 +3,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -44,10 +42,4 @@ public class Usuario extends Pessoa implements Serializable {
     @JsonManagedReference
     @JsonIgnore
     List<Paciente> pacienteList;
-
-    //Methods
-    @Override
-    public String toString(){
-        return STR."id_usuario, nome, email, senha, situacao, dt_cadastro, dt_modificao = [\{getId()}, \{getNome()}, \{getEmail()}, \{getSenha()}, \{getSituacao()}, \{getDtCadastro()}, \{getDtModificacao()}]";
-    }
 }

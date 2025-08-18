@@ -1,20 +1,17 @@
 package com.unibave.Lumina.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -47,10 +44,4 @@ public class Paciente extends Pessoa implements Serializable {
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     @JsonManagedReference
     List<Agendamento> agendamentoList;
-
-    //Methods
-    @Override
-    public String toString(){
-        return STR."id_paciente, nome, cpf, dt_nascimento, crtSus, email, situacao, dt_cadastro, dt_modificao = [\{getId()}, \{getNome()}, \{getCpf()}, \{getDtNascimento()}, \{getCrtSus()}, \{getEmail()}, \{getSituacao()}, \{getDtCadastro()}, \{getDtModificacao()}]";
-    }
 }

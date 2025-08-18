@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, Long> {
-    //Find By idEvento
+    //Find By id
     Optional<Evento> findById(Long id);
     //Find By nomeEvento
-    List<Evento> findByNomeEvento(String nomeEvento);
+    List<Evento> findByNomeEventoContainingIgnoreCase(String nomeEvento);
     //Find By stEvento
     List<Evento> findByStEvento(Situacao stEvento);
     //Find By dtEvento

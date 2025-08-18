@@ -62,12 +62,6 @@ public class Evento implements Serializable {
     @Column(name = "dt_modificao")
     @LastModifiedDate
     private LocalDateTime dtModificacao;
-
-    //Methods
-    @Override
-    public String toString() {
-        return STR."id_evento, dt_evento, nm_evento, dsc_evento, st_evento, dt_criacao, dt_modificao = [\{getId()}, \{getDtEvento()}, \{getNomeEvento()}, \{getDescricao()}, \{getStEvento()}, \{getDtCriacao()}, \{getDtModificacao()}]";
-    }
 }
 
 
