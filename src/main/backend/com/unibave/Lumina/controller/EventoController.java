@@ -1,12 +1,13 @@
 package com.unibave.Lumina.controller;
 
+import com.unibave.Lumina.DTOs.Evento.EventoDto;
 import com.unibave.Lumina.model.Evento;
 import com.unibave.Lumina.repository.EventoRepository;
 import com.unibave.Lumina.service.EventoService;
+import org.springframework.http.ResponseEntity;
 import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -24,21 +25,24 @@ public class EventoController {
     }
 
     @GetMapping("/buscar/data")
-    public List<Evento> buscarPorData(@RequestParam("data") LocalDateTime data){
+    public List<EventoDto> buscarPorData(@RequestParam("data") LocalDateTime data){
         return eventoService.buscarPorDataEvento(data);
     }
 
     @GetMapping("/buscar/nomeEvento")
-    public List<Evento> buscarPorNome(@RequestParam("nomeEvento") String nome){
-        return eventoService.buscarPorNomeEvento(nome);
+    public ResponseEntity<List<EventoDto>> buscarPorNome(@RequestParam("nomeEvento") String nome){
+        List<EventoDto> eventoDtos = eventoService.buscarPorNomeEvento(nome);
+        return ResponseEntity.ok(eventoDtos);
     }
 
     @GetMapping("/buscar/id")
-    public Optional<Evento> buscarPorID(@RequestParam("id")Long id){
-        return eventoService.buscarPorIdEvento(id);
+    public ResponseEntity<Optional<EventoDto>> buscarPorId(@RequestParam("id") Long id){
+        Optional<EventoDto> evento = eventoService.buscarPorId(id);
+        return ResponseEntity.ok(evento);
     }
+
     @GetMapping("/buscar/data/filtro")
-    public List<Evento> filtrarPorData(
+    public List<EventoDto> filtrarPorData(
             @RequestParam("inicio") String inicio,
             @RequestParam("fim") String fim) {
 
@@ -49,10 +53,13 @@ public class EventoController {
     }
 
     @PostMapping("/salvar")
-    public Evento salvar(@RequestBody Evento evento){return eventoService.salvar(evento);}
+    public Evento salvar(@RequestBody Evento evento){
+        return eventoService.salvar(evento);
+    }
 
     @DeleteMapping("/deletar/id")
-    public void deletar(@RequestParam("id")Long id){
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
         eventoService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }
