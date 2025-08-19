@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.module.ResolutionException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,7 +47,7 @@ public class PacienteService {
         return pacienteRepository.findByNomeContainingIgnoreCase(nome)
                 .stream()
                 .map(PacienteDto::fromEntity)
-                .collect(Collectors.toList());
+                .orElseThrow(() -> new ResourceNotFoundException(STR."Paciente não encontrado com o ID: \{id}"));
     }
 
     @Transactional(readOnly = true)
@@ -122,8 +123,67 @@ public class PacienteService {
     }
 
     @Transactional(readOnly = true)
-    public List<PacienteDto> buscarPorDtCadastroDepois(LocalDateTime dtCadastroDepois) {
-        return pacienteRepository.findByDtCadastroAfter(dtCadastroDepois)
+    public PacienteDto buscarPorCpf(String cpf) {
+        return pacienteRepository.findByCpf(cpf)
+                .map(PacienteDto::fromEntity)
+                .orElseThrow(()-> new ResolutionException(STR."Paciente não econtrado com CPF: \{cpf}"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<PacienteDto> buscarPorSituacao(Situacao situacao) {
+        return pacienteRepository.findBySituacao(situacao)
+                .stream()
+                .map(PacienteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public List<PacienteDto> buscarPorDataNascimento(LocalDate dtNacimento) {
+        return pacienteRepository.findByDtNascimento(dtNacimento)
+                .stream()
+                .map(PacienteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PacienteDto> buscarPorDataNascimentoAntes(LocalDate dtNacimentoAntes) {
+        return pacienteRepository.findByDtNascimentoBefore(dtNacimentoAntes)
+                .stream()
+                .map(PacienteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PacienteDto> buscarPorDataNascimentoDepois(LocalDate dtNacimentoDepois) {
+        return pacienteRepository.findByDtNascimentoAfter(dtNacimentoDepois)
+                .stream()
+                .map(PacienteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public List<PacienteDto> buscarPorDataNascimentoentre(LocalDate dtNacimentoInicio, LocalDate dtNascimentoFim) {
+        return pacienteRepository.findByDtNascimentoBetween(dtNacimentoInicio, dtNascimentoFim)
+                .stream()
+                .map(PacienteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public PacienteDto buscarPorCrtSus(String crtSus) {
+        return pacienteRepository.findByCrtSus(crtSus)
+                .map(PacienteDto::fromEntity)
+                .orElseThrow(() -> new RuntimeException(STR."Paciente não encontrado com Cartão SUS: \{crtSus}"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<PacienteDto> buscarPorEmail(String email) {
+        return pacienteRepository.findByEmail(email)
+                .stream()
+                .map(PacienteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PacienteDto> buscarPorDtCadastro(LocalDateTime dtCadastro) {
+        return pacienteRepository.findByDtCadastro(dtCadastro)
                 .stream()
                 .map(PacienteDto::fromEntity)
                 .collect(Collectors.toList());
@@ -138,8 +198,16 @@ public class PacienteService {
     }
 
     @Transactional(readOnly = true)
-    public List<PacienteDto> buscarPorDtCadastroEntre(LocalDateTime dtCadastroDepois, LocalDateTime dtCadastroAntes ) {
-        return pacienteRepository.findByDtCadastroBetween(dtCadastroDepois, dtCadastroAntes)
+    public List<PacienteDto> buscarPorDtCadastroDepois(LocalDateTime dtCadastroDepois) {
+        return pacienteRepository.findByDtCadastroAfter(dtCadastroDepois)
+                .stream()
+                .map(PacienteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PacienteDto> buscarPorDtCadastroEntre(LocalDateTime inicio, LocalDateTime fim) {
+        return pacienteRepository.findByDtCadastroBetween(inicio, fim)
                 .stream()
                 .map(PacienteDto::fromEntity)
                 .collect(Collectors.toList());
