@@ -1,5 +1,6 @@
 package com.unibave.Lumina.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unibave.Lumina.enums.Situacao;
 import jakarta.persistence.*;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -24,7 +27,7 @@ public class Evento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evento", nullable = false, unique = true)
-    protected long idEvento;
+    protected long id;
 
     @Column(name = "dt_evento", nullable = false)
     protected LocalDateTime dtEvento;
@@ -41,6 +44,7 @@ public class Evento implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
+    @JsonBackReference
     private Usuario usuario;
 
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -48,16 +52,16 @@ public class Evento implements Serializable {
     private List<Anexo> anexos = new ArrayList<>();
 
     @Column(name = "dt_criacao", nullable = false, updatable = false)
-    protected LocalDateTime dtCriacao = LocalDateTime.now();
+    @CreatedDate
+    protected LocalDateTime dtCriacao;
 
-    @Column(name = "dt_modificao", nullable = false)
-    private LocalDateTime dtModificacao = LocalDateTime.now();
+    @Version
+    @Column(name = "version", nullable = false)
+    protected Long version = 0L;
 
-    //Methods
-    @Override
-    public String toString() {
-        return STR."id_evento, dt_evento, nm_evento, dsc_evento, st_evento, dt_criacao, dt_modificao = [\{getIdEvento()}, \{getDtEvento()}, \{getNomeEvento()}, \{getDescricao()}, \{getStEvento()}, \{getDtCriacao()}, \{getDtModificacao()}]";
-    }
+    @Column(name = "dt_modificao")
+    @LastModifiedDate
+    private LocalDateTime dtModificacao;
 }
 
 

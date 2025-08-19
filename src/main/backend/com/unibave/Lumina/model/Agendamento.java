@@ -1,5 +1,6 @@
 package com.unibave.Lumina.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -23,7 +26,7 @@ public class Agendamento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_agendamento", nullable = false, unique = true)
-    private Long idAgendamento;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"agendamentos"})
@@ -46,19 +49,20 @@ public class Agendamento implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
+    @JsonBackReference
     private Usuario usuario;
 
     @Column(name = "dt_criacao", nullable = false, updatable = false)
-    private LocalDateTime dtCriacao = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime dtCriacao;
 
-    @Column(name = "dt_modificao", nullable = false)
-    private LocalDateTime dtModificacao = LocalDateTime.now();
+    @Column(name = "dt_modificao")
+    @LastModifiedDate
+    private LocalDateTime dtModificacao;
 
-    //Methods
-    @Override
-    public String toString() {
-        return STR."id_agendamento, id_paciente, tp_visita, dt_agendamento, observacao, id_usuario, dt_criacao, dt_modificao = [\{getIdAgendamento()},\{paciente.getIdPaciente()}, \{getTpVisita()}, \{getDtAgendamento()}, \{getObservacao()}, \{usuario.getIdUsuario()}, \{getDtCriacao()}, \{getDtModificacao()}]";
-    }
+    @Version
+    @Column(name = "version", nullable = false)
+    protected Long version = 0L;
 
     //Enum Tipo de Visita (somente para a classe)
     public enum TpVisita {

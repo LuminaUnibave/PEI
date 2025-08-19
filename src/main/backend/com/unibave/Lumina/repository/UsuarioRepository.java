@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //Find By IdPaciente
-    Optional<Usuario> findById(Long idUsuario);
+    Optional<Usuario> findById(Long id);
     //Find By nome
     List<Usuario>findByNomeContainingIgnoreCase(String nome);
     //Find By situacao
@@ -22,5 +22,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByDtCadastroBefore(LocalDateTime dtCadastroBefore);
     List<Usuario> findByDtCadastroAfter(LocalDateTime dtCadastroAfter);
     List<Usuario> findByDtCadastroBetween(LocalDateTime dtCadastroAfter, LocalDateTime dtCadastroBefore);
-
 }

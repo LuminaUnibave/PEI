@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/paciente")
@@ -19,6 +20,7 @@ public class PacienteController {
     public PacienteController(PacienteService pacienteService) {
         this.pacienteService = pacienteService;
     }
+
 
     // GET /paciente/buscar/todos
     @GetMapping("/buscar/todos")

@@ -8,11 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
 
     //AGENDAMENTO
+    //Find By idAgendamento
+    Optional<Agendamento> findById(Long id);
     //Find By tpVisita
     List<Agendamento> findByTpVisita(TpVisita tpVisita);
     //Find By dtAgendamento
@@ -28,7 +31,7 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
 
     //AGENDAMENTO/PACIENTE
     //Find By IdPaciente
-    List<Agendamento> findByPaciente_IdPaciente(Long idPaciente);
+    List<Agendamento> findByPaciente_id(Long id);
     //Find By nome
     List<Agendamento> findByPaciente_NomeContainingIgnoreCase(String nome);
     //Find By situacao
@@ -39,7 +42,4 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
     List<Agendamento> findByPaciente_CrtSus(String crtSus);
     //Find By email
     List<Agendamento> findByPaciente_Email(String email);
-
-
-
 }

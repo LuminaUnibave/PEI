@@ -1,13 +1,18 @@
 package com.unibave.Lumina.service;
 
+import com.unibave.Lumina.DTOs.Evento.EventoDto;
+import com.unibave.Lumina.DTOs.Paciente.PacienteDto;
+import com.unibave.Lumina.enums.Situacao;
+import com.unibave.Lumina.exception.ResourceNotFoundException;
 import com.unibave.Lumina.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.unibave.Lumina.model.Evento;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventoService {
@@ -18,38 +23,97 @@ public class EventoService {
         this.eventoRepository = eventoRepository;
     }
 
-    public List<Evento> buscarPorDataEvento(LocalDateTime data){
-        return eventoRepository.findByDtEvento(data);
-    }
-    public List<Evento> buscarPorNomeEvento(String nome){
-        return eventoRepository.findByNomeEvento(nome);
-    }
-    public List<Evento> buscarPorIdEvento(Long id){
-        return eventoRepository.findByIdEvento(id);
-    }
-    public Evento salvar(Evento evento){
-        try{
-            if(evento.getNomeEvento() == null || evento.getNomeEvento().trim().isEmpty()){//verifica que o título não é vazio
-                throw new IllegalArgumentException("Título não pode ser vazio.");
-            }
-            if(evento.getNomeEvento().length() > 255){//verifica o tamanho do título
-                throw new IllegalArgumentException("Título não pode exceder o tamanho.");
-            }
-            if(evento.getDescricao() != null &&  evento.getDescricao().length() > 255){//verifica o tamanho da descrição
-                throw new IllegalArgumentException("Descrição não pode exceder o tamanho.");
-            }
-            if(evento.getDtEvento() == null){//verifica que a dataEvento não é nula
-                throw new IllegalArgumentException("Data não pode ser nula.");
-            }
-            if(evento.getDtEvento().isBefore(LocalDateTime.now())){//impede o cadastro de um evento em uma dtEvento já passada
-                throw new IllegalArgumentException("Evento não pode ser no passado.");
-            }
-        } catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("Dados inválidos, verifique e tente novamente!");
-        }
-        return eventoRepository.save(evento);
+    @Transactional
+    public Optional<EventoDto> buscarPorId(Long id) {
+        return eventoRepository.findById(id)
+                .map(EventoDto::fromEntity);
     }
 
-    public void deletar(Long id){
-        eventoRepository.deleteById(id);}
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorNomeEvento(String nomeEvento) {
+        return eventoRepository.findByNomeEventoContainingIgnoreCase(nomeEvento)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorStEvento(Situacao stEvento) {
+        return eventoRepository.findByStEvento(stEvento)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorDtEvento(LocalDateTime dtEvento) {
+        return eventoRepository.findByDtEvento(dtEvento)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorDtEventoAntes(LocalDateTime dtEventoAntes) {
+        return eventoRepository.findByDtEventoBefore(dtEventoAntes)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorDtEventoDepois(LocalDateTime dtEventoDepois) {
+        return eventoRepository.findByDtEventoAfter(dtEventoDepois)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarPorDtEventoEntre(LocalDateTime dtEventoDepois,  LocalDateTime dtEventoAntes) {
+        return eventoRepository.findByDtEventoBetween(dtEventoDepois, dtEventoAntes)
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> buscarTodos() {
+        return eventoRepository.findAll()
+                .stream()
+                .map(EventoDto::fromEntity)
+                .toList();
+    }
+
+    @Transactional
+    public Evento salvar(Evento evento) {
+
+        if(evento.getNomeEvento() == null || evento.getNomeEvento().trim().isEmpty()) {
+            throw new IllegalArgumentException("Título não pode ser vazio.");
+        }
+        if(evento.getNomeEvento().length() > 255) {
+            throw new IllegalArgumentException("Título não pode exceder o tamanho.");
+        }
+        if(evento.getDescricao() != null &&  evento.getDescricao().length() > 255) {
+            throw new IllegalArgumentException("Descrição não pode exceder o tamanho.");
+        }
+        if(evento.getDtEvento() == null) {
+            throw new IllegalArgumentException("Data não pode ser nula.");
+        }
+        if(evento.getDtEvento().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Evento não pode ser no passado.");
+        }
+
+        Evento eventoSalvo = eventoRepository.save(evento);
+        return eventoRepository.save(eventoSalvo);
+    }
+
+    @Transactional
+    public void deletar(Long id) {
+        if(!eventoRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Evento não encontrato com  o ID: " + id);
+        }
+        eventoRepository.deleteById(id);
+    }
+
 }
