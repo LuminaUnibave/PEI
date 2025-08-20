@@ -9,15 +9,15 @@ import java.util.stream.Collectors;
 
 @Value
 public class UsuarioDto implements Serializable {
-    Long idUsarioDto;
-    String emailUsuarioDto;
-    String senhaUsuarioDto;
+    Long id;
+    String email;
+    String senha;
 
-    List<UsuarioAgendamentoDto> usuarioAgendamentoDtoList;
+    List<UsuarioAgendamentoDto> agendamentoList;
 
     public static UsuarioDto fromEntity(Usuario usuario){
         return new UsuarioDto(
-                usuario.getIdUsuario(),
+                usuario.getId(),
                 usuario.getEmail(),
                 usuario.getSenha(),
                 usuario.getAgendamentoList() == null ? null :

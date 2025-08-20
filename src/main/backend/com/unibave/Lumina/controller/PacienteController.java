@@ -3,6 +3,10 @@ package com.unibave.Lumina.controller;
 import com.unibave.Lumina.DTOs.Paciente.PacienteDto;
 import com.unibave.Lumina.enums.Situacao;
 import com.unibave.Lumina.service.PacienteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +18,27 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/paciente")
+@Tag(name = "Paciente", description = "Controller de Paciente")
 public class PacienteController {
+
     private final PacienteService pacienteService;
 
     public PacienteController(PacienteService pacienteService) {
         this.pacienteService = pacienteService;
     }
-
+  
+    // GET /paciente/buscar/id?id=...
+    @GetMapping("/buscar/id")
+    @Operation(summary = "Buscar paciente por ID", description = "Retorna o paciente pelo seu identificador único")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Paciente encontrado"),
+            @ApiResponse(responseCode = "404", description = "Paciente não encontrado")
+    })
+    public ResponseEntity<PacienteDto> buscarPorId(@RequestParam("id") Long id) {
+        return pacienteService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     // GET /paciente/buscar/todos
     @GetMapping("/buscar/todos")

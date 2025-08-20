@@ -5,14 +5,6 @@ import org.junit.jupiter.api.*;
 
 class DotEnvTest {
 
-    /*
-    Este teste deve garantir que o arquivo .env seja aberto, lido e que as variaveis cheguem até o application proporties.
-
-    Isso são as "configurações" do banco de dados. Caso o .env seja alterado, as mesmas configurações devem ser lidas
-    e alocadas no application.properties, que é onde ficam as variaveis para a conexão com o banco de dados.
-
-    Caso seja necessario altere  ou melhore os testes.
-     */
     private static Dotenv dotenv; //Atributo da classe de teste para ser inicializado posteriormente./ no setUp
 
     @BeforeAll

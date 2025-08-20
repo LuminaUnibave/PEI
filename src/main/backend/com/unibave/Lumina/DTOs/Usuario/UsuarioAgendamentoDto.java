@@ -22,7 +22,7 @@ public class UsuarioAgendamentoDto {
             return null;
         }
         return new UsuarioAgendamentoDto(
-                agendamento.getIdAgendamento(),
+                agendamento.getId(),
                 agendamento.getTpVisita(),
                 agendamento.getObservacao(),
                 agendamento.getDtAgendamento(),
