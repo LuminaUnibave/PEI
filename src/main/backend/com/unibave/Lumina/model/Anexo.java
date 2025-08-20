@@ -32,7 +32,7 @@ public class Anexo implements Serializable {
 
     @Column(name = "conteudo")
     @Lob
-    private byte[] conteudo;
+    private byte[] conteudo ;
 
     @Column(name = "nm_anexo")
     private String nomeAnexo;
