@@ -26,7 +26,7 @@ public class PacienteController {
     public PacienteController(PacienteService pacienteService) {
         this.pacienteService = pacienteService;
     }
-
+  
     // GET /paciente/buscar/id?id=...
     @GetMapping("/buscar/id")
     @Operation(summary = "Buscar paciente por ID", description = "Retorna o paciente pelo seu identificador único")
@@ -40,101 +40,104 @@ public class PacienteController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /paciente/buscar/todos...
+    // GET /paciente/buscar/todos
     @GetMapping("/buscar/todos")
     public ResponseEntity<List<PacienteDto>> buscarTodos() {
-        List<PacienteDto> paciente = pacienteService.buscarTodos();
-        return ResponseEntity.ok(paciente);
+        return ResponseEntity.ok(pacienteService.buscarTodos());
+    }
+
+    // GET /paciente/buscar/id?id=...
+    @GetMapping("/buscar/id")
+    public ResponseEntity<PacienteDto> buscarPorId(@RequestParam("id") Long id) {
+        return ResponseEntity.ok(pacienteService.buscarPorId(id));
     }
 
     // GET /paciente/buscar/nome?nome=...
     @GetMapping("/buscar/nome")
     public ResponseEntity<List<PacienteDto>> buscarPorNome(@RequestParam("nome") String nome) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorNome(nome);
-        return ResponseEntity.ok(pacientes);
+        return ResponseEntity.ok(pacienteService.buscarPorNome(nome));
     }
 
     // GET /paciente/buscar/cpf?cpf=...
     @GetMapping("/buscar/cpf")
-    public ResponseEntity<Optional<PacienteDto>> buscarPorCpf(@RequestParam("cpf") String cpf) {
-        Optional<PacienteDto> pacientes = pacienteService.buscarPorCpf(cpf);
-        return ResponseEntity.ok(pacientes);
+    public ResponseEntity<PacienteDto> buscarPorCpf(@RequestParam("cpf") String cpf) {
+        return ResponseEntity.ok(pacienteService.buscarPorCpf(cpf));
     }
 
-    // GET /paciente/buscar/situacao?situacao=...
+    // GET /paciente/buscar/situacao?situacao=ATIVO
     @GetMapping("/buscar/situacao")
-    public ResponseEntity<List<PacienteDto>> buscarPorSituacao(@RequestParam("situacao")Situacao situacao) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorSituacao(situacao);
-        return ResponseEntity.ok(pacientes);
+    public ResponseEntity<List<PacienteDto>> buscarPorSituacao(@RequestParam("situacao") Situacao situacao) {
+        return ResponseEntity.ok(pacienteService.buscarPorSituacao(situacao));
     }
 
-    // GET /paciente/buscar/dtNascimento?dtNascimento=...
-    @GetMapping("/buscar/dtNascimento")
-    public ResponseEntity<List<PacienteDto>> buscarPorDtNascimento(@RequestParam("dtNascimento") LocalDate dtNascimento) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorDtNascimento(dtNascimento);
-        return ResponseEntity.ok(pacientes);
-    }
-    // GET /paciente/buscar/dtNascimentoAntes?dtNascimentoAntes=...
-    @GetMapping("/buscar/dtNascimentoAntes")
-    public ResponseEntity<List<PacienteDto>> buscarPorDtNascimentoAntes(@RequestParam("dtNascimentoAntes") LocalDate dtNascimentoAntes) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorDtNascimentoAntes(dtNascimentoAntes);
-        return ResponseEntity.ok(pacientes);
+    // GET /paciente/buscar/dtnascimento?data=2000-01-01
+    @GetMapping("/buscar/dtnascimento")
+    public ResponseEntity<List<PacienteDto>> buscarPorDataNascimento(
+            @RequestParam("data") LocalDate data) {
+        return ResponseEntity.ok(pacienteService.buscarPorDataNascimento(data));
     }
 
-    // GET /paciente/buscar/dtNascimentoDepois?dtNascimentoDepois=...
-    @GetMapping("/buscar/dtNascimentoDepois")
-    public ResponseEntity<List<PacienteDto>> buscarPorDtNascimentoDepois(@RequestParam("dtNascimentoDepois") LocalDate dtNascimentoDepois) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorDtNascimentoDepois(dtNascimentoDepois);
-        return ResponseEntity.ok(pacientes);
+    // GET /paciente/buscar/dtnascimento/antes?data=2000-01-01
+    @GetMapping("/buscar/dtnascimento/antes")
+    public ResponseEntity<List<PacienteDto>> buscarPorDataNascimentoAntes(
+            @RequestParam("data") LocalDate data) {
+        return ResponseEntity.ok(pacienteService.buscarPorDataNascimentoAntes(data));
     }
 
-    // GET /paciente/buscar/dtNascimentoEntre?dtNascimentoEntre=...
-    @GetMapping("/buscar/dtNascimentoEntre")
-    public ResponseEntity<List<PacienteDto>> buscarPorDtNascimentoEntre(@RequestParam("dtNascimentoEntre") LocalDate dtNascimentoDepois, LocalDate dtNascimentoAntes) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorDtNascimentoEntre(dtNascimentoDepois,  dtNascimentoAntes);
-        return ResponseEntity.ok(pacientes);
+    // GET /paciente/buscar/dtnascimento/depois?data=2000-01-01
+    @GetMapping("/buscar/dtnascimento/depois")
+    public ResponseEntity<List<PacienteDto>> buscarPorDataNascimentoDepois(
+            @RequestParam("data") LocalDate data) {
+        return ResponseEntity.ok(pacienteService.buscarPorDataNascimentoDepois(data));
     }
 
-    // GET /paciente/buscar/crtSus?crtSus=...
-    @GetMapping("/buscar/crtSus")
-    public ResponseEntity<Optional<PacienteDto>> buscarPorCrtSus(@RequestParam("crtSus") String crtSus) {
-        Optional<PacienteDto> pacientes = pacienteService.buscarPorCrtSus(crtSus);
-        return ResponseEntity.ok(pacientes);
+    // GET /paciente/buscar/dtnascimento/entre?inicio=1990-01-01&fim=2000-12-31
+    @GetMapping("/buscar/dtnascimento/entre")
+    public ResponseEntity<List<PacienteDto>> buscarPorDataNascimentoEntre(
+            @RequestParam("inicio") LocalDate inicio,
+            @RequestParam("fim") LocalDate fim) {
+        return ResponseEntity.ok(pacienteService.buscarPorDataNascimentoentre(inicio, fim));
     }
 
-    // GET /paciente/buscar/email?email=...
+    // GET /paciente/buscar/crtsus?crtsus=123456
+    @GetMapping("/buscar/crtsus")
+    public ResponseEntity<PacienteDto> buscarPorCrtSus(@RequestParam("crtsus") String crtSus) {
+        return ResponseEntity.ok(pacienteService.buscarPorCrtSus(crtSus));
+    }
+
+    // GET /paciente/buscar/email?email=teste@email.com
     @GetMapping("/buscar/email")
     public ResponseEntity<List<PacienteDto>> buscarPorEmail(@RequestParam("email") String email) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorEmail(email);
-        return ResponseEntity.ok(pacientes);
+        return ResponseEntity.ok(pacienteService.buscarPorEmail(email));
     }
 
-    // GET /paciente/buscar/dtCadastro?dtCadastro=...
-    @GetMapping("/buscar/dtCadastro")
-    public ResponseEntity<List<PacienteDto>> buscarPorDtCadastro(@RequestParam("dtCadastro") LocalDateTime dtCadastro) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorDtCadastro(dtCadastro);
-        return ResponseEntity.ok(pacientes);
+    // GET /paciente/buscar/dtcadastro?data=2025-01-01T10:00:00
+    @GetMapping("/buscar/dtcadastro")
+    public ResponseEntity<List<PacienteDto>> buscarPorDtCadastro(
+            @RequestParam("data") LocalDateTime data) {
+        return ResponseEntity.ok(pacienteService.buscarPorDtCadastro(data));
     }
 
-    // GET /paciente/buscar/dtCadastroDepois?dtCadastroDepois=...
-    @GetMapping("/buscar/dtCadastroDepois")
-    public ResponseEntity<List<PacienteDto>> buscarPorDtCadastroDepois(@RequestParam("dtCadastroDepois") LocalDateTime dtCadastroDepois) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorDtCadastroDepois(dtCadastroDepois);
-        return ResponseEntity.ok(pacientes);
+    // GET /paciente/buscar/dtcadastro/antes?data=2025-01-01T10:00:00
+    @GetMapping("/buscar/dtcadastro/antes")
+    public ResponseEntity<List<PacienteDto>> buscarPorDtCadastroAntes(
+            @RequestParam("data") LocalDateTime data) {
+        return ResponseEntity.ok(pacienteService.buscarPorDtCadastroAntes(data));
     }
 
-    // GET /paciente/buscar/dtCadastroAntes?dtCadastroAntes=...
-    @GetMapping("/buscar/dtCadastroAntes")
-    public ResponseEntity<List<PacienteDto>> buscarPorDtCadastroAntes(@RequestParam("dtCadastroAntes") LocalDateTime dtCadastroAntes) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorDtCadastroAntes(dtCadastroAntes);
-        return ResponseEntity.ok(pacientes);
+    // GET /paciente/buscar/dtcadastro/depois?data=2025-01-01T10:00:00
+    @GetMapping("/buscar/dtcadastro/depois")
+    public ResponseEntity<List<PacienteDto>> buscarPorDtCadastroDepois(
+            @RequestParam("data")LocalDateTime data) {
+        return ResponseEntity.ok(pacienteService.buscarPorDtCadastroDepois(data));
     }
 
-    // GET /paciente/buscar/dtCadastroEntre?dtCadastroEntre=...
-    @GetMapping("/buscar/dtCadastroEntre")
-    public ResponseEntity<List<PacienteDto>> buscarPorDtCadastroEntre(@RequestParam("dtCadastroEntre") LocalDateTime dtCadastroDepois, LocalDateTime dtCadastroAntes) {
-        List<PacienteDto> pacientes = pacienteService.buscarPorDtCadastroEntre(dtCadastroDepois, dtCadastroAntes);
-        return ResponseEntity.ok(pacientes);
+    // GET /paciente/buscar/dtcadastro/entre?inicio=2025-01-01T10:00:00&fim=2025-08-01T10:00:00
+    @GetMapping("/buscar/dtcadastro/entre")
+    public ResponseEntity<List<PacienteDto>> buscarPorDtCadastroEntre(
+            @RequestParam("inicio") LocalDateTime inicio,
+            @RequestParam("fim") LocalDateTime fim) {
+        return ResponseEntity.ok(pacienteService.buscarPorDtCadastroEntre(inicio, fim));
     }
 
     // POST /paciente/salvar
