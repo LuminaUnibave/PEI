@@ -26,7 +26,13 @@ public class PacienteController {
     public PacienteController(PacienteService pacienteService) {
         this.pacienteService = pacienteService;
     }
-  
+
+    // GET /paciente/buscar/todos
+    @GetMapping("/buscar/todos")
+    public ResponseEntity<List<PacienteDto>> buscarTodos() {
+        return ResponseEntity.ok(pacienteService.buscarTodos());
+    }
+
     // GET /paciente/buscar/id?id=...
     @GetMapping("/buscar/id")
     @Operation(summary = "Buscar paciente por ID", description = "Retorna o paciente pelo seu identificador único")
@@ -40,18 +46,6 @@ public class PacienteController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /paciente/buscar/todos
-    @GetMapping("/buscar/todos")
-    public ResponseEntity<List<PacienteDto>> buscarTodos() {
-        return ResponseEntity.ok(pacienteService.buscarTodos());
-    }
-
-    // GET /paciente/buscar/id?id=...
-    @GetMapping("/buscar/id")
-    public ResponseEntity<PacienteDto> buscarPorId(@RequestParam("id") Long id) {
-        return ResponseEntity.ok(pacienteService.buscarPorId(id));
-    }
-
     // GET /paciente/buscar/nome?nome=...
     @GetMapping("/buscar/nome")
     public ResponseEntity<List<PacienteDto>> buscarPorNome(@RequestParam("nome") String nome) {
@@ -60,8 +54,15 @@ public class PacienteController {
 
     // GET /paciente/buscar/cpf?cpf=...
     @GetMapping("/buscar/cpf")
+    @Operation(summary = "Buscar paciente por CPF", description = "Retorna o paciente pelo seu CPF (único)")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Paciente encontrado"),
+            @ApiResponse(responseCode = "404", description = "Paciente não encontrado")
+    })
     public ResponseEntity<PacienteDto> buscarPorCpf(@RequestParam("cpf") String cpf) {
-        return ResponseEntity.ok(pacienteService.buscarPorCpf(cpf));
+        return pacienteService.buscarPorCpf(cpf)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // GET /paciente/buscar/situacao?situacao=ATIVO

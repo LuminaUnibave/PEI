@@ -22,7 +22,7 @@ public abstract class Pessoa {
 
     @Column(name = "situacao", nullable = false)
     @Enumerated(EnumType.STRING)
-    protected Situacao situacao;
+    protected Situacao situacao = Situacao.ATIVO;
 
     @Version
     @Column(name = "version", nullable = false)

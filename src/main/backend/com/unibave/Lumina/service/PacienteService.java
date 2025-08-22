@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.module.ResolutionException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,8 +29,7 @@ public class PacienteService {
     //PACIENTE
     @Transactional(readOnly = true)
     public Optional<PacienteDto> buscarPorId(Long id) {
-        return pacienteRepository.findById(id)
-                .map(PacienteDto::fromEntity);
+        return pacienteRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
@@ -47,86 +45,13 @@ public class PacienteService {
         return pacienteRepository.findByNomeContainingIgnoreCase(nome)
                 .stream()
                 .map(PacienteDto::fromEntity)
-                .orElseThrow(() -> new ResourceNotFoundException(STR."Paciente não encontrado com o ID: \{id}"));
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public Optional<PacienteDto> buscarPorCpf(String cpf) {
         return pacienteRepository.findByCpf(cpf)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .findFirst();
-    }
-
-    @Transactional(readOnly = true)
-    public List<PacienteDto> buscarPorSituacao(Situacao situacao) {
-        return pacienteRepository.findBySituacao(situacao)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<PacienteDto> buscarPorDtNascimento(LocalDate dtNascimento) {
-        return pacienteRepository.findByDtNascimento(dtNascimento)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<PacienteDto> buscarPorDtNascimentoAntes(LocalDate dtNascimentoAntes) {
-        return pacienteRepository.findByDtNascimentoBefore(dtNascimentoAntes)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<PacienteDto> buscarPorDtNascimentoDepois(LocalDate dtNascimentoDepois) {
-        return pacienteRepository.findByDtNascimentoAfter(dtNascimentoDepois)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-
-    public List<PacienteDto> buscarPorDtNascimentoEntre(LocalDate dtNascimentoDepois, LocalDate dtNascimentoAntes) {
-        return pacienteRepository.findByDtNascimentoBetween(dtNascimentoDepois, dtNascimentoAntes)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<PacienteDto> buscarPorCrtSus(String crtSus) {
-        return pacienteRepository.findByCrtSus(crtSus)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .findFirst();
-    }
-
-    @Transactional(readOnly = true)
-    public List<PacienteDto> buscarPorEmail(String email) {
-        return pacienteRepository.findByEmail(email)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<PacienteDto> buscarPorDtCadastro(LocalDateTime dtCadastro) {
-        return pacienteRepository.findByDtCadastro(dtCadastro)
-                .stream()
-                .map(PacienteDto::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public PacienteDto buscarPorCpf(String cpf) {
-        return pacienteRepository.findByCpf(cpf)
-                .map(PacienteDto::fromEntity)
-                .orElseThrow(()-> new ResolutionException(STR."Paciente não econtrado com CPF: \{cpf}"));
+                .map(PacienteDto::fromEntity);
     }
 
     @Transactional(readOnly = true)
