@@ -1,96 +1,68 @@
 package com.unibave.Lumina.service;
 
-import com.unibave.Lumina.DTOs.Agendamento.AgendamentoDto;
 import com.unibave.Lumina.exception.ResourceNotFoundException;
-import com.unibave.Lumina.model.Agendamento;
-import com.unibave.Lumina.model.Paciente;
+import com.unibave.Lumina.model.entidades.Agendamento;
+import com.unibave.Lumina.model.entidades.Paciente;
 import com.unibave.Lumina.repository.AgendamentoRepository;
 import com.unibave.Lumina.repository.AnexoRepository;
 import com.unibave.Lumina.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import java.util.Optional;
 
 @Service
 public class AgendamentoService {
 
     private final AgendamentoRepository agendamentoRepository;
     private final PacienteRepository pacienteRepository;
-    private final AnexoRepository anexoRepository;
 
     @Autowired
-    public AgendamentoService(AgendamentoRepository agendamentoRepository,
-                              PacienteRepository pacienteRepository, AnexoRepository anexoRepository) {
+    public AgendamentoService(AgendamentoRepository agendamentoRepository, PacienteRepository pacienteRepository) {
         this.agendamentoRepository = agendamentoRepository;
         this.pacienteRepository = pacienteRepository;
-        this.anexoRepository = anexoRepository;
     }
 
     //GET
     //AGENDAMENTO
     @Transactional(readOnly = true)
-    public AgendamentoDto buscarPorId(Long id) {
-        return agendamentoRepository.findById(id)
-                .map(AgendamentoDto::fromEntity)
-                .orElseThrow(() -> new ResourceNotFoundException("Agendamento não encontrado com ID: " + id));
+    public Optional<Agendamento> buscarPorId(Long id) {
+        return agendamentoRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
-    public List<AgendamentoDto> buscarTpVisita(Agendamento.TpVisita tpVisita) {
-        return agendamentoRepository.findByTpVisita(tpVisita)
-                .stream()
-                .map(AgendamentoDto::fromEntity)
-                .toList();
+    public List<Agendamento> buscarTpVisita(Agendamento.TpVisita tpVisita) {
+        return agendamentoRepository.findByTpVisita(tpVisita);
     }
 
     @Transactional(readOnly = true)
-    public List<AgendamentoDto> buscarTodos() {
-        return agendamentoRepository.findAll()
-                .stream()
-                .map(AgendamentoDto::fromEntity)
-                .toList();
+    public List<Agendamento> buscarTodos() {
+        return agendamentoRepository.findAll();
     }
 
     //AGENDAMENTO/PACIENTE
     @Transactional(readOnly = true)
-    public List<AgendamentoDto> buscarPorPacienteId(Long id) {
+    public List<Agendamento> buscarPorPacienteId(Long id) {
         if (!pacienteRepository.existsById(id)) {
             throw new ResourceNotFoundException("Paciente não encontrado com ID: " + id);
         }
-        return agendamentoRepository.findByPaciente_id(id)
-                .stream()
-                .map(AgendamentoDto::fromEntity)
-                .toList();
+        return agendamentoRepository.findByPaciente_id(id);
     }
 
     @Transactional(readOnly = true)
-    public List<AgendamentoDto> buscarPorPacienteNome(String nome) {
-        return agendamentoRepository.findByPaciente_NomeContainingIgnoreCase(nome)
-                .stream()
-                .map(AgendamentoDto::fromEntity)
-                .toList();
+    public List<Agendamento> buscarPorPacienteNome(String nome) {
+        return agendamentoRepository.findByPaciente_NomeContainingIgnoreCase(nome);
     }
 
 
     //POST
     @Transactional
-    public AgendamentoDto salvar(AgendamentoDto agendamentoDto) {
-        Paciente paciente = pacienteRepository.findById(agendamentoDto.getPaciente().getId())
+    public Agendamento salvar(Agendamento agendamento) {
+        Paciente paciente = pacienteRepository.findById(agendamento.getPaciente().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado"));
-
-        Agendamento agendamento = new Agendamento();
-        // Mapear campos do DTO para a entidade
         agendamento.setPaciente(paciente);
-        agendamento.setTpVisita(agendamentoDto.getTpVisita());
-        agendamento.setObservacao(agendamentoDto.getObservacao());
-        agendamento.setDtAgendamento(agendamentoDto.getDtAgendamento());
-
-        Agendamento agendamentoSalvo = agendamentoRepository.save(agendamento);
-        return AgendamentoDto.fromEntity(agendamentoSalvo);
+        return agendamentoRepository.save(agendamento);
     }
 
     //DELETE

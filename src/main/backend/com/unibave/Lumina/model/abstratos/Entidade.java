@@ -1,28 +1,20 @@
-package com.unibave.Lumina.model;
+package com.unibave.Lumina.model.abstratos;
+
 import com.unibave.Lumina.enums.Situacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class Pessoa {
-
-    @Column(name = "nome", nullable = false)
-    protected String nome;
-
-    @Column(name = "situacao", nullable = false)
-    @Enumerated(EnumType.STRING)
-    protected Situacao situacao = Situacao.ATIVO;
+public abstract class Entidade {
 
     @Version
     @Column(name = "version", nullable = false)
@@ -35,6 +27,10 @@ public abstract class Pessoa {
     @Column(name = "dt_modificao")
     @LastModifiedDate
     private LocalDateTime dtModificacao  = LocalDateTime.now();
+
+    @Column(name = "situacao", nullable = false)
+    @Enumerated(EnumType.STRING)
+    protected Situacao situacao = Situacao.ATIVO;
 
     @PrePersist
     protected void onCreate() {

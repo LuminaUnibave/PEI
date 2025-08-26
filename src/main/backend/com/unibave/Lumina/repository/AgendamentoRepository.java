@@ -1,8 +1,8 @@
 package com.unibave.Lumina.repository;
 
 import com.unibave.Lumina.enums.Situacao;
-import com.unibave.Lumina.model.Agendamento;
-import com.unibave.Lumina.model.Agendamento.TpVisita;
+import com.unibave.Lumina.model.entidades.Agendamento;
+import com.unibave.Lumina.model.entidades.Agendamento.TpVisita;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,11 +23,11 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
     List<Agendamento> findByDtAgendamentoBefore(LocalDateTime dtAgendamentoBefore);
     List<Agendamento> findByDtAgendamentoAfter(LocalDateTime dtAgendamentoAfter);
     List<Agendamento> findByDtAgendamentoBetween(LocalDateTime dtAgendamentoAfter, LocalDateTime dtAgendamentoBefore);
-    //Find By dtCriacao
-    List<Agendamento> findByDtCriacao(LocalDateTime dtCriacao);
-    List<Agendamento> findByDtCriacaoBefore(LocalDateTime dtCriacaoBefore);
-    List<Agendamento> findByDtCriacaoAfter(LocalDateTime dtCriacaoAfter);
-    List<Agendamento> findByDtCriacaoBetween(LocalDateTime dtCriacaoAfter, LocalDateTime dtCriacaoBefore);
+    //Find By dtCadastro
+    List<Agendamento> findByDtCadastro(LocalDateTime dtCadastro);
+    List<Agendamento> findByDtCadastroBefore(LocalDateTime dtCadastroBefore);
+    List<Agendamento> findByDtCadastroAfter(LocalDateTime dtCadastroAfter);
+    List<Agendamento> findByDtCadastroBetween(LocalDateTime dtCadastroAfter, LocalDateTime dtCadastroBefore);
 
     //AGENDAMENTO/PACIENTE
     //Find By IdPaciente

@@ -1,7 +1,7 @@
 package com.unibave.Lumina.repository;
 
 import com.unibave.Lumina.enums.Situacao;
-import com.unibave.Lumina.model.Usuario;
+import com.unibave.Lumina.model.entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

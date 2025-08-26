@@ -1,10 +1,10 @@
-package com.unibave.Lumina.model;
+package com.unibave.Lumina.model.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.unibave.Lumina.model.abstratos.Entidade;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,11 +18,17 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "paciente" , schema = "lumina")
-public class Paciente extends Pessoa implements Serializable {
+public class Paciente extends Entidade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente", nullable = false, unique = true)
     protected Long id;
+
+    @Column(name = "nome", nullable = false)
+    protected String nome;
+
+    @Column(name = "sobrenome")
+    protected String sobrenome;
 
     @Column(name = "cpf", unique = true)
     protected String cpf;
@@ -35,6 +41,9 @@ public class Paciente extends Pessoa implements Serializable {
 
     @Column(name = "email")
     protected String email;
+
+    @Column(name = "contato")
+    protected String contato;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)

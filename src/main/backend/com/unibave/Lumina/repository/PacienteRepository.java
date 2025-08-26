@@ -1,8 +1,7 @@
 package com.unibave.Lumina.repository;
 
-import com.unibave.Lumina.DTOs.Paciente.PacienteDto;
 import com.unibave.Lumina.enums.Situacao;
-import com.unibave.Lumina.model.Paciente;
+import com.unibave.Lumina.model.entidades.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
