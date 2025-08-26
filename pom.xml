@@ -12,7 +12,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.unibave</groupId>
+    <groupId>com.unibave.Lumina</groupId>
     <artifactId>Lumina</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Lumina</name>
