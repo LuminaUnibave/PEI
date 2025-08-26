@@ -135,6 +135,12 @@
             <version>5.9.3</version>
             <scope>test</scope>
         </dependency>
+        <!-- H2 para testes -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

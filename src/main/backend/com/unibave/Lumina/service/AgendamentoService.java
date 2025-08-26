@@ -4,7 +4,6 @@ import com.unibave.Lumina.exception.ResourceNotFoundException;
 import com.unibave.Lumina.model.entidades.Agendamento;
 import com.unibave.Lumina.model.entidades.Paciente;
 import com.unibave.Lumina.repository.AgendamentoRepository;
-import com.unibave.Lumina.repository.AnexoRepository;
 import com.unibave.Lumina.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

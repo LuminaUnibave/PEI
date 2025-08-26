@@ -5,7 +5,6 @@ import com.unibave.Lumina.DTOs.Evento.EventoRequisicaoDTO;
 import com.unibave.Lumina.DTOs.Evento.EventoRespostaDTO;
 import com.unibave.Lumina.enums.Situacao;
 import com.unibave.Lumina.model.entidades.Evento;
-import com.unibave.Lumina.model.entidades.Paciente;
 import com.unibave.Lumina.model.entidades.Usuario;
 import com.unibave.Lumina.service.EventoService;
 import com.unibave.Lumina.service.UsuarioService;
