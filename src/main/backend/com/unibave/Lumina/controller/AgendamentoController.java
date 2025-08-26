@@ -1,5 +1,6 @@
 package com.unibave.Lumina.controller;
 
+import com.unibave.Lumina.DTOs.Agendamento.AgendamentoAtualizarDTO;
 import com.unibave.Lumina.DTOs.Agendamento.AgendamentoMapper;
 import com.unibave.Lumina.DTOs.Agendamento.AgendamentoRequisicaoDTO;
 import com.unibave.Lumina.DTOs.Agendamento.AgendamentoRespostaDTO;
@@ -113,6 +114,24 @@ public class AgendamentoController {
         Agendamento agendamento = agendamentoMapper.toEntity(agendamentoRequisicaoDTO);
         Optional<Paciente> paciente = pacienteService.buscarPorId(agendamentoRequisicaoDTO.getIdPaciente());
         Optional<Usuario> usuario = usuarioService.buscarPorId(agendamentoRequisicaoDTO.getIdUsuario());
+        agendamento.setPaciente(paciente.get());
+        agendamento.setUsuario(usuario.get());
+        agendamento = agendamentoService.salvar(agendamento);
+        return ResponseEntity.ok(agendamentoMapper.toDto(agendamento));
+    }
+
+    //PUT /agendamento/atualizar
+    @PutMapping("/atualizar")
+    @Operation(summary = "Atualizar agendamento", description = "Atualiza o agendamento")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamento atualizado"),
+            @ApiResponse(responseCode = "404", description = "Agendamento não atualizado")
+    })
+    public ResponseEntity<AgendamentoRespostaDTO> atualizar(
+            @RequestBody AgendamentoAtualizarDTO agendamentoAtualizarDTO) {
+        Agendamento agendamento = agendamentoMapper.toEntity(agendamentoAtualizarDTO);
+        Optional<Paciente> paciente = pacienteService.buscarPorId(agendamentoAtualizarDTO.getIdPaciente());
+        Optional<Usuario> usuario = usuarioService.buscarPorId(agendamentoAtualizarDTO.getIdUsuario());
         agendamento.setPaciente(paciente.get());
         agendamento.setUsuario(usuario.get());
         agendamento = agendamentoService.salvar(agendamento);

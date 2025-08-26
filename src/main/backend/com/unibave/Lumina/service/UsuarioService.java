@@ -46,7 +46,7 @@ public class UsuarioService {
 
     // Buscar por email (pode haver mais de 1 usuário com o mesmo email em casos estranhos → lista)
     @Transactional(readOnly = true)
-    public List<Usuario> buscarPorEmail(String email) {
+    public Optional<Usuario> buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
 

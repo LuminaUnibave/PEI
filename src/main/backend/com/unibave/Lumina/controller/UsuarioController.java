@@ -1,5 +1,6 @@
 package com.unibave.Lumina.controller;
 
+import com.unibave.Lumina.DTOs.Usuario.UsuarioAtualizarDTO;
 import com.unibave.Lumina.DTOs.Usuario.UsuarioMapper;
 import com.unibave.Lumina.DTOs.Usuario.UsuarioRequisicaoDTO;
 import com.unibave.Lumina.DTOs.Usuario.UsuarioRespostaDTO;
@@ -71,9 +72,10 @@ public class UsuarioController {
             @ApiResponse(responseCode = "200", description = "usuário(s) encontrado(s)"),
             @ApiResponse(responseCode = "404", description = "usuário(s) não encontrado(s)")
     })
-    public ResponseEntity<List<UsuarioRespostaDTO>> buscarPorEmail(@RequestParam("email") String email) {
-        List<Usuario> usuario = usuarioService.buscarPorEmail(email);
-        return ResponseEntity.ok(Collections.singletonList(usuarioMapper.toDto((Usuario) usuario)));
+    public ResponseEntity<Optional<UsuarioRespostaDTO>> buscarPorEmail(@RequestParam("email") String email) {
+        Usuario usuario = usuarioService.buscarPorEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));;
+        return ResponseEntity.ok(Optional.ofNullable(usuarioMapper.toDto(usuario)));
     }
 
     @GetMapping("/dtCadastro")
@@ -121,7 +123,6 @@ public class UsuarioController {
     }
 
     //POST
-
     @PostMapping("/salvar")
     @Operation(summary = "Salvar usuário", description = "Salva o usúario")
     @ApiResponses({
@@ -134,6 +135,19 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioMapper.toDto(usuario));
     }
 
+    //PUT
+    @PutMapping("/atualizar")
+    @Operation(summary = "Atualizar usuário", description = "Atualiza o usuário")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuário atualizado"),
+            @ApiResponse(responseCode = "404", description = "Usuário não atualizado")
+    })
+    public ResponseEntity<UsuarioRespostaDTO> atualizar(@RequestBody UsuarioAtualizarDTO usuarioAtualizarDTO) {
+        Usuario usuario = usuarioMapper.toEntity(usuarioAtualizarDTO);
+        usuario = usuarioService.salvar(usuario);
+        return ResponseEntity.ok(usuarioMapper.toDto(usuario));
+    }
+
     //DELETE
     @DeleteMapping("/deletar/id")
     @Operation(summary = "Deletar usuário", description = "Deleta o usúario")
@@ -141,7 +155,8 @@ public class UsuarioController {
             @ApiResponse(responseCode = "200", description = "Usuário deletado"),
             @ApiResponse(responseCode = "404", description = "Usuário não deletado")
     })
-    public ResponseEntity<UsuarioRespostaDTO> deletar(@RequestParam("id") Long id) {
+    public ResponseEntity<UsuarioRespostaDTO> deletar(
+            @RequestParam("id") Long id) {
         usuarioService.deletar(id);
         return ResponseEntity.noContent().build();
     }

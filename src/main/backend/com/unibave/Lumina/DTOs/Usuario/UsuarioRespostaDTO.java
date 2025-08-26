@@ -17,6 +17,7 @@ public class UsuarioRespostaDTO {
     private String email;
     private String tpUsuario;
     private LocalDateTime dtCadastro;
+    private LocalDateTime dtModificacao;
     private String situacao;
     private List<AgendamentoListDTO> agendamentoList;
     private List<EventoListDTO> eventoList;

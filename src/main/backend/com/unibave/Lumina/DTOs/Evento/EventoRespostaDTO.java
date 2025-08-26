@@ -16,9 +16,9 @@ public class EventoRespostaDTO {
     private Long id;
     private String nmEvento;
     private String descricao;
-    private String tpUsuario;
     protected LocalDateTime dtEvento;
     private LocalDateTime dtCadastro;
+    private LocalDateTime dtModificacao;
     private String situacao;
     private UsuarioDTO usuario;
     private List<AnexoListDTO> anexoList;

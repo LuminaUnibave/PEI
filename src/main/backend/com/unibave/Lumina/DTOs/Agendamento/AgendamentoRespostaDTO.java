@@ -19,6 +19,7 @@ public class AgendamentoRespostaDTO {
     private LocalDateTime dtAgendamento;
     private UsuarioDTO usuario;
     private LocalDateTime dtCadastro;
+    private LocalDateTime dtModificacao;
     private String situacao;
     private List<AnexoListDTO> anexoList;
 

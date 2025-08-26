@@ -1,5 +1,6 @@
 package com.unibave.Lumina.controller;
 
+import com.unibave.Lumina.DTOs.Paciente.PacienteAtualizarDTO;
 import com.unibave.Lumina.DTOs.Paciente.PacienteMapper;
 import com.unibave.Lumina.DTOs.Paciente.PacienteRequisicaoDTO;
 import com.unibave.Lumina.DTOs.Paciente.PacienteRespostaDTO;
@@ -247,6 +248,22 @@ public class PacienteController {
             @RequestBody PacienteRequisicaoDTO pacienteRequisicaoDTO) {
         Paciente paciente = pacienteMapper.toEntity(pacienteRequisicaoDTO);
         Optional<Usuario> usuario = usuarioService.buscarPorId(pacienteRequisicaoDTO.getIdUsuario());
+        paciente.setUsuario(usuario.get());
+        paciente = pacienteService.salvar(paciente);
+        return ResponseEntity.ok(pacienteMapper.toDto(paciente));
+    }
+
+    //PUT /paciente/atualizar
+    @PutMapping("/atualizar")
+    @Operation(summary = "Atualizar paciente", description = "Atualiza o paciente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Paciente atualizado"),
+            @ApiResponse(responseCode = "404", description = "Paciente não atualizado")
+    })
+    public ResponseEntity<PacienteRespostaDTO> atualizar(
+            @RequestBody PacienteAtualizarDTO pacienteAtualizarDTO) {
+        Paciente paciente = pacienteMapper.toEntity(pacienteAtualizarDTO);
+        Optional<Usuario> usuario = usuarioService.buscarPorId(pacienteAtualizarDTO.getIdUsuario());
         paciente.setUsuario(usuario.get());
         paciente = pacienteService.salvar(paciente);
         return ResponseEntity.ok(pacienteMapper.toDto(paciente));

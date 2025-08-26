@@ -23,6 +23,7 @@ public class PacienteRespostaDTO {
     private String contato;
     private UsuarioDTO usuario;
     private LocalDateTime dtCadastro;
+    private LocalDateTime dtModificacao;
     private String situacao;
     private List<AgendamentoListDTO> agendamentoList;
 

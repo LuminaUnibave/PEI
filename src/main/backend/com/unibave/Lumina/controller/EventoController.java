@@ -1,5 +1,6 @@
 package com.unibave.Lumina.controller;
 
+import com.unibave.Lumina.DTOs.Evento.EventoAtualizarDTO;
 import com.unibave.Lumina.DTOs.Evento.EventoMapper;
 import com.unibave.Lumina.DTOs.Evento.EventoRequisicaoDTO;
 import com.unibave.Lumina.DTOs.Evento.EventoRespostaDTO;
@@ -146,6 +147,21 @@ public class EventoController {
         return ResponseEntity.ok(eventoMapper.toDto(evento));
     }
 
+    @PutMapping("/atualizar")
+    @Operation(summary = "Atualizar evento", description = "Atualiza o evento")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Evento atualizado"),
+            @ApiResponse(responseCode = "404", description = "Evento não atualizado")
+    })
+    public ResponseEntity<EventoRespostaDTO> atualizar(
+            @RequestBody EventoAtualizarDTO eventoAtualizarDTO){
+        Evento evento = eventoMapper.toEntity(eventoAtualizarDTO);
+        Optional<Usuario> usuario = usuarioService.buscarPorId(eventoAtualizarDTO.getIdUsuario());
+        evento.setUsuario(usuario.get());
+        evento = eventoService.salvar(evento);
+        return ResponseEntity.ok(eventoMapper.toDto(evento));
+    }
+
     @DeleteMapping("/deletar/id")
     @Operation(summary = "Deletar evento", description = "Deleta o evento")
     @ApiResponses({
@@ -153,7 +169,7 @@ public class EventoController {
             @ApiResponse(responseCode = "404", description = "Evento não deletado")
     })
     public ResponseEntity<Void> deletar(
-            @PathVariable Long id){
+            @RequestParam("id") Long id){
         eventoService.deletar(id);
         return ResponseEntity.noContent().build();
     }

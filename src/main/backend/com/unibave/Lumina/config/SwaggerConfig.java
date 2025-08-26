@@ -15,7 +15,7 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("LUMINA API REST")
                         .version("1.0.0")
-                        .description("Documentação Lumina")
+                        .description("Documentação API REST Lumina")
                         .contact(new Contact()
                                 .name("Lucca P. Müller")
                                 .email("lumina.unibave@gmail.com")));
