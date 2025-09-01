@@ -1,6 +1,6 @@
 package com.unibave.Lumina.service;
 
-import com.unibave.Lumina.exception.ResourceNotFoundException;
+import com.unibave.Lumina.exception.http.ResourceNotFoundException;
 import com.unibave.Lumina.model.entidades.Agendamento;
 import com.unibave.Lumina.model.entidades.Paciente;
 import com.unibave.Lumina.repository.AgendamentoRepository;
@@ -25,6 +25,11 @@ public class AgendamentoService {
 
     //GET
     //AGENDAMENTO
+    @Transactional(readOnly = true)
+    public long contar() {
+        return agendamentoRepository.count();
+    }
+
     @Transactional(readOnly = true)
     public Optional<Agendamento> buscarPorId(Long id) {
         return agendamentoRepository.findById(id);

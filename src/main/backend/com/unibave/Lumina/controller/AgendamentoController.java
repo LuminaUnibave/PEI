@@ -38,6 +38,13 @@ public class AgendamentoController {
         this.pacienteService = pacienteService;
     }
 
+    @GetMapping("/contar")
+    @Operation(summary = "Contar todos os agendamentos", description = "Conta a quantidade de agendamentos")
+    public ResponseEntity<Long> contar(){
+        long contador = agendamentoService.contar();
+        return ResponseEntity.ok(contador);
+    }
+
     @GetMapping("/buscar/todos")
     @Operation(summary = "Buscar todos os agendamentos", description = "Retorna todos os agendamentos")
     @ApiResponses({
@@ -130,10 +137,13 @@ public class AgendamentoController {
     public ResponseEntity<AgendamentoRespostaDTO> atualizar(
             @RequestBody AgendamentoAtualizarDTO agendamentoAtualizarDTO) {
         Agendamento agendamento = agendamentoMapper.toEntity(agendamentoAtualizarDTO);
+        //Busca as entitades referenciadas
         Optional<Paciente> paciente = pacienteService.buscarPorId(agendamentoAtualizarDTO.getIdPaciente());
         Optional<Usuario> usuario = usuarioService.buscarPorId(agendamentoAtualizarDTO.getIdUsuario());
+        //Set das entidades no agendamento
         agendamento.setPaciente(paciente.get());
         agendamento.setUsuario(usuario.get());
+        //Salva o agendamento
         agendamento = agendamentoService.salvar(agendamento);
         return ResponseEntity.ok(agendamentoMapper.toDto(agendamento));
     }

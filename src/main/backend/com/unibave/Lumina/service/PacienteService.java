@@ -1,7 +1,7 @@
 package com.unibave.Lumina.service;
 
 import com.unibave.Lumina.enums.Situacao;
-import com.unibave.Lumina.exception.ResourceNotFoundException;
+import com.unibave.Lumina.exception.http.ResourceNotFoundException;
 import com.unibave.Lumina.model.entidades.Paciente;
 import com.unibave.Lumina.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,12 @@ public class PacienteService {
 
     //GET
     //PACIENTE
+
+    @Transactional(readOnly = true)
+    public long contar() {
+        return pacienteRepository.count();
+    }
+
     @Transactional(readOnly = true)
     public Optional<Paciente> buscarPorId(Long id) {
         return pacienteRepository.findById(id);

@@ -1,7 +1,7 @@
 package com.unibave.Lumina.service;
 
 import com.unibave.Lumina.enums.Situacao;
-import com.unibave.Lumina.exception.ResourceNotFoundException;
+import com.unibave.Lumina.exception.http.ResourceNotFoundException;
 import com.unibave.Lumina.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,11 @@ public class EventoService {
     @Autowired
     public EventoService(EventoRepository eventoRepository) {
         this.eventoRepository = eventoRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public long contar() {
+        return eventoRepository.count();
     }
 
     @Transactional

@@ -29,6 +29,13 @@ public class AnexoController {
         this.anexoMapper = anexoMapper;
     }
 
+    @GetMapping("/contar")
+    @Operation(summary = "Contar todos os agendamentos", description = "Conta a quantidade de agendamentos")
+    public ResponseEntity<Long> contar(){
+        long contador = anexoService.contar();
+        return ResponseEntity.ok(contador);
+    }
+
     // GET /anexo/buscar/id?id=...
     @GetMapping("/buscar/id")
     @Operation(summary = "Buscar anexo por ID", description = "Retorna o anexo pelo seu identificador (único)")
