@@ -38,6 +38,13 @@ public class PacienteController {
         this.usuarioService = usuarioService;
     }
 
+    @GetMapping("/contar")
+    @Operation(summary = "Contar todos os agendamentos", description = "Conta a quantidade de agendamentos")
+    public ResponseEntity<Long> contar(){
+        long contador = pacienteService.contar();
+        return ResponseEntity.ok(contador);
+    }
+
     // GET /paciente/buscar/todos
     @GetMapping("/buscar/todos")
     @Operation(summary = "Buscar todos os pacientes", description = "Retorna todos os pacientes")

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +39,11 @@ class LoginController {
     public ResponseEntity<Optional<UsuarioRespostaDTO>> Login(
             @RequestParam String email,
             @RequestParam String senha) {
-        Usuario usuario = loginService.login(email, senha)
-                .orElseThrow(() -> new RuntimeException("Usuário ou senha incorreto(s)"));;
-        return ResponseEntity.ok(Optional.ofNullable(usuarioMapper.toDto(usuario)));
+            Optional<Usuario> usuario = loginService.login(email, senha);
+            if (usuario.isPresent()) {
+                return ResponseEntity.ok(Optional.ofNullable(usuarioMapper.toDto(usuario.orElse(null))));
+            }else  {
+                return ResponseEntity.status(HttpStatus.valueOf(404)).body(Optional.empty());
+            }
     }
 }

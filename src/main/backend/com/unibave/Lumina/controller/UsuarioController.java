@@ -5,12 +5,14 @@ import com.unibave.Lumina.DTOs.Usuario.UsuarioMapper;
 import com.unibave.Lumina.DTOs.Usuario.UsuarioRequisicaoDTO;
 import com.unibave.Lumina.DTOs.Usuario.UsuarioRespostaDTO;
 import com.unibave.Lumina.enums.Situacao;
+import com.unibave.Lumina.exception.http.ResourceNotFoundException;
 import com.unibave.Lumina.model.entidades.Usuario;
 import com.unibave.Lumina.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
+
     private final UsuarioService usuarioService;
     private final UsuarioMapper usuarioMapper;
 
@@ -29,6 +32,13 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService, UsuarioMapper usuarioMapper) {
         this.usuarioService = usuarioService;
         this.usuarioMapper = usuarioMapper;
+    }
+
+    @GetMapping("/contar")
+    @Operation(summary = "Contar todos os agendamentos", description = "Conta a quantidade de agendamentos")
+    public ResponseEntity<Long> contar(){
+        long contador = usuarioService.contar();
+        return ResponseEntity.ok(contador);
     }
 
     //GETS
@@ -126,26 +136,42 @@ public class UsuarioController {
     @PostMapping("/salvar")
     @Operation(summary = "Salvar usuário", description = "Salva o usúario")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuário salvo"),
+            @ApiResponse(responseCode = "201", description = "Usuário salvo"),
+            @ApiResponse(responseCode = "409", description = "Email já cadastrado"),
             @ApiResponse(responseCode = "404", description = "Usuário não salvo")
     })
-    public ResponseEntity<UsuarioRespostaDTO> salvar(@RequestBody UsuarioRequisicaoDTO usuarioRequisicaoDTO) {
+    public ResponseEntity salvar(@RequestBody UsuarioRequisicaoDTO usuarioRequisicaoDTO) {
         Usuario usuario = usuarioMapper.toEntity(usuarioRequisicaoDTO);
-        usuario = usuarioService.salvar(usuario);
-        return ResponseEntity.ok(usuarioMapper.toDto(usuario));
+        Optional<Usuario> usuarioNoBanco = usuarioService.buscarPorEmail(usuario.getEmail());
+        if(usuarioNoBanco.isEmpty()){
+            usuarioService.salvar(usuario);
+            return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
+        } else if (usuario.getEmail().equals(usuarioNoBanco.get().getEmail())) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(409)).build();
+        } else  {
+            return ResponseEntity.status(HttpStatusCode.valueOf(404)).build();
+        }
     }
 
     //PUT
     @PutMapping("/atualizar")
     @Operation(summary = "Atualizar usuário", description = "Atualiza o usuário")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuário atualizado"),
-            @ApiResponse(responseCode = "404", description = "Usuário não atualizado")
+            @ApiResponse(responseCode = "201", description = "Usuário atualizado"),
+            @ApiResponse(responseCode = "409", description = "Email já cadastrado"),
+            @ApiResponse(responseCode = "404", description = "Usuário não salvo")
     })
-    public ResponseEntity<UsuarioRespostaDTO> atualizar(@RequestBody UsuarioAtualizarDTO usuarioAtualizarDTO) {
+    public ResponseEntity atualizar(@RequestBody UsuarioAtualizarDTO usuarioAtualizarDTO) {
         Usuario usuario = usuarioMapper.toEntity(usuarioAtualizarDTO);
-        usuario = usuarioService.salvar(usuario);
-        return ResponseEntity.ok(usuarioMapper.toDto(usuario));
+        Optional<Usuario> usuarioNoBanco = usuarioService.buscarPorEmail(usuario.getEmail());
+        if(usuarioNoBanco.isEmpty()){
+            usuarioService.salvar(usuario);
+            return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
+        } else if (usuario.getEmail().equals(usuarioNoBanco.get().getEmail())) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(409)).build();
+        } else  {
+            return ResponseEntity.status(HttpStatusCode.valueOf(404)).build();
+        }
     }
 
     //DELETE
@@ -153,12 +179,17 @@ public class UsuarioController {
     @Operation(summary = "Deletar usuário", description = "Deleta o usúario")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Usuário deletado"),
-            @ApiResponse(responseCode = "404", description = "Usuário não deletado")
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     public ResponseEntity<UsuarioRespostaDTO> deletar(
             @RequestParam("id") Long id) {
-        usuarioService.deletar(id);
-        return ResponseEntity.noContent().build();
+        try {
+            usuarioService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(404)).build();
+        }
+
     }
 }
 

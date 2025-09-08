@@ -1,14 +1,18 @@
 package com.unibave.Lumina.service;
 
+import com.unibave.Lumina.exception.http.ResourceNotFoundException;
 import com.unibave.Lumina.model.entidades.Usuario;
 import com.unibave.Lumina.repository.UsuarioRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
+@Slf4j
 public class LoginService {
 
     private final UsuarioRepository usuarioRepository;
@@ -22,9 +26,17 @@ public class LoginService {
 
     //LOGIN
     public Optional<Usuario> login(String email, String senha) {
-        if (email.equals(usuarioRepository.findByEmail(email).get().getEmail()) && passwordEncoder.matches(senha, usuarioRepository.findByEmail(email).get().getSenha())) {
-          return usuarioRepository.findByEmail(email);
-        }else {
+        try{
+            Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+            if (usuario.get().getEmail().equals(email) && passwordEncoder.matches(senha, usuario.get().getSenha())) {
+                log.info("Sucesso no login usuario de ID: {}", usuario.get().getId());
+                return usuario;
+            }else {
+                log.info("Erro no login: email e/ou senha incorrto(s)");
+                return Optional.empty();
+            }
+        } catch (ResourceNotFoundException e) {
+            log.info("Erro no login: ResourceNotFoundException");
             return Optional.empty();
         }
     }

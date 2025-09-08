@@ -25,7 +25,7 @@ public class Usuario extends Entidade implements Serializable {
     @Column(name = "nome", nullable = false)
     protected String nome;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     protected String email;
 
     @Column(name = "senha", nullable = false)

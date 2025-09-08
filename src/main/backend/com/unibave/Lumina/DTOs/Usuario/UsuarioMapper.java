@@ -4,6 +4,7 @@ import com.unibave.Lumina.model.entidades.Usuario;
 import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {

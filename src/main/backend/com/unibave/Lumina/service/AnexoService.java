@@ -1,8 +1,7 @@
 package com.unibave.Lumina.service;
 
-import com.unibave.Lumina.exception.ResourceNotFoundException;
+import com.unibave.Lumina.exception.http.ResourceNotFoundException;
 import com.unibave.Lumina.model.entidades.Anexo;
-import com.unibave.Lumina.model.entidades.Paciente;
 import com.unibave.Lumina.repository.AnexoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,11 @@ public class AnexoService {
     }
 
     //GET
+    @Transactional(readOnly = true)
+    public long contar() {
+        return anexoRepository.count();
+    }
+
     //ANEXO
     @Transactional(readOnly = true)
     public Optional<Anexo> buscarPorId(Long id) {

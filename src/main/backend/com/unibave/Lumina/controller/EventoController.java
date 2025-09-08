@@ -36,6 +36,13 @@ public class EventoController {
         this.usuarioService = usuarioService;
     }
 
+    @GetMapping("/contar")
+    @Operation(summary = "Contar todos os agendamentos", description = "Conta a quantidade de agendamentos")
+    public ResponseEntity<Long> contar(){
+        long contador = eventoService.contar();
+        return ResponseEntity.ok(contador);
+    }
+
     @GetMapping("/buscar/todos")
     @Operation(summary = "Buscar todos os evento", description = "Retorna todos os eventos")
     @ApiResponses({
