@@ -21,7 +21,7 @@ public class AgendamentoRespostaDTO {
     private LocalDateTime dtCadastro;
     private LocalDateTime dtModificacao;
     private String situacao;
-    private List<AnexoListDTO> anexoList;
+    private List<ArquivoListDTO> arquivoList;
 
     @Getter
     @Setter
@@ -42,7 +42,7 @@ public class AgendamentoRespostaDTO {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class AnexoListDTO {
+    public static class ArquivoListDTO {
         private Long id;
     }
 }

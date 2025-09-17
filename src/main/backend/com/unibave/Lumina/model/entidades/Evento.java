@@ -38,7 +38,7 @@ public class Evento extends Entidade implements Serializable {
     @JsonBackReference
     private Usuario usuario;
 
-    private List<Anexo> anexos = new ArrayList<>();
+    private List<Arquivo> arquivos = new ArrayList<>();
 }
 
 

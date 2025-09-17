@@ -40,7 +40,7 @@ public class Agendamento extends Entidade implements Serializable {
     @Column(name = "observacao")
     private String observacao;
 
-    private List<Anexo> anexos = new ArrayList<>();
+    private List<Arquivo> arquivos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)

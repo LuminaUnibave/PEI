@@ -17,17 +17,16 @@ public class EmailService { // Realiza o envio dos emails
     @Autowired
     private JavaMailSender javaMailService;
 
-    @PostMapping("/enviar")
     public void enviarEmail(String destinatario, String assunto, String conteudo, MultipartFile anexo) {
         try {
             MimeMessage mensagem = javaMailService.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");
 
-            helper.setFrom("lumina.unibave@gmail.com"); // Aqui vai o remetente
+            helper.setFrom("lumina.unibave@gmail.com");
             helper.setTo(destinatario);
             helper.setSubject(assunto);
-            helper.setText(conteudo, true); // possível enviar em HTML
-            helper.addAttachment(Objects.requireNonNull(anexo.getOriginalFilename()), anexo); // Envio de anexos (PDF, TXT...)
+            helper.setText(conteudo, true);
+            helper.addAttachment(Objects.requireNonNull(anexo.getOriginalFilename()), anexo);
 
             javaMailService.send(mensagem);
 

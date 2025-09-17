@@ -14,16 +14,12 @@ import java.io.Serializable;
 @Builder
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "anexo", schema = "lumina")
-public class Anexo extends Entidade implements Serializable {
+@Table(name = "arquivo", schema = "lumina")
+public class Arquivo extends Entidade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_anexo", nullable = false, unique = true)
+    @Column(name = "id_arquivo", nullable = false, unique = true)
     private Long id;
-
-    @Column(name = "extensao", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Extensao extensao;
 
     @Column(name = "tamanho", nullable = false)
     private Long tamanho;
@@ -33,12 +29,18 @@ public class Anexo extends Entidade implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     private byte[] conteudo;
 
-    @Column(name = "nm_anexo")
-    private String nmAnexo;
+    @Column(name = "nm_arquivo")
+    private String nmArquivo;
 
     @Column(name = "id_entidade")
     private Long idEntidade;
 
     @Column(name = "tp_entidade")
     private TpEntidade tpEntidade;
+
+    public String getExtensao(String nmArquivo) {
+        int index = nmArquivo.lastIndexOf(".");
+        return (index > 0) ? nmArquivo.substring(index + 1).toUpperCase() : "ERRO";
+    }
+
 }

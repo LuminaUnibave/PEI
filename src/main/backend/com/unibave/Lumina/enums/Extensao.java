@@ -1,9 +1,11 @@
 package com.unibave.Lumina.enums;
 
+import com.unibave.Lumina.model.entidades.Arquivo;
 import lombok.Getter;
 
 @Getter
 public enum Extensao {
+    ERRO("ERRO"),
     PDF("application/pdf"),
     TXT("text/plain"),
     DOC("application/msword"),
@@ -15,5 +17,4 @@ public enum Extensao {
     Extensao(String mimeType) {
         this.mimeType = mimeType;
     }
-
 }

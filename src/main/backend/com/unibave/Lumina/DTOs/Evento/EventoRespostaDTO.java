@@ -21,7 +21,7 @@ public class EventoRespostaDTO {
     private LocalDateTime dtModificacao;
     private String situacao;
     private UsuarioDTO usuario;
-    private List<AnexoListDTO> anexoList;
+    private List<ArquivoListDTO> arquivoList;
 
     @Getter
     @Setter
@@ -35,7 +35,7 @@ public class EventoRespostaDTO {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class AnexoListDTO {
+    public static class ArquivoListDTO {
         private Long id;
     }
 }

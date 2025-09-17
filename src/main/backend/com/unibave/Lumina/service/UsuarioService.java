@@ -2,7 +2,7 @@ package com.unibave.Lumina.service;
 
 import com.unibave.Lumina.enums.Situacao;
 import com.unibave.Lumina.model.entidades.Usuario;
-import com.unibave.Lumina.repository.AnexoRepository;
+import com.unibave.Lumina.repository.ArquivoRepository;
 import com.unibave.Lumina.repository.UsuarioRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,13 @@ import java.util.Optional;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AnexoRepository anexoRepository;
+    private final ArquivoRepository arquivoRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, AnexoRepository anexoRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, ArquivoRepository arquivoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
-        this.anexoRepository = anexoRepository;
+        this.arquivoRepository = arquivoRepository;
     }
 
     //GET

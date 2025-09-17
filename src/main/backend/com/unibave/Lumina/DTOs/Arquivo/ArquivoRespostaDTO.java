@@ -1,4 +1,4 @@
-package com.unibave.Lumina.DTOs.Anexo;
+package com.unibave.Lumina.DTOs.Arquivo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnexoRespostaDTO {
+public class ArquivoRespostaDTO {
     private Long id;
     private String extensao;
     private Long tamanho;

@@ -16,8 +16,6 @@ public class EmailDTO {
     @Schema( description = "Endereço de e-mail do destinatário", example = "fulano@gmail.com")
     private String destinatario;
 
-    @NotNull
-    @NotBlank
     @Schema(description = "Assunto do e-mail", example = "Agendamento de consulta")
     private String assunto;
 
