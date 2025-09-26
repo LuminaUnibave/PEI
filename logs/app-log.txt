@@ -1,0 +1,12 @@
+2025-09-25 21:07:42.902 [restartedMain] INFO  c.unibave.Lumina.LuminaApplication - Starting LuminaApplication using Java 21.0.7 with PID 3388 (C:\PEI\target\classes started by aleha in C:\PEI)
+2025-09-25 21:07:42.940 [restartedMain] INFO  c.unibave.Lumina.LuminaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-25 21:07:50.177 [restartedMain] INFO  c.u.L.config.ServerLifecycleLogger - 🟢 Iniciando servidor...
+2025-09-25 21:07:51.844 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-25 21:07:52.029 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-25 21:07:54.159 [restartedMain] INFO  c.unibave.Lumina.LuminaApplication - Started LuminaApplication in 12.638 seconds (process running for 13.611)
+2025-09-25 21:07:54.166 [restartedMain] INFO  c.u.L.config.ServerLifecycleLogger - ✅ Servidor iniciado em 3989 ms
+2025-09-25 21:09:37.815 [http-nio-8081-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing POST /usuario/salvar
+2025-09-25 21:09:37.824 [http-nio-8081-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured POST /usuario/salvar
+2025-09-25 21:09:37.997 [http-nio-8081-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-25 21:09:37.999 [http-nio-8081-exec-2] INFO  c.u.L.aspect.ServiceLoggingAspect - INICIADO : REQUISIÇÃO = 605ecbbf-64f5-45ef-8c69-ee3f5e9dd267 -- DATA = 2025-09-25T21:09:37.999393 -- USUÁRIO = NAO_AUTENTICADO | IP=0:0:0:0:0:0:0:1 | ENDPOINT=/usuario/salvar -- MÉTODO = UsuarioService.buscarPorEmail(..) -- ARGS = [joaosilva@gmail.com]
+2025-09-25 21:09:38.194 [http-nio-8081-exec-2] INFO  c.u.L.aspect.ServiceLoggingAspect - EXECUTADO : REQUISIÇÃO = 605ecbbf-64f5-45ef-8c69-ee3f5e9dd267 -- DATA = 2025-09-25T21:09:38.184413200 -- USUÁRIO = NAO_AUTENTICADO | IP=0:0:0:0:0:0:0:1 | ENDPOINT=/usuario/salvar -- MÉTODO = UsuarioService.buscarPorEmail(..) -- DURAÇÃO = 188ms -- RESULTADO = Usuario(id=2, nome=João)
