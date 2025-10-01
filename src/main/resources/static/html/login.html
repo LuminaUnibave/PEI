@@ -1,26 +1,50 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="/css/stylesheet.css">
-        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    </head>
-    <body>
-        <div class="container">
-            <h1 id="head-text" style="text-align: center;">Lumina PEI</h1>
-            <h2 id="head-text">Login</h2>
-            <div id="inputs">
-                <label>Email</label>
-                <input type="text" id="inputEmail" placeholder="Email">
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina - RFCC</title>
+    <link rel="stylesheet" href="/css/stylesheet.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <img class="lumina" src="../img/luminaIcon.jpg" alt="Lumina">
+        <h1>Lumina</h1>
+        <div class="header-buttons">
+            <button>Contate-nos</button>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="header-box">
+                <img style="height: 90px; width: 90px;" src="../img/rfcc.jpg" alt="RFCC Logo" class="logo">
+                <h2>Rede Feminina de Combate ao Câncer</h2>
             </div>
-            <div id="inputs">
-                <label>Senha</label>
-                <input type="password" id="inputSenha" placeholder="Senha">
-            </div>
-            <div id="submit">
-                <button id="enviar">Enviar</button>
+            <form>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <i class="bx bxs-user"></i>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" required>
+                    <i class="bx bxs-lock-alt"></i>
+                </div>
+                <button type="submit" class="access-button">Acessar</button>
+            </form>
+            <div class="social-icons">
+                <a href="#" class="google"><img src="../img/google.jpg" alt="Google"></a>
+                <a href="#" class="facebook"><img src="../img/facebook.jpg" alt="Facebook"></a>
+                <a href="#" class="instagram"><img src="../img/instagram.jpg" alt="Instagram"></a>
             </div>
         </div>
-    </body>
-    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="/js/script.js"></script>
+    </div>
+</main>
+</body>
 </html>
