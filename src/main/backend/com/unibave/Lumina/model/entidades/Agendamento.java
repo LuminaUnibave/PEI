@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.unibave.Lumina.model.abstratos.Entidade;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -36,6 +37,10 @@ public class Agendamento extends Entidade implements Serializable {
 
     @Column(name = "dt_agendamento", nullable = false)
     private LocalDateTime dtAgendamento;
+
+    @CreationTimestamp // Informações de data automáticas quando o salvamento é realizado
+    @Column(name = "dt_criacao_agendamento", nullable = false, updatable = false)
+    private LocalDateTime dtCriacao;
 
     @Column(name = "observacao")
     private String observacao;
