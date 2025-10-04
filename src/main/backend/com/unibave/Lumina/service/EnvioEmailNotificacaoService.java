@@ -27,9 +27,7 @@ public class EnvioEmailNotificacaoService {
     public void lembreteConsulta(Agendamento agendamento) {
         LocalDateTime dataLembrete = agendamento.getDtAgendamento().minusDays(1); // Subtrai 1 dia da data da consulta para saber quando enviar o e-mail
 
-        Instant instante = dataLembrete.atZone(ZoneId.of("America/Sao_Paulo")).toInstant();
-
-        System.out.print("Lembrete vai ser enviado em: " + dataLembrete);
+        Instant instante = dataLembrete.atZone(ZoneId.of("America/Sao_Paulo")).toInstant(); // Usa o horário de São Paulo como base
 
         taskScheduler.schedule(() -> {
             emailService.enviarEmail(
