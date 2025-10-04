@@ -16,11 +16,13 @@ public class AgendamentoService {
 
     private final AgendamentoRepository agendamentoRepository;
     private final PacienteRepository pacienteRepository;
+    private final EnvioEmailNotificacaoService envioEmailNotificacaoService;
 
     @Autowired
-    public AgendamentoService(AgendamentoRepository agendamentoRepository, PacienteRepository pacienteRepository) {
+    public AgendamentoService(AgendamentoRepository agendamentoRepository, PacienteRepository pacienteRepository, EnvioEmailNotificacaoService envioEmailNotificacaoService) {
         this.agendamentoRepository = agendamentoRepository;
         this.pacienteRepository = pacienteRepository;
+        this.envioEmailNotificacaoService = envioEmailNotificacaoService;
     }
 
     //GET
@@ -66,7 +68,10 @@ public class AgendamentoService {
         Paciente paciente = pacienteRepository.findById(agendamento.getPaciente().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado"));
         agendamento.setPaciente(paciente);
-        return agendamentoRepository.save(agendamento);
+
+        Agendamento agendamentoSalvo = agendamentoRepository.save(agendamento);
+        envioEmailNotificacaoService.lembreteConsulta(agendamentoSalvo);
+        return agendamentoSalvo;
     }
 
     //DELETE

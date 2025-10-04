@@ -7,3 +7,446 @@
 2025-10-04T11:08:05.044-03:00  INFO 20432 --- [Lumina] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-10-04T11:08:05.058-03:00  INFO 20432 --- [Lumina] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
 2025-10-04T11:08:05.064-03:00  INFO 20432 --- [Lumina] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2025-10-04T12:12:12.758-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Starting LuminaApplication using Java 21.0.7 with PID 27908 (C:\Users\anton\IdeaProjects\PEI\target\classes started by anton in C:\Users\anton\IdeaProjects\PEI)
+2025-10-04T12:12:12.760-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-04T12:12:12.823-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\anton\.m2\repository\io\github\cdimascio\java-dotenv\5.2.2\java-dotenv-5.2.2.jar referenced one or more files that do not exist: file:/C:/Users/anton/.m2/repository/io/github/cdimascio/java-dotenv/5.2.2/kotlin-stdlib-1.4.0.jar,file:/C:/Users/anton/.m2/repository/io/github/cdimascio/java-dotenv/5.2.2/kotlin-stdlib-common-1.4.0.jar,file:/C:/Users/anton/.m2/repository/io/github/cdimascio/java-dotenv/5.2.2/annotations-13.0.jar
+2025-10-04T12:12:12.823-03:00  INFO 27908 --- [Lumina] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-10-04T12:12:12.823-03:00  INFO 27908 --- [Lumina] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-10-04T12:12:15.935-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:12:15.935-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-10-04T12:12:15.987-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:12:15.989-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:12:15.990-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:12:15.991-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:12:15.994-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:12:15.994-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 0 JDBC repository interfaces.
+2025-10-04T12:12:16.009-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:12:16.010-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-04T12:12:16.230-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 214 ms. Found 5 JPA repository interfaces.
+2025-10-04T12:12:16.241-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:12:16.241-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data LDAP repositories in DEFAULT mode.
+2025-10-04T12:12:16.250-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:12:16.250-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:12:16.251-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:12:16.251-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:12:16.251-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:12:16.252-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 LDAP repository interfaces.
+2025-10-04T12:12:17.304-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-10-04T12:12:17.325-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-04T12:12:17.325-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-04T12:12:17.388-03:00  INFO 27908 --- [Lumina] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-04T12:12:17.388-03:00  INFO 27908 --- [Lumina] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4563 ms
+2025-10-04T12:12:17.638-03:00  INFO 27908 --- [Lumina] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-04T12:12:17.740-03:00  INFO 27908 --- [Lumina] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-10-04T12:12:17.791-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-04T12:12:18.191-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-04T12:12:18.231-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-04T12:12:18.562-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7084f50b
+2025-10-04T12:12:18.564-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-04T12:12:18.693-03:00  INFO 27908 --- [Lumina] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-04T12:12:20.671-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-04T12:12:21.338-03:00  INFO 27908 --- [Lumina] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:12:22.737-03:00  WARN 27908 --- [Lumina] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-04T12:12:22.831-03:00  WARN 27908 --- [Lumina] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: a92a63f6-c224-4a1f-bf8c-fd8e63d289cb
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-10-04T12:12:22.857-03:00  INFO 27908 --- [Lumina] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-10-04T12:12:23.131-03:00 DEBUG 27908 --- [Lumina] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-10-04T12:12:23.329-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-10-04T12:12:23.395-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-10-04T12:12:24.551-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.l.c.support.AbstractContextSource    : Property 'userDn' not set - anonymous context will be used for read-only operations
+2025-10-04T12:12:24.820-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-04T12:12:25.085-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2025-10-04T12:12:25.115-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Started LuminaApplication in 13.499 seconds (process running for 28.456)
+2025-10-04T12:12:32.387-03:00  INFO 27908 --- [Lumina] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-04T12:12:32.388-03:00  INFO 27908 --- [Lumina] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-04T12:12:32.389-03:00  INFO 27908 --- [Lumina] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-10-04T12:12:32.433-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /swagger-ui/index.html
+2025-10-04T12:12:32.455-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /swagger-ui/index.html
+2025-10-04T12:12:32.560-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:12:32.611-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /swagger-ui/swagger-ui.css
+2025-10-04T12:12:32.612-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /swagger-ui/swagger-ui.css
+2025-10-04T12:12:32.629-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:12:32.632-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /swagger-ui/index.css
+2025-10-04T12:12:32.635-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /swagger-ui/index.css
+2025-10-04T12:12:32.634-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /swagger-ui/swagger-ui-bundle.js
+2025-10-04T12:12:32.637-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /swagger-ui/swagger-ui-bundle.js
+2025-10-04T12:12:32.640-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /swagger-ui/swagger-ui-standalone-preset.js
+2025-10-04T12:12:32.642-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /swagger-ui/swagger-ui-standalone-preset.js
+2025-10-04T12:12:32.644-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /swagger-ui/swagger-initializer.js
+2025-10-04T12:12:32.644-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:12:32.644-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /swagger-ui/swagger-initializer.js
+2025-10-04T12:12:32.659-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:12:32.677-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:12:32.689-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:12:32.950-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /v3/api-docs/swagger-config
+2025-10-04T12:12:32.950-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /v3/api-docs/swagger-config
+2025-10-04T12:12:33.073-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:12:33.095-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /v3/api-docs
+2025-10-04T12:12:33.096-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /v3/api-docs
+2025-10-04T12:12:35.633-03:00  INFO 27908 --- [Lumina] [http-nio-8081-exec-9] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 2519 ms
+2025-10-04T12:12:35.690-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:13:33.086-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /agendamento/salvar
+2025-10-04T12:13:33.087-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /agendamento/salvar
+2025-10-04T12:13:33.505-03:00 DEBUG 27908 --- [Lumina] [http-nio-8081-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-10-04T12:24:17.738-03:00  INFO 27908 --- [Lumina] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2025-10-04T12:24:17.743-03:00  INFO 27908 --- [Lumina] [Thread-5] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-04T12:24:17.751-03:00  INFO 27908 --- [Lumina] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-04T12:24:17.799-03:00  INFO 27908 --- [Lumina] [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:24:17.804-03:00  INFO 27908 --- [Lumina] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-04T12:24:17.813-03:00  INFO 27908 --- [Lumina] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-04T12:24:17.940-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Starting LuminaApplication using Java 21.0.7 with PID 27908 (C:\Users\anton\IdeaProjects\PEI\target\classes started by anton in C:\Users\anton\IdeaProjects\PEI)
+2025-10-04T12:24:17.941-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-04T12:24:18.342-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:24:18.342-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-10-04T12:24:18.363-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:18.365-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:18.367-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:18.367-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:18.369-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:18.371-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 JDBC repository interfaces.
+2025-10-04T12:24:18.375-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:24:18.375-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-04T12:24:18.403-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 5 JPA repository interfaces.
+2025-10-04T12:24:18.405-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:24:18.405-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data LDAP repositories in DEFAULT mode.
+2025-10-04T12:24:18.411-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:18.413-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:18.413-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:18.413-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:18.413-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:18.413-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 LDAP repository interfaces.
+2025-10-04T12:24:18.617-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-10-04T12:24:18.620-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-04T12:24:18.620-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-04T12:24:18.654-03:00  INFO 27908 --- [Lumina] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-04T12:24:18.654-03:00  INFO 27908 --- [Lumina] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 708 ms
+2025-10-04T12:24:18.716-03:00  INFO 27908 --- [Lumina] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-04T12:24:18.723-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-04T12:24:18.735-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-04T12:24:18.735-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-10-04T12:24:18.810-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@2fa8e8dc
+2025-10-04T12:24:18.810-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-10-04T12:24:18.840-03:00  INFO 27908 --- [Lumina] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-04T12:24:19.042-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-04T12:24:19.478-03:00  INFO 27908 --- [Lumina] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:24:19.507-03:00  WARN 27908 --- [Lumina] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'agendamentoController' defined in file [C:\Users\anton\IdeaProjects\PEI\target\classes\com\unibave\Lumina\controller\AgendamentoController.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.unibave.Lumina.service.AgendamentoService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-10-04T12:24:19.507-03:00  INFO 27908 --- [Lumina] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:24:19.507-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2025-10-04T12:24:19.547-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2025-10-04T12:24:19.547-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-04T12:24:19.559-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-04T12:24:19.610-03:00 ERROR 27908 --- [Lumina] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.unibave.Lumina.controller.AgendamentoController required a bean of type 'com.unibave.Lumina.service.AgendamentoService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.unibave.Lumina.service.AgendamentoService' in your configuration.
+
+2025-10-04T12:24:21.142-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Starting LuminaApplication using Java 21.0.7 with PID 27908 (C:\Users\anton\IdeaProjects\PEI\target\classes started by anton in C:\Users\anton\IdeaProjects\PEI)
+2025-10-04T12:24:21.143-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-04T12:24:22.253-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:24:22.253-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-10-04T12:24:22.272-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:22.274-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:22.277-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:22.280-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:22.282-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:24:22.282-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24 ms. Found 0 JDBC repository interfaces.
+2025-10-04T12:24:22.291-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:24:22.291-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-04T12:24:22.330-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 5 JPA repository interfaces.
+2025-10-04T12:24:22.339-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:24:22.341-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data LDAP repositories in DEFAULT mode.
+2025-10-04T12:24:22.351-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:22.352-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:22.352-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:22.352-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:22.353-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:24:22.353-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 LDAP repository interfaces.
+2025-10-04T12:24:22.606-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-10-04T12:24:22.610-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-04T12:24:22.612-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-04T12:24:22.730-03:00  INFO 27908 --- [Lumina] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-04T12:24:22.730-03:00  INFO 27908 --- [Lumina] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1584 ms
+2025-10-04T12:24:22.802-03:00  INFO 27908 --- [Lumina] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-04T12:24:22.811-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-04T12:24:22.822-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-04T12:24:22.822-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2025-10-04T12:24:22.928-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@e905aa6
+2025-10-04T12:24:22.928-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2025-10-04T12:24:22.945-03:00  INFO 27908 --- [Lumina] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-04T12:24:23.227-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-04T12:24:23.778-03:00  INFO 27908 --- [Lumina] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:24:24.413-03:00  WARN 27908 --- [Lumina] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-04T12:24:24.440-03:00  WARN 27908 --- [Lumina] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: c5f8ec78-39ac-47e4-bb14-97e21c2e6897
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-10-04T12:24:24.443-03:00  INFO 27908 --- [Lumina] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-10-04T12:24:24.473-03:00 DEBUG 27908 --- [Lumina] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-10-04T12:24:24.552-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-10-04T12:24:24.571-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-10-04T12:24:24.931-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.l.c.support.AbstractContextSource    : Property 'userDn' not set - anonymous context will be used for read-only operations
+2025-10-04T12:24:24.976-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-04T12:24:25.017-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2025-10-04T12:24:25.023-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Started LuminaApplication in 3.927 seconds (process running for 748.364)
+2025-10-04T12:24:25.027-03:00  INFO 27908 --- [Lumina] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-10-04T12:27:50.068-03:00  INFO 27908 --- [Lumina] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-10-04T12:27:50.070-03:00  INFO 27908 --- [Lumina] [Thread-7] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-04T12:27:50.074-03:00  INFO 27908 --- [Lumina] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-04T12:27:50.078-03:00  INFO 27908 --- [Lumina] [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:27:50.078-03:00  INFO 27908 --- [Lumina] [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2025-10-04T12:27:50.080-03:00  INFO 27908 --- [Lumina] [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2025-10-04T12:27:50.190-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Starting LuminaApplication using Java 21.0.7 with PID 27908 (C:\Users\anton\IdeaProjects\PEI\target\classes started by anton in C:\Users\anton\IdeaProjects\PEI)
+2025-10-04T12:27:50.190-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-04T12:27:50.719-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:27:50.719-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-10-04T12:27:50.733-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:50.735-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:50.736-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:50.738-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:50.740-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:50.740-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 JDBC repository interfaces.
+2025-10-04T12:27:50.747-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:27:50.747-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-04T12:27:50.777-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 5 JPA repository interfaces.
+2025-10-04T12:27:50.779-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:27:50.780-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data LDAP repositories in DEFAULT mode.
+2025-10-04T12:27:50.787-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:50.788-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:50.788-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:50.788-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:50.788-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:50.788-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 LDAP repository interfaces.
+2025-10-04T12:27:51.003-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-10-04T12:27:51.007-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-04T12:27:51.007-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-04T12:27:51.036-03:00  INFO 27908 --- [Lumina] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-04T12:27:51.036-03:00  INFO 27908 --- [Lumina] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 843 ms
+2025-10-04T12:27:51.111-03:00  INFO 27908 --- [Lumina] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-04T12:27:51.116-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-04T12:27:51.137-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-04T12:27:51.139-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2025-10-04T12:27:51.320-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection org.postgresql.jdbc.PgConnection@53315f5b
+2025-10-04T12:27:51.321-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2025-10-04T12:27:51.335-03:00  INFO 27908 --- [Lumina] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-4)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-04T12:27:51.555-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-04T12:27:52.096-03:00  INFO 27908 --- [Lumina] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:27:52.110-03:00  WARN 27908 --- [Lumina] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'agendamentoController': Resolution of declared constructors on bean Class [com.unibave.Lumina.controller.AgendamentoController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@38a027e4] failed
+2025-10-04T12:27:52.111-03:00  INFO 27908 --- [Lumina] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:27:52.111-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2025-10-04T12:27:52.115-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2025-10-04T12:27:52.116-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-04T12:27:52.125-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-04T12:27:52.131-03:00 ERROR 27908 --- [Lumina] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'agendamentoController': Resolution of declared constructors on bean Class [com.unibave.Lumina.controller.AgendamentoController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@38a027e4] failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:384) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1320) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1215) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:347) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1155) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1121) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1056) ~[spring-beans-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.5.jar:6.2.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.4.4.jar:3.4.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.4.4.jar:3.4.4]
+	at com.unibave.Lumina.LuminaApplication.main(LuminaApplication.java:18) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.4.4.jar:3.4.4]
+Caused by: java.lang.NoClassDefFoundError: com/unibave/Lumina/service/AgendamentoService
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:3549) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructors(Class.java:2727) ~[na:na]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:379) ~[spring-beans-6.2.5.jar:6.2.5]
+	... 23 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.unibave.Lumina.service.AgendamentoService
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:534) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:513) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.4.4.jar:3.4.4]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[na:na]
+	... 27 common frames omitted
+
+2025-10-04T12:27:53.661-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Starting LuminaApplication using Java 21.0.7 with PID 27908 (C:\Users\anton\IdeaProjects\PEI\target\classes started by anton in C:\Users\anton\IdeaProjects\PEI)
+2025-10-04T12:27:53.661-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-04T12:27:54.312-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:27:54.312-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-10-04T12:27:54.329-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:54.330-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:54.332-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:54.336-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:54.336-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:27:54.336-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 0 JDBC repository interfaces.
+2025-10-04T12:27:54.342-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:27:54.342-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-04T12:27:54.383-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 5 JPA repository interfaces.
+2025-10-04T12:27:54.388-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:27:54.388-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data LDAP repositories in DEFAULT mode.
+2025-10-04T12:27:54.396-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:54.396-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:54.396-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:54.396-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:54.396-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:27:54.396-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 LDAP repository interfaces.
+2025-10-04T12:27:54.664-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-10-04T12:27:54.665-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-04T12:27:54.665-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-04T12:27:54.703-03:00  INFO 27908 --- [Lumina] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-04T12:27:54.703-03:00  INFO 27908 --- [Lumina] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1040 ms
+2025-10-04T12:27:55.218-03:00  INFO 27908 --- [Lumina] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-04T12:27:55.222-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-04T12:27:55.245-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-04T12:27:55.246-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2025-10-04T12:27:55.360-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection org.postgresql.jdbc.PgConnection@6d494060
+2025-10-04T12:27:55.360-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2025-10-04T12:27:55.373-03:00  INFO 27908 --- [Lumina] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-5)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-04T12:27:55.626-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-04T12:27:55.982-03:00  INFO 27908 --- [Lumina] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:27:56.354-03:00  WARN 27908 --- [Lumina] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-04T12:27:56.402-03:00  WARN 27908 --- [Lumina] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 56b79f14-7d8d-4bb0-82d1-3291592104d1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-10-04T12:27:56.407-03:00  INFO 27908 --- [Lumina] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-10-04T12:27:56.443-03:00 DEBUG 27908 --- [Lumina] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-10-04T12:27:56.552-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-10-04T12:27:56.568-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-10-04T12:27:56.897-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.l.c.support.AbstractContextSource    : Property 'userDn' not set - anonymous context will be used for read-only operations
+2025-10-04T12:27:56.997-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-04T12:27:57.063-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2025-10-04T12:27:57.071-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Started LuminaApplication in 3.457 seconds (process running for 960.412)
+2025-10-04T12:27:57.076-03:00  INFO 27908 --- [Lumina] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-10-04T12:30:42.170-03:00  INFO 27908 --- [Lumina] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-10-04T12:30:42.170-03:00  INFO 27908 --- [Lumina] [Thread-14] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-04T12:30:42.170-03:00  INFO 27908 --- [Lumina] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-04T12:30:42.184-03:00  INFO 27908 --- [Lumina] [Thread-14] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:30:42.184-03:00  INFO 27908 --- [Lumina] [Thread-14] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2025-10-04T12:30:42.186-03:00  INFO 27908 --- [Lumina] [Thread-14] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2025-10-04T12:30:42.281-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Starting LuminaApplication using Java 21.0.7 with PID 27908 (C:\Users\anton\IdeaProjects\PEI\target\classes started by anton in C:\Users\anton\IdeaProjects\PEI)
+2025-10-04T12:30:42.281-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-04T12:30:42.694-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:30:42.695-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-10-04T12:30:42.709-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:30:42.710-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:30:42.711-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:30:42.713-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:30:42.714-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-10-04T12:30:42.714-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 JDBC repository interfaces.
+2025-10-04T12:30:42.721-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:30:42.721-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-04T12:30:42.762-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39 ms. Found 5 JPA repository interfaces.
+2025-10-04T12:30:42.767-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-04T12:30:42.767-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data LDAP repositories in DEFAULT mode.
+2025-10-04T12:30:42.774-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:30:42.774-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:30:42.774-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:30:42.774-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:30:42.774-03:00  INFO 27908 --- [Lumina] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+2025-10-04T12:30:42.774-03:00  INFO 27908 --- [Lumina] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 LDAP repository interfaces.
+2025-10-04T12:30:43.070-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-10-04T12:30:43.074-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-04T12:30:43.074-03:00  INFO 27908 --- [Lumina] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-04T12:30:43.105-03:00  INFO 27908 --- [Lumina] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-04T12:30:43.105-03:00  INFO 27908 --- [Lumina] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 822 ms
+2025-10-04T12:30:43.170-03:00  INFO 27908 --- [Lumina] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-04T12:30:43.172-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-04T12:30:43.181-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-04T12:30:43.183-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2025-10-04T12:30:43.268-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-6 - Added connection org.postgresql.jdbc.PgConnection@7c5c3674
+2025-10-04T12:30:43.268-03:00  INFO 27908 --- [Lumina] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2025-10-04T12:30:43.284-03:00  INFO 27908 --- [Lumina] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-6)']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-04T12:30:43.461-03:00  INFO 27908 --- [Lumina] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-04T12:30:43.754-03:00  INFO 27908 --- [Lumina] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-04T12:30:44.050-03:00  WARN 27908 --- [Lumina] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-04T12:30:44.063-03:00  WARN 27908 --- [Lumina] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: ace20251-a8b0-4ab7-9777-37d723125d00
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-10-04T12:30:44.065-03:00  INFO 27908 --- [Lumina] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-10-04T12:30:44.081-03:00 DEBUG 27908 --- [Lumina] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-10-04T12:30:44.129-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-10-04T12:30:44.144-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-10-04T12:30:44.354-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.l.c.support.AbstractContextSource    : Property 'userDn' not set - anonymous context will be used for read-only operations
+2025-10-04T12:30:44.398-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-04T12:30:44.420-03:00  INFO 27908 --- [Lumina] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2025-10-04T12:30:44.424-03:00  INFO 27908 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Started LuminaApplication in 2.168 seconds (process running for 1127.766)
+2025-10-04T12:30:44.426-03:00  INFO 27908 --- [Lumina] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
