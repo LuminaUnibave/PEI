@@ -1,0 +1,35 @@
+2025-09-25T20:47:16.651-03:00  INFO 8324 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Starting LuminaApplication using Java 21.0.7 with PID 8324 (C:\PEI\target\classes started by aleha in C:\PEI)
+2025-09-25T20:47:16.653-03:00  INFO 8324 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-09-25T20:47:23.147-03:00  INFO 8324 --- [Lumina] [restartedMain] c.u.Lumina.config.ServerLifecycleLogger  : 🟢 Iniciando servidor...
+2025-09-25T20:47:24.440-03:00  WARN 8324 --- [Lumina] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-25T20:47:24.524-03:00  WARN 8324 --- [Lumina] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d170cb1b-9d12-4f69-99cb-674620ef8442
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-09-25T20:47:24.541-03:00  INFO 8324 --- [Lumina] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-25T20:47:24.732-03:00 DEBUG 8324 --- [Lumina] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-25T20:47:26.325-03:00  INFO 8324 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Started LuminaApplication in 10.617 seconds (process running for 11.555)
+2025-09-25T20:47:26.333-03:00  INFO 8324 --- [Lumina] [restartedMain] c.u.Lumina.config.ServerLifecycleLogger  : ✅ Servidor iniciado em 3186 ms
+2025-09-25T20:47:47.807-03:00  INFO 8324 --- [Lumina] [SpringApplicationShutdownHook] c.u.Lumina.config.ServerLifecycleLogger  : 🔴 Finalizando servidor. Tempo online = 24660 ms (≈ 0 minutos)
+2025-09-25T20:47:51.503-03:00  INFO 11752 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Starting LuminaApplication using Java 21.0.7 with PID 11752 (C:\PEI\target\classes started by aleha in C:\PEI)
+2025-09-25T20:47:51.506-03:00  INFO 11752 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-09-25T20:47:57.642-03:00  INFO 11752 --- [Lumina] [restartedMain] c.u.Lumina.config.ServerLifecycleLogger  : 🟢 Iniciando servidor...
+2025-09-25T20:47:58.891-03:00  WARN 11752 --- [Lumina] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-25T20:47:58.970-03:00  WARN 11752 --- [Lumina] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 5667b2fc-00d8-43d1-9bb4-a52f6fbe1941
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-09-25T20:47:58.981-03:00  INFO 11752 --- [Lumina] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-25T20:47:59.127-03:00 DEBUG 11752 --- [Lumina] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-25T20:48:00.780-03:00  INFO 11752 --- [Lumina] [restartedMain] com.unibave.Lumina.LuminaApplication     : Started LuminaApplication in 10.15 seconds (process running for 10.996)
+2025-09-25T20:48:00.787-03:00  INFO 11752 --- [Lumina] [restartedMain] c.u.Lumina.config.ServerLifecycleLogger  : ✅ Servidor iniciado em 3145 ms
+2025-09-25T20:48:58.885-03:00 DEBUG 11752 --- [Lumina] [http-nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /usuario/salvar
+2025-09-25T20:48:58.898-03:00 DEBUG 11752 --- [Lumina] [http-nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /usuario/salvar
+2025-09-25T20:48:59.115-03:00 DEBUG 11752 --- [Lumina] [http-nio-8081-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-09-25T20:48:59.121-03:00  INFO 11752 --- [Lumina] [http-nio-8081-exec-1] c.u.Lumina.aspect.ServiceLoggingAspect   : INICIADO : REQUISIÇÃO = e9513eba-29ab-40ec-9ffe-bfd2e7ccc34f -- DATA = 2025-09-25T20:48:59.121508400 -- USUÁRIO = NAO_AUTENTICADO | IP=0:0:0:0:0:0:0:1 | ENDPOINT=/usuario/salvar -- MÉTODO = UsuarioService.buscarPorEmail(..) -- ARGS = [joaosilva@gmail.com]
+2025-09-25T20:48:59.344-03:00  INFO 11752 --- [Lumina] [http-nio-8081-exec-1] c.u.Lumina.aspect.ServiceLoggingAspect   : EXECUTADO : REQUISIÇÃO = e9513eba-29ab-40ec-9ffe-bfd2e7ccc34f -- DATA = 2025-09-25T20:48:59.334808 -- USUÁRIO = NAO_AUTENTICADO | IP=0:0:0:0:0:0:0:1 | ENDPOINT=/usuario/salvar -- MÉTODO = UsuarioService.buscarPorEmail(..) -- DURAÇÃO = 221ms -- RESULTADO = Usuario(id=2, nome=João)
+2025-09-25T20:49:36.523-03:00  INFO 11752 --- [Lumina] [SpringApplicationShutdownHook] c.u.Lumina.config.ServerLifecycleLogger  : 🔴 Finalizando servidor. Tempo online = 98881 ms (≈ 1 minutos)

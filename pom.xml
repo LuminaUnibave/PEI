@@ -63,6 +63,14 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
+        <!-- Logback -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>7.4</version>
+        </dependency>
+
+
         <!-- Devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
