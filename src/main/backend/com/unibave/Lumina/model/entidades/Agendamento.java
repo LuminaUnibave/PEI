@@ -39,7 +39,7 @@ public class Agendamento extends Entidade implements Serializable {
     private LocalDateTime dtAgendamento;
 
     @CreationTimestamp // Informações de data automáticas quando o salvamento é realizado
-    @Column(name = "dt_criacao_agendamento", nullable = false, updatable = false)
+    @Column(name = "dt_cadastro", nullable = false, updatable = false)
     private LocalDateTime dtCriacao;
 
     @Column(name = "observacao")
