@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/paginaInicial.css">
+    <title>Lumina PEI</title>
+</head>
+
+<body>
+    <header class="header">
+        <section>
+            <a href="#" class="logo">
+                <img width="80" height="80" src="../img/RFCCLogo.png" alt="Lumina Logo">
+            </a>
+
+            <nav class="navbar">
+                <a href="#">Home</a>
+                <a href="#about">Sobre nós</a>
+                <a href="#event">Eventos</a>
+                <a href="#address">Endereço</a>
+                <a href="#">Contate-nos</a>
+            </nav>
+
+            <div class="icons"> 
+                <a href="https://www.facebook.com/RedeFemininaOrleans/?locale=pt_BR"><img style="margin-bottom: 20px;"width="50" height="50" src="../img/FacebookIcon.png" alt="Facebook"></a>
+                <a href="https://www.instagram.com/redefemininaorleans/"><img style="margin-top: 30px;"width="60" height="60" src="../img/InstagramIcon.png" alt="Instagram"></a>
+            </div>
+        </section>
+    </header>
+
+    <div class="home-container">
+        <div class="carousel" id="carousel">
+            <div class="carousel-slide"></div>
+            <div class="carousel-slide"></div>
+            <div class="carousel-slide"></div>
+            <!-- Adicione mais slides se necessário -->
+        </div>
+
+        <!-- Indicadores -->
+        <div class="carousel-indicators">
+            <span class="indicator active" onclick="currentSlide(0)"></span>
+            <span class="indicator" onclick="currentSlide(1)"></span>
+            <span class="indicator" onclick="currentSlide(2)"></span>
+        </div>
+
+        <section id="home">
+            <div class="content">
+                <h3>Previna-se, hoje, amanhã e sempre!</h3>
+                <a href="#" class="btn">Contate-nos</a>
+            </div>
+        </section>
+    </div>
+
+    <section class="about" id="about">
+        <div class="container">
+            <h3>Conheça Nossa História</h3>
+            <h1>Desde 1998 ajudando as mulheres.</h1>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="../img/RFCCUnibave.jpeg" alt="Grupo RFCC">
+                </div>
+                <div class="about-text">
+                    <p style="font-size: 1.3rem;">A Rede Feminina de Combate ao Câncer (RFCC) de Orleans foi fundada em 8 de maio de 1998, a partir da iniciativa e do trabalho de um grupo de mulheres voluntárias. Desde sua criação, a entidade tem se dedicado a oferecer assistência gratuita, conscientização e prevenção do câncer, principalmente o de mama e o do colo de útero, às mulheres da comunidade.</p>
+                    <a href="#" class="btn">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../js/paginaInicial.js"></script>
+</body>
+
+</html>
