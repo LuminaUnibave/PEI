@@ -24,10 +24,8 @@ public class Arquivo extends Entidade implements Serializable {
     @Column(name = "tamanho", nullable = false)
     private Long tamanho;
 
-    @Column(name = "conteudo", columnDefinition = "bytea")
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] conteudo;
+    @Column(name = "caminho", columnDefinition = "bytea")
+    private String caminho;
 
     @Column(name = "nm_arquivo")
     private String nmArquivo;
@@ -42,5 +40,4 @@ public class Arquivo extends Entidade implements Serializable {
         int index = nmArquivo.lastIndexOf(".");
         return (index > 0) ? nmArquivo.substring(index + 1).toUpperCase() : "ERRO";
     }
-
 }
