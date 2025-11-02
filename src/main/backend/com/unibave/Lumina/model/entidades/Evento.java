@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "evento", schema = "lumina")
+@Table(name = "evento", schema = "public")
 public class Evento extends Entidade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
