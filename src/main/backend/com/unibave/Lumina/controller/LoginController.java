@@ -1,5 +1,6 @@
 package com.unibave.Lumina.controller;
 
+import com.unibave.Lumina.DTOs.Usuario.UsuarioLoginDTO;
 import com.unibave.Lumina.DTOs.Usuario.UsuarioMapper;
 import com.unibave.Lumina.DTOs.Usuario.UsuarioRespostaDTO;
 import com.unibave.Lumina.model.entidades.Usuario;
@@ -11,13 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/login")
 class LoginController {
 
@@ -30,15 +29,14 @@ class LoginController {
         this.usuarioMapper = usuarioMapper;
     }
 
-    @GetMapping("/logar")
+    @PostMapping("/logar")
     @Operation(summary = "Logar no sistema", description = "Loga no sistema caso o email e senha estejam corretos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Login bem sucedido"),
             @ApiResponse(responseCode = "404", description = "Login mal sucedido")
     })
     public ResponseEntity<Optional<UsuarioRespostaDTO>> Login(
-            @RequestParam String email,
-            @RequestParam String senha) {
+            @RequestBody UsuarioLoginDTO usuarioLoginDTO) {
             Optional<Usuario> usuario = loginService.login(email, senha);
             if (usuario.isPresent()) {
                 return ResponseEntity.ok(Optional.ofNullable(usuarioMapper.toDto(usuario.orElse(null))));

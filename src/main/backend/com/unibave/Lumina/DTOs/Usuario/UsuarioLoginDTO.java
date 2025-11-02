@@ -12,7 +12,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "DTO para atualizar usuário (UsuarioAtualizarDTO)")
-public class UsuarioAtualizarDTO {
+public class UsuarioLoginDTO {
+
+    @Schema(description = "Id do usuário", example = "1")
+    @NotBlank
+    @NotNull
+    private Long id;
+
+    @Schema(description = "Nome do usuário", example = "gabriel")
+    @NotBlank
+    @NotNull
+    private String nome;
 
     @Schema(description = "Email do usuário", example = "gabrielsilva@gmail.com")
     @Email(message = "Email inválido")
@@ -22,4 +32,9 @@ public class UsuarioAtualizarDTO {
     @NotBlank
     @NotNull
     private String senha;
+
+    @Schema(description = "Tipo do usuário", example = "OPERADOR")
+    @NotBlank
+    @NotNull
+    private String tpUsuario;
 }
