@@ -64,11 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         messageArea.style.display = 'none';
         
+        // 1. OBTÉM O TOKEN JWT
+        const token = localStorage.getItem('jwtToken');
+        
+        if (!token) {
+            showMessage("❌ Erro de autenticação: Token JWT não encontrado. Faça o login primeiro.", true);
+            return;
+        }
+        
         const tipo = tipoSelect.value;
         const idUsuario = idUsuarioInput.value;
         
+        // 2. Monta o Payload
         let payload = {
-            // Adiciona segundos para o LocalDateTime: 2025-11-05T10:00:00
             dtAgendamento: dtAgendamentoInput.value + ':00', 
             observacao: document.getElementById('descricao').value,
             idUsuario: parseInt(idUsuario),
@@ -77,43 +85,41 @@ document.addEventListener('DOMContentLoaded', () => {
         let endpoint = '';
         
         if (tipo === 'AGENDAMENTO') {
-            // Rota: /agendamento/salvar
             endpoint = `${API_BASE_URL}/agendamento/salvar`;
             
             payload.idPaciente = parseInt(document.getElementById('idPaciente').value);
             payload.tpVisita = document.getElementById('tpVisita').value;
             
         } else if (tipo === 'EVENTO') {
-            // Rota: /evento/salvar
             endpoint = `${API_BASE_URL}/evento/salvar`;
             
             payload.nmEvento = document.getElementById('nmEvento').value;
-            payload.descricao = payload.observacao; // Usa observacao como descricao para o Evento
-            delete payload.observacao; // Remove observacao se a API só espera descricao
+            payload.descricao = payload.observacao; 
+            delete payload.observacao; 
         } else {
             showMessage("Selecione um tipo de registro válido.", true);
             return;
         }
         
-        // 3. Chamada da API
+        // 3. Chamada da API com o JWT no cabeçalho Authorization
         try {
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Incluir JWT aqui se o endpoint for seguro
+                    // JWT INCLUÍDO AQUI: 
+                    'Authorization': `Bearer ${token}` 
                 },
                 body: JSON.stringify(payload),
             });
 
             if (response.ok) {
                 showMessage(`✅ ${tipo} salvo com sucesso! Redirecionando...`, false);
-                // Redireciona para a agenda após 2 segundos
                 setTimeout(() => {
                     window.location.href = '../html/evento.html';
                 }, 2000);
             } else {
-                const errorData = await response.json().catch(() => ({ message: 'Erro de formatação JSON.' }));
+                const errorData = await response.json().catch(() => ({ message: 'Erro de processamento.' }));
                 showMessage(`❌ Erro ao salvar (${response.status}): ${errorData.message || 'Verifique o console.'}`, true);
                 console.error("Erro da API:", errorData);
             }
@@ -126,16 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LISTENERS INICIAIS ---
     
-    // 1. Inicializa o preenchimento da data
     preencherDataDaURL();
-    
-    // 2. Inicializa o controle de campos
     tipoSelect.addEventListener('change', toggleFields);
     toggleFields(); 
 
-    // 3. Botão Voltar
     document.getElementById('btn-voltar').addEventListener('click', () => {
-        // Volta para a página da agenda (evento.html)
         window.location.href = '../html/evento.html'; 
     });
 });

@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDate = new Date(); 
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
-    let selectedDateKey = ''; // CORREÇÃO: Variável declarada no escopo principal
+    // CORREÇÃO: Variável para armazenar a data do dia clicado, acessível globalmente
+    let selectedDateKey = ''; 
     
     // Mapeamento de meses
     const monthNames = [
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const agendamentosUrl = `${API_BASE_URL}/agendamento/buscar/entre?depois=${dataInicial}&antes=${dataFinal}`;
         
         try {
+            // OBS: Adicione o token JWT aqui se os endpoints GET de busca também forem protegidos
             const [eventosResponse, agendamentosResponse] = await Promise.all([
                 fetch(eventosUrl),
                 fetch(agendamentosUrl)
@@ -71,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
             addHighlightsToDays();
 
         } catch (error) {
-            // Se o backend falhar, agora será no console. O calendário renderiza vazio.
             console.error("Erro ao carregar dados do backend. Verifique o servidor e o CORS.", error); 
             renderCalendarDOM(month, year); 
         }
@@ -130,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Funções do Modal
     function openModal(dateKey, dayNum, monthIndex, year) {
-        // CORREÇÃO: Armazena a data no escopo principal
         selectedDateKey = dateKey; 
         
         modalDate.textContent = `${dayNum} de ${monthNames[monthIndex]} de ${year}`;
