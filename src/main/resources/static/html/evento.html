@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina - Agenda Dinâmica</title>
+    <link rel="stylesheet" href="../css/style.css"> 
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-placeholder"></div>
+            <h1>Lumina</h1>
+        </div>
+        <nav class="nav">
+            <button class="contact-button">Contate-nos</button>
+            <button class="menu-icon" aria-label="Menu principal">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h2 class="title-eventos">Agenda de Eventos</h2>
+
+        <div class="calendar">
+            <div class="month-control">
+                <button id="prev-month-btn" class="nav-btn"> &lt; </button>
+                <h3 id="current-month-year">Mês/Ano Atual</h3>
+                <button id="next-month-btn" class="nav-btn"> &gt; </button>
+            </div>
+            
+            <div class="weekdays-grid">
+                <span>Dom</span>
+                <span>Seg</span>
+                <span>Ter</span>
+                <span>Qua</span>
+                <span>Qui</span>
+                <span>Sex</span>
+                <span>Sáb</span>
+            </div>
+
+            <div id="calendar-days-grid" class="days-grid">
+                </div>
+        </div>
+    </main>
+    
+    <div id="event-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="modal-date"></h3>
+            <div id="modal-event-details">
+                </div>
+            <button id="add-event-btn" class="modal-action-btn">Adicionar Evento</button>
+        </div>
+    </div>
+
+    <script src="../js/eventoScript.js"></script>
+</body>
+</html>

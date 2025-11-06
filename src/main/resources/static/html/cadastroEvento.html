@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina - Cadastrar Evento/Agendamento</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Estilos específicos para o formulário */
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid var(--secondary-pink);
+            border-radius: 8px;
+            background-color: var(--light-pink);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--primary-pink);
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .form-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #btn-salvar {
+            background-color: var(--primary-pink);
+            color: white;
+        }
+        #btn-voltar {
+            background-color: #ccc;
+            color: #333;
+        }
+        #message-area {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        .error {
+            background-color: #fdd;
+            color: red;
+        }
+        .success {
+            background-color: #dfd;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-placeholder"></div>
+            <h1>Lumina</h1>
+        </div>
+        <nav class="nav">
+            <button class="contact-button">Contate-nos</button>
+            <button class="menu-icon" aria-label="Menu principal">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h2 class="title-eventos">Cadastrar Novo Evento / Agendamento</h2>
+
+        <div class="form-container">
+            <div id="message-area"></div>
+            
+            <form id="event-form">
+                <div class="form-group">
+                    <label for="tipo">Tipo de Registro:</label>
+                    <select id="tipo" required>
+                        <option value="">Selecione...</option>
+                        <option value="AGENDAMENTO">Agendamento (Consulta/Visita)</option>
+                        <option value="EVENTO">Evento (Geral)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dtAgendamento">Data e Hora:</label>
+                    <input type="datetime-local" id="dtAgendamento" required>
+                </div>
+
+                <div id="paciente-group" class="form-group" style="display:none;">
+                    <label for="idPaciente">ID do Paciente:</label>
+                    <input type="number" id="idPaciente" placeholder="Ex: 1">
+                </div>
+                <div id="tpVisita-group" class="form-group" style="display:none;">
+                    <label for="tpVisita">Tipo de Visita:</label>
+                    <select id="tpVisita">
+                        <option value="CONSULTA">Consulta</option>
+                        <option value="VISITA">Visita</option>
+                    </select>
+                </div>
+                
+                <div id="nmEvento-group" class="form-group" style="display:none;">
+                    <label for="nmEvento">Título do Evento:</label>
+                    <input type="text" id="nmEvento" maxlength="255">
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Observação / Descrição:</label>
+                    <textarea id="descricao" rows="3" maxlength="255" required></textarea>
+                </div>
+
+                <input type="hidden" id="idUsuario" value="1"> 
+                
+
+                <div class="form-actions">
+                    <button type="button" id="btn-voltar">Voltar para Agenda</button>
+                    <button type="submit" id="btn-salvar">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <script src="../js/cadastroEventoScript.js"></script> 
+</body>
+</html>

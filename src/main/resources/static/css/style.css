@@ -1,0 +1,271 @@
+:root {
+    --primary-pink: #e91e63; /* Rosa mais escuro do cabeçalho */
+    --secondary-pink: #f8bbd0; /* Rosa mais claro de fundo/caixa */
+    --light-pink: #fce4ec; /* Rosa bem claro dos dias/background */
+    --text-color: #4a4a4a;
+    --dark-text: #212121;
+}
+
+/* 1. Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+/* 2. Cabeçalho (Header) */
+.header {
+    background-color: var(--primary-pink);
+    color: white;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.logo-placeholder {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;
+    border: 2px solid var(--primary-pink);
+    position: relative;
+}
+.logo-placeholder::after {
+    content: 'L';
+    color: var(--primary-pink);
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.contact-button {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+.menu-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 30px;
+}
+.menu-icon div {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+/* 3. Conteúdo Principal */
+.content {
+    padding: 30px 40px;
+}
+.title-eventos {
+    color: var(--primary-pink);
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* 4. Calendário (Estrutura e Cores) */
+.calendar {
+    border: 1px solid var(--primary-pink); /* Linha Externa Rosa */
+}
+.month-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+    background-color: var(--light-pink);
+    border-bottom: 2px solid var(--primary-pink);
+}
+#current-month-year {
+    color: var(--primary-pink);
+    font-size: 1.5rem;
+    margin: 0 20px;
+    min-width: 150px;
+    text-align: center;
+}
+.nav-btn {
+    background-color: var(--primary-pink);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+.weekdays-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: var(--secondary-pink);
+    color: var(--dark-text);
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--primary-pink); /* Linha Inferior Rosa */
+}
+.weekdays-grid span {
+    font-size: 1.1rem;
+    color: var(--primary-pink);
+}
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    min-height: 500px;
+}
+.day {
+    background-color: white;
+    border: 1px solid var(--secondary-pink); /* Linhas Internas Rosa Claro */
+    padding: 5px;
+    min-height: 100px;
+    position: relative;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.1s;
+    overflow: hidden; /* IMPORTANTE: Corta conteúdo que ultrapassa */
+    word-wrap: break-word;
+}
+
+/* Destaques Dinâmicos */
+.day-current-month {
+    background-color: var(--light-pink);
+}
+.day-other-month {
+    background-color: #f4f4f4;
+    opacity: 0.6;
+    cursor: default;
+}
+.day-today {
+    border: 3px solid var(--primary-pink); /* Destaque Rosa Forte para o dia atual */
+    background-color: #fde8ee;
+}
+.event-highlight {
+    background-color: var(--secondary-pink) !important; /* Destaque para dias com evento */
+    border: 2px solid var(--primary-pink);
+}
+.event-icon::after {
+    content: '📑';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 0.9rem;
+    color: var(--primary-pink);
+}
+/* Bolha de Evento (Conteúdo do dia) - Removida a bolha estática */
+.event-bubble {
+    display: none; /* Não será usado na versão com BD, o modal assume */
+}
+
+
+/* 5. Estilização do Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* Ajustado para subir um pouco */
+    padding: 30px;
+    border: 5px solid var(--primary-pink);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
+}
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+#modal-date {
+    color: var(--primary-pink);
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+}
+#modal-event-details {
+    color: var(--dark-text);
+    margin-bottom: 25px;
+    text-align: left;
+}
+#modal-event-details ul {
+    list-style: none;
+    padding: 0;
+}
+#modal-event-details li {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-left: 5px solid var(--secondary-pink);
+    background-color: var(--light-pink);
+    border-radius: 4px;
+}
+.modal-event-time {
+    font-weight: bold;
+    color: var(--primary-pink);
+    margin-right: 5px;
+}
+.modal-event-title {
+    font-weight: bold;
+}
+.modal-event-description {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 2px;
+}
+.modal-action-btn {
+    /* ... estilos de botão ... */
+    background-color: var(--primary-pink);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}

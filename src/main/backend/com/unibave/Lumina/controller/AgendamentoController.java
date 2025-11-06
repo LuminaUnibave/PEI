@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/agendamento")
 public class AgendamentoController {
@@ -160,4 +163,23 @@ public class AgendamentoController {
         agendamentoService.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
+    // GET /agendamento/buscar/entre?depois={data}&antes={data}
+    @GetMapping("/buscar/entre")
+    @Operation(summary = "Buscar agendamentos pela data entre o período", description = "Retorna o(s) agendamento(s) pela data entre o período")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamento(s) encontrado(s)"),
+            @ApiResponse(responseCode = "404", description = "Agendamento(s) não encontrado(s)")
+    })
+    public ResponseEntity<List<AgendamentoRespostaDTO>> buscarPorDtAgendamentoEntre(
+            @RequestParam("depois") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime depois,
+            @RequestParam("antes") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime antes){
+
+        // OBS: Você precisa ter o método buscarPorDtAgendamentoEntre no AgendamentoService.java
+        List<Agendamento> agendamentos = agendamentoService.buscarPorDtAgendamentoEntre(depois, antes);
+        
+        // Use seu AgendamentoMapper para converter a lista de entidades para DTOs
+        // (Ajuste o mapper conforme a assinatura real do seu método no mapper)
+        return ResponseEntity.ok(agendamentoMapper.toDto(agendamentos));
+    }    
 }

@@ -8,6 +8,8 @@ import com.unibave.Lumina.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +62,10 @@ public class AgendamentoService {
     public List<Agendamento> buscarPorPacienteNome(String nome) {
         return agendamentoRepository.findByPaciente_NomeContainingIgnoreCase(nome);
     }
-
+    @Transactional(readOnly = true)
+    public List<Agendamento> buscarPorDtAgendamentoEntre(LocalDateTime depois, LocalDateTime antes){
+        return agendamentoRepository.findByDtAgendamentoBetween(depois, antes);
+    }
 
     //POST
     @Transactional
@@ -82,4 +87,6 @@ public class AgendamentoService {
         }
         agendamentoRepository.deleteById(id);
     }
+
+
 }
