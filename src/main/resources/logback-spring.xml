@@ -1,6 +1,6 @@
 <configuration>
     <timestamp key="currentDate" datePattern="yyyy-MM"/>
-    <property name="LOG_PATH" value="C:/PEI/logs"/>
+    <property name="LOG_PATH" value="C:\Workspace\Repositorys\PEI\logs"/>
 
 
     <!-- ==================== JSON LOGS ==================== -->
