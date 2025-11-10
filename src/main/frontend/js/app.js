@@ -262,6 +262,12 @@ class LuminaApp {
         document.getElementById('modalOverlay').style.display = 'none';
     }
 
+    formatDateTimeForInput(dateTimeString) {
+        if (!dateTimeString) return '';
+        const date = new Date(dateTimeString);
+        return date.toISOString().slice(0, 16);
+    }
+
     // ========== PACIENTES ==========
     showNovoPacienteModal() {
         const content = `
@@ -272,12 +278,16 @@ class LuminaApp {
                         <input type="text" id="pacienteNome" required>
                     </div>
                     <div class="form-group">
+                        <label for="pacienteSobrenome">Sobrenome</label>
+                        <input type="text" id="pacienteSobrenome">
+                    </div>
+                    <div class="form-group">
                         <label for="pacienteCpf">CPF *</label>
                         <input type="text" id="pacienteCpf" required>
                     </div>
                     <div class="form-group">
-                        <label for="pacienteEmail">Email *</label>
-                        <input type="email" id="pacienteEmail" required>
+                        <label for="pacienteEmail">Email</label>
+                        <input type="email" id="pacienteEmail">
                     </div>
                     <div class="form-group">
                         <label for="pacienteDtNascimento">Data Nascimento *</label>
@@ -286,6 +296,10 @@ class LuminaApp {
                     <div class="form-group">
                         <label for="pacienteCrtSus">Cartão SUS</label>
                         <input type="text" id="pacienteCrtSus">
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteContato">Contato</label>
+                        <input type="text" id="pacienteContato">
                     </div>
                 </div>
                 <div class="modal-actions">
@@ -310,10 +324,12 @@ class LuminaApp {
 
         const pacienteData = {
             nome: document.getElementById('pacienteNome').value,
+            sobrenome: document.getElementById('pacienteSobrenome').value,
             cpf: document.getElementById('pacienteCpf').value,
             email: document.getElementById('pacienteEmail').value,
             dtNascimento: document.getElementById('pacienteDtNascimento').value,
-            crtSus: document.getElementById('pacienteCrtSus').value
+            crtSus: document.getElementById('pacienteCrtSus').value,
+            contato: document.getElementById('pacienteContato').value
         };
 
         try {
@@ -345,12 +361,16 @@ class LuminaApp {
                             <input type="text" id="pacienteNome" value="${paciente.nome || ''}" required>
                         </div>
                         <div class="form-group">
+                            <label for="pacienteSobrenome">Sobrenome</label>
+                            <input type="text" id="pacienteSobrenome" value="${paciente.sobrenome || ''}">
+                        </div>
+                        <div class="form-group">
                             <label for="pacienteCpf">CPF *</label>
                             <input type="text" id="pacienteCpf" value="${paciente.cpf || ''}" required>
                         </div>
                         <div class="form-group">
-                            <label for="pacienteEmail">Email *</label>
-                            <input type="email" id="pacienteEmail" value="${paciente.email || ''}" required>
+                            <label for="pacienteEmail">Email</label>
+                            <input type="email" id="pacienteEmail" value="${paciente.email || ''}">
                         </div>
                         <div class="form-group">
                             <label for="pacienteDtNascimento">Data Nascimento *</label>
@@ -359,6 +379,10 @@ class LuminaApp {
                         <div class="form-group">
                             <label for="pacienteCrtSus">Cartão SUS</label>
                             <input type="text" id="pacienteCrtSus" value="${paciente.crtSus || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label for="pacienteContato">Contato</label>
+                            <input type="text" id="pacienteContato" value="${paciente.contato || ''}">
                         </div>
                     </div>
                     <div class="modal-actions">
@@ -374,10 +398,12 @@ class LuminaApp {
                 const updatedData = {
                     id: id,
                     nome: document.getElementById('pacienteNome').value,
+                    sobrenome: document.getElementById('pacienteSobrenome').value,
                     cpf: document.getElementById('pacienteCpf').value,
                     email: document.getElementById('pacienteEmail').value,
                     dtNascimento: document.getElementById('pacienteDtNascimento').value,
-                    crtSus: document.getElementById('pacienteCrtSus').value
+                    crtSus: document.getElementById('pacienteCrtSus').value,
+                    contato: document.getElementById('pacienteContato').value
                 };
 
                 try {
@@ -410,40 +436,54 @@ class LuminaApp {
     }
 
     // ========== AGENDAMENTOS ==========
-    showNovoAgendamentoModal() {
-        const content = `
-            <form id="agendamentoForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="agendamentoPacienteId">ID do Paciente *</label>
-                        <input type="number" id="agendamentoPacienteId" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="agendamentoTpVisita">Tipo de Visita *</label>
-                        <select id="agendamentoTpVisita" required>
-                            <option value="CONSULTA">Consulta</option>
-                            <option value="RETORNO">Retorno</option>
-                            <option value="URGENCIA">Urgência</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="agendamentoData">Data *</label>
-                        <input type="datetime-local" id="agendamentoData" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="agendamentoObservacoes">Observações</label>
-                        <textarea id="agendamentoObservacoes"></textarea>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn-primary">Salvar</button>
-                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
-                </div>
-            </form>
-        `;
-        this.showModal('Novo Agendamento', content);
+    async showNovoAgendamentoModal() {
+        try {
+            // Busca pacientes para o dropdown
+            const pacientes = await this.agendamentoService.buscarPacientesParaAgendamento();
 
-        document.getElementById('agendamentoForm').addEventListener('submit', (e) => this.salvarAgendamento(e));
+            let pacientesOptions = '<option value="">Selecione um paciente</option>';
+            pacientes.forEach(paciente => {
+                pacientesOptions += `<option value="${paciente.id}">${paciente.nome} ${paciente.sobrenome || ''} - ${paciente.cpf || 'Sem CPF'}</option>`;
+            });
+
+            const content = `
+                <form id="agendamentoForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="agendamentoPacienteId">Paciente *</label>
+                            <select id="agendamentoPacienteId" required>
+                                ${pacientesOptions}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agendamentoTpVisita">Tipo de Visita *</label>
+                            <select id="agendamentoTpVisita" required>
+                                <option value="VISITA">Visita</option>
+                                <option value="CONSULTA">Consulta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agendamentoData">Data e Hora *</label>
+                            <input type="datetime-local" id="agendamentoData" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="agendamentoObservacao">Observações</label>
+                            <textarea id="agendamentoObservacao" rows="3" placeholder="Observações sobre o agendamento..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-primary">Salvar</button>
+                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    </div>
+                </form>
+            `;
+            this.showModal('Novo Agendamento', content);
+
+            document.getElementById('agendamentoForm').addEventListener('submit', (e) => this.salvarAgendamento(e));
+        } catch (error) {
+            console.error('Erro ao carregar pacientes:', error);
+            Utils.showNotification('Erro ao carregar lista de pacientes', 'error');
+        }
     }
 
     async salvarAgendamento(event) {
@@ -455,11 +495,19 @@ class LuminaApp {
             return;
         }
 
+        const pacienteSelect = document.getElementById('agendamentoPacienteId');
+        const pacienteId = pacienteSelect.value;
+
+        if (!pacienteId) {
+            Utils.showNotification('Selecione um paciente', 'error');
+            return;
+        }
+
         const agendamentoData = {
-            idPaciente: parseInt(document.getElementById('agendamentoPacienteId').value),
+            idPaciente: parseInt(pacienteId),
             tpVisita: document.getElementById('agendamentoTpVisita').value,
-            data: document.getElementById('agendamentoData').value,
-            observacoes: document.getElementById('agendamentoObservacoes').value
+            dtAgendamento: document.getElementById('agendamentoData').value,
+            observacao: document.getElementById('agendamentoObservacao').value
         };
 
         try {
@@ -483,6 +531,7 @@ class LuminaApp {
     async editarAgendamento(id) {
         try {
             const agendamento = await this.agendamentoService.buscarPorId(id);
+            const pacientes = await this.agendamentoService.buscarPacientesParaAgendamento();
             const userId = this.authService.getUserId();
 
             if (!userId) {
@@ -490,27 +539,35 @@ class LuminaApp {
                 return;
             }
 
+            let pacientesOptions = '<option value="">Selecione um paciente</option>';
+            pacientes.forEach(paciente => {
+                const selected = paciente.id === agendamento.paciente?.id ? 'selected' : '';
+                pacientesOptions += `<option value="${paciente.id}" ${selected}>${paciente.nome} ${paciente.sobrenome || ''} - ${paciente.cpf || 'Sem CPF'}</option>`;
+            });
+
             const content = `
                 <form id="agendamentoForm">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="agendamentoPacienteId">ID do Paciente *</label>
-                            <input type="number" id="agendamentoPacienteId" value="${agendamento.paciente?.id || ''}" required>
+                            <label for="agendamentoPacienteId">Paciente *</label>
+                            <select id="agendamentoPacienteId" required>
+                                ${pacientesOptions}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="agendamentoTpVisita">Tipo de Visita *</label>
                             <select id="agendamentoTpVisita" required>
+                                <option value="VISITA" ${agendamento.tpVisita === 'VISITA' ? 'selected' : ''}>Visita</option>
                                 <option value="CONSULTA" ${agendamento.tpVisita === 'CONSULTA' ? 'selected' : ''}>Consulta</option>
-                                <option value="RETORNO" ${agendamento.tpVisita === 'VISITA' ? 'selected' : ''}>Visita</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="agendamentoData">Data *</label>
-                            <input type="datetime-local" id="agendamentoData" value="${agendamento.data || ''}" required>
+                            <label for="agendamentoData">Data e Hora *</label>
+                            <input type="datetime-local" id="agendamentoData" value="${this.formatDateTimeForInput(agendamento.dtAgendamento)}" required>
                         </div>
-                        <div class="form-group">
-                            <label for="agendamentoObservacoes">Observações</label>
-                            <textarea id="agendamentoObservacoes">${agendamento.observacoes || ''}</textarea>
+                        <div class="form-group full-width">
+                            <label for="agendamentoObservacao">Observações</label>
+                            <textarea id="agendamentoObservacao" rows="3">${agendamento.observacao || ''}</textarea>
                         </div>
                     </div>
                     <div class="modal-actions">
@@ -527,8 +584,8 @@ class LuminaApp {
                     id: id,
                     idPaciente: parseInt(document.getElementById('agendamentoPacienteId').value),
                     tpVisita: document.getElementById('agendamentoTpVisita').value,
-                    data: document.getElementById('agendamentoData').value,
-                    observacoes: document.getElementById('agendamentoObservacoes').value
+                    dtAgendamento: document.getElementById('agendamentoData').value,
+                    observacao: document.getElementById('agendamentoObservacao').value
                 };
 
                 try {
@@ -643,12 +700,12 @@ class LuminaApp {
                         <input type="text" id="eventoNome" required>
                     </div>
                     <div class="form-group">
-                        <label for="eventoData">Data *</label>
+                        <label for="eventoData">Data e Hora *</label>
                         <input type="datetime-local" id="eventoData" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group full-width">
                         <label for="eventoDescricao">Descrição</label>
-                        <textarea id="eventoDescricao"></textarea>
+                        <textarea id="eventoDescricao" rows="3" placeholder="Descrição do evento..."></textarea>
                     </div>
                 </div>
                 <div class="modal-actions">
@@ -674,8 +731,7 @@ class LuminaApp {
         const eventoData = {
             nmEvento: document.getElementById('eventoNome').value,
             dtEvento: document.getElementById('eventoData').value,
-            dsEvento: document.getElementById('eventoDescricao').value,
-            stEvento: 'ATIVO'
+            descricao: document.getElementById('eventoDescricao').value
         };
 
         try {
@@ -714,19 +770,12 @@ class LuminaApp {
                             <input type="text" id="eventoNome" value="${evento.nmEvento || ''}" required>
                         </div>
                         <div class="form-group">
-                            <label for="eventoData">Data *</label>
-                            <input type="datetime-local" id="eventoData" value="${evento.dtEvento || ''}" required>
+                            <label for="eventoData">Data e Hora *</label>
+                            <input type="datetime-local" id="eventoData" value="${this.formatDateTimeForInput(evento.dtEvento)}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group full-width">
                             <label for="eventoDescricao">Descrição</label>
-                            <textarea id="eventoDescricao">${evento.dsEvento || ''}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="eventoSituacao">Situação</label>
-                            <select id="eventoSituacao">
-                                <option value="ATIVO" ${evento.stEvento === 'ATIVO' ? 'selected' : ''}>Ativo</option>
-                                <option value="INATIVO" ${evento.stEvento === 'INATIVO' ? 'selected' : ''}>Inativo</option>
-                            </select>
+                            <textarea id="eventoDescricao" rows="3">${evento.descricao || ''}</textarea>
                         </div>
                     </div>
                     <div class="modal-actions">
@@ -743,8 +792,7 @@ class LuminaApp {
                     id: id,
                     nmEvento: document.getElementById('eventoNome').value,
                     dtEvento: document.getElementById('eventoData').value,
-                    dsEvento: document.getElementById('eventoDescricao').value,
-                    stEvento: document.getElementById('eventoSituacao').value
+                    descricao: document.getElementById('eventoDescricao').value
                 };
 
                 try {

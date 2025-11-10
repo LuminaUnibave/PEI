@@ -257,4 +257,14 @@ class AgendamentoService {
             throw error;
         }
     }
+
+    async buscarPacientesParaAgendamento() {
+        try {
+            const pacienteService = new PacienteService();
+            return await pacienteService.buscarTodos();
+        } catch (error) {
+            console.error('Erro ao buscar pacientes:', error);
+            return [];
+        }
+    }
 }
