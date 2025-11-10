@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDate = new Date(); 
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
-    // CORREÇÃO: Variável para armazenar a data do dia clicado, acessível globalmente
     let selectedDateKey = ''; 
     
     // Mapeamento de meses
@@ -13,8 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // --- VARIÁVEL DE CONFIGURAÇÃO DA API ---
-    // CORREÇÃO: Porta ajustada para 8080 (Padrão Spring Boot)
-    const API_BASE_URL = 'http://localhost:8080'; 
+    const API_BASE_URL = 'http://localhost:8081'; // Porta 8081 mantida conforme seu último snippet
     
     // Armazenamento dos eventos buscados
     let monthlyEvents = {}; 
@@ -28,9 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.close-button');
     const modalDate = document.getElementById('modal-date');
     const modalDetails = document.getElementById('modal-event-details');
-    const addEventBtn = document.getElementById('add-event-btn'); 
+    // REMOVIDO: const addEventBtn = document.getElementById('add-event-btn'); 
     
-    // 1. Função principal: Busca eventos na API e inicia a renderização
+    // 1. Função principal: Busca eventos na API
     async function fetchAndRenderEvents(month, year) {
         monthlyEvents = {}; 
 
@@ -48,12 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const dataInicial = formatDateTime(startDate, false);
         const dataFinal = formatDateTime(endDate, true);
 
-        // Rotas que usam os Controllers /evento e /agendamento
         const eventosUrl = `${API_BASE_URL}/evento/buscar/dtEvento/entre?depois=${dataInicial}&antes=${dataFinal}`;
         const agendamentosUrl = `${API_BASE_URL}/agendamento/buscar/entre?depois=${dataInicial}&antes=${dataFinal}`;
         
         try {
-            // OBS: Adicione o token JWT aqui se os endpoints GET de busca também forem protegidos
             const [eventosResponse, agendamentosResponse] = await Promise.all([
                 fetch(eventosUrl),
                 fetch(agendamentosUrl)
@@ -62,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const eventosData = eventosResponse.ok ? await eventosResponse.json() : [];
             const agendamentosData = agendamentosResponse.ok ? await agendamentosResponse.json() : [];
             
-            // Normaliza a lista de DTOs
             const normalize = (data) => Array.isArray(data) ? (Array.isArray(data[0]) ? data[0] : data) : [];
 
             const combinedData = [...normalize(eventosData), ...normalize(agendamentosData)];
@@ -93,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (item.dtAgendamento) {
                 [dateKey, dateTime] = item.dtAgendamento.split('T');
                 
-                // Trata o DTO sem o nome do paciente (item.paciente.nome)
                 const pacienteNome = item.paciente && item.paciente.nome ? item.paciente.nome : `ID ${item.paciente ? item.paciente.id : '?'}`;
                 
                 title = `Agendamento c/ ${pacienteNome}`;
@@ -249,13 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target == modal) {
             closeModal();
         }
-    });
-
-    // Ação do botão "Adicionar Evento"
-    addEventBtn.addEventListener('click', () => {
-        closeModal(); 
-        // Redireciona para o formulário de cadastro, passando a data
-        window.location.href = `../html/cadastroEvento.html?data=${selectedDateKey}`; 
     });
 
     // Inicializa a agenda, buscando eventos do backend

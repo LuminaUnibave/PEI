@@ -1,9 +1,10 @@
 :root {
-    --primary-pink: #e91e63; /* Rosa mais escuro do cabeçalho */
-    --secondary-pink: #f8bbd0; /* Rosa mais claro de fundo/caixa */
-    --light-pink: #fce4ec; /* Rosa bem claro dos dias/background */
+    --primary-pink: #e91e63; /* Rosa mais escuro (Agenda/Botões) */
+    --secondary-pink: #f8bbd0; /* Rosa mais claro (Fundo/Bordas internas) */
+    --light-pink: #fce4ec; /* Rosa bem claro (Fundo dias) */
     --text-color: #4a4a4a;
     --dark-text: #212121;
+    --main-bg-color: #fff; /* Fundo padrão branco */
 }
 
 /* 1. Reset Básico */
@@ -11,14 +12,37 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
 }
 
+/* 2. Estilo Global do BODY (Fusão: Fundo de Imagem + Centralização) */
 body {
-    background-color: #ffffff;
+    /* Estilos do Login: Fundo de imagem e centralização */
+    background-image: url('../img/background.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centraliza verticalmente o conteúdo de login */
+    min-height: 100vh;
 }
 
-/* 2. Cabeçalho (Header) */
+/* 6. CORREÇÃO DE LAYOUT PARA A AGENDA (Override) */
+/* Redefine o body para o fluxo normal quando a página é a da agenda */
+.page-agenda {
+    display: block; 
+    align-items: initial;
+    justify-content: initial;
+    background-image: none; /* Remove a imagem de fundo */
+    background-color: var(--main-bg-color); 
+    height: auto; 
+    min-height: 100vh; /* Mantém a altura mínima */
+}
+
+/* 3. Estilos do Cabeçalho (Header) */
+
 .header {
     background-color: var(--primary-pink);
     color: white;
@@ -27,6 +51,10 @@ body {
     justify-content: space-between;
     align-items: center;
     min-height: 60px;
+    width: 100%; 
+    position: fixed; 
+    top: 0;
+    z-index: 50;
 }
 .logo-container {
     display: flex;
@@ -35,23 +63,12 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
 }
-.logo-placeholder {
-    width: 30px;
-    height: 30px;
-    background-color: white;
+.logo-img {
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
-    border: 2px solid var(--primary-pink);
-    position: relative;
-}
-.logo-placeholder::after {
-    content: 'L';
-    color: var(--primary-pink);
-    font-size: 18px;
-    font-weight: bold;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    object-fit: cover; 
+    border: 2px solid var(--primary-pink); 
 }
 .nav {
     display: flex;
@@ -85,10 +102,30 @@ body {
     border-radius: 2px;
 }
 
-/* 3. Conteúdo Principal */
+/* 4. Estilos do Conteúdo Principal (Agenda/Login) */
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    margin-top: 60px; 
+    width: 100%;
+}
+.page-agenda main {
+    display: block; /* Desfaz o flexbox de centralização para a agenda */
+    margin-top: 0;
+}
+
 .content {
     padding: 30px 40px;
+    margin-top: 60px; 
 }
+.page-agenda .content {
+    padding-top: 90px; /* Garante espaço abaixo do header fixo */
+    width: 100%;
+}
+
 .title-eventos {
     color: var(--primary-pink);
     font-size: 2.5rem;
@@ -96,9 +133,112 @@ body {
     margin-bottom: 20px;
 }
 
-/* 4. Calendário (Estrutura e Cores) */
+/* --- ESTILOS DE LOGIN INCORPORADOS --- */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.logo-rfcc { 
+    width: 50px;
+    height: 50px; 
+    object-fit: contain; 
+}
+.login-box {
+    background-color: white;
+    border: var(--primary-pink) 1px solid; 
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+.header-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.logo {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+.lumina { 
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+    border-radius: 100px;
+}
+.login-box h2 {
+    color: var(--primary-pink); 
+    font-size: 18px;
+    margin: 0;
+}
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+.form-group label {
+    display: block;
+    color: var(--primary-pink); 
+    font-size: 14px;
+}
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.access-button {
+    background-color: var(--primary-pink); 
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+.access-button:hover {
+    background-color: #c2185b;
+}
+.social-icons {
+    margin-top: 20px;
+}
+.social-icons a {
+    margin: 0 17px;
+}
+.social-icons img {
+    width: 60px;
+    height: 60px;
+    padding-bottom: 5px;
+}
+.bx {
+    font-family: boxicons !important;
+    font-weight: 400;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+    display: inline-block;
+    text-transform: none;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    left: 275px;
+    bottom: 24px;
+}
+
+/* 5. Estilos do Calendário (Agenda) */
+
 .calendar {
-    border: 1px solid var(--primary-pink); /* Linha Externa Rosa */
+    border: 1px solid var(--primary-pink); 
 }
 .month-control {
     display: flex;
@@ -133,7 +273,7 @@ body {
     text-align: center;
     font-weight: bold;
     padding: 10px 0;
-    border-bottom: 2px solid var(--primary-pink); /* Linha Inferior Rosa */
+    border-bottom: 2px solid var(--primary-pink); 
 }
 .weekdays-grid span {
     font-size: 1.1rem;
@@ -146,7 +286,7 @@ body {
 }
 .day {
     background-color: white;
-    border: 1px solid var(--secondary-pink); /* Linhas Internas Rosa Claro */
+    border: 1px solid var(--secondary-pink); 
     padding: 5px;
     min-height: 100px;
     position: relative;
@@ -155,11 +295,12 @@ body {
     color: var(--text-color);
     cursor: pointer;
     transition: background-color 0.1s;
-    overflow: hidden; /* IMPORTANTE: Corta conteúdo que ultrapassa */
+    overflow: hidden; 
     word-wrap: break-word;
 }
-
-/* Destaques Dinâmicos */
+.day:hover {
+    box-shadow: inset 0 0 0 2px var(--primary-pink);
+}
 .day-current-month {
     background-color: var(--light-pink);
 }
@@ -169,11 +310,11 @@ body {
     cursor: default;
 }
 .day-today {
-    border: 3px solid var(--primary-pink); /* Destaque Rosa Forte para o dia atual */
+    border: 3px solid var(--primary-pink); 
     background-color: #fde8ee;
 }
 .event-highlight {
-    background-color: var(--secondary-pink) !important; /* Destaque para dias com evento */
+    background-color: var(--secondary-pink) !important; 
     border: 2px solid var(--primary-pink);
 }
 .event-icon::after {
@@ -184,13 +325,9 @@ body {
     font-size: 0.9rem;
     color: var(--primary-pink);
 }
-/* Bolha de Evento (Conteúdo do dia) - Removida a bolha estática */
-.event-bubble {
-    display: none; /* Não será usado na versão com BD, o modal assume */
-}
 
+/* 7. Estilos do Modal */
 
-/* 5. Estilização do Modal */
 .modal {
     display: none;
     position: fixed;
@@ -205,7 +342,7 @@ body {
 }
 .modal-content {
     background-color: #fefefe;
-    margin: 10% auto; /* Ajustado para subir um pouco */
+    margin: 10% auto; 
     padding: 30px;
     border: 5px solid var(--primary-pink);
     width: 90%;
@@ -260,7 +397,6 @@ body {
     margin-top: 2px;
 }
 .modal-action-btn {
-    /* ... estilos de botão ... */
     background-color: var(--primary-pink);
     color: white;
     border: none;

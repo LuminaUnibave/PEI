@@ -176,11 +176,8 @@ public class AgendamentoController {
             @RequestParam("depois") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime depois,
             @RequestParam("antes") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime antes){
 
-        // OBS: Você precisa ter o método buscarPorDtAgendamentoEntre no AgendamentoService.java
         List<Agendamento> agendamentos = agendamentoService.buscarPorDtAgendamentoEntre(depois, antes);
-        
-        // Use seu AgendamentoMapper para converter a lista de entidades para DTOs
-        // (Ajuste o mapper conforme a assinatura real do seu método no mapper)
+
         return ResponseEntity.ok(agendamentoMapper.toDto(agendamentos));
     }    
 }
