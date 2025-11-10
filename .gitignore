@@ -6,7 +6,7 @@ target/
 .env
 
 # Ignorar logs
-/logs/
+logs/
 
 ### STS ###
 .apt_generated

@@ -56,7 +56,8 @@ public class AgendamentoController {
     })
     public ResponseEntity<List<AgendamentoRespostaDTO>> buscarTodos(){
         List<Agendamento> agendamentos = agendamentoService.buscarTodos();
-        return ResponseEntity.ok(Collections.singletonList(agendamentoMapper.toDto((Agendamento) agendamentos)));
+        List<AgendamentoRespostaDTO> agendamentoDTOs = agendamentoMapper.toDto(agendamentos);
+        return ResponseEntity.ok(agendamentoDTOs);
     }
 
     // GET /agendamento/buscar/id?id=...

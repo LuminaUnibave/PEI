@@ -8,12 +8,13 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuario", schema = "public")
 public class Usuario extends Entidade implements Serializable {

@@ -10,12 +10,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "evento", schema = "public")
 public class Evento extends Entidade implements Serializable {
@@ -37,8 +38,6 @@ public class Evento extends Entidade implements Serializable {
     @JoinColumn(name = "id_usuario", nullable = false)
     @JsonBackReference
     private Usuario usuario;
-
-    private List<Arquivo> arquivos = new ArrayList<>();
 }
 
 

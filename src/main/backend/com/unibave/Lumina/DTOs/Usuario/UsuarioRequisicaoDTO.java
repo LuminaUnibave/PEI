@@ -1,5 +1,6 @@
 package com.unibave.Lumina.DTOs.Usuario;
 
+import com.unibave.Lumina.enums.TpUsuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +17,6 @@ public class UsuarioRequisicaoDTO {
 
     @Schema(description = "Nome do usuário", example = "João")
     @NotBlank
-    @NotNull
     private String nome;
 
     @Schema(description = "Email do usuário", example = "joaosilva@gmail.com")
@@ -25,11 +25,9 @@ public class UsuarioRequisicaoDTO {
 
     @Schema(description = "Senha do usuário", example = "Pa$sw0rd")
     @NotBlank
-    @NotNull
     private String senha;
 
     @Schema(description = "Tipo do usuário", example = "ADMINISTRADOR")
-    @NotBlank
     @NotNull
-    private String tpUsuario;
+    private TpUsuario tpUsuario;
 }
