@@ -2,17 +2,14 @@ package com.unibave.Lumina.model.abstratos;
 
 import com.unibave.Lumina.enums.Situacao;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class Entidade {
 

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina - Sistema de Gestão</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+<!-- Tela de Login/Cadastro -->
+<div id="authScreen" class="screen active">
+    <div class="container">
+        <!-- Card de Login -->
+        <div class="login-card" id="loginCard">
+            <div class="login-header">
+                <h1>Lumina</h1>
+                <p>Faça login em sua conta</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required placeholder="Sua senha">
+                    <span class="error-message" id="senhaError"></span>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">Entrar</span>
+                    <span class="btn-loading" style="display: none;">
+                            <span class="spinner"></span> Entrando...
+                        </span>
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>ou</span>
+            </div>
+
+            <button class="secondary-btn" id="showRegisterBtn">
+                Criar nova conta
+            </button>
+
+            <div id="message" class="message" style="display: none;"></div>
+        </div>
+
+        <!-- Card de Cadastro -->
+        <div class="login-card" id="registerCard" style="display: none;">
+            <div class="login-header">
+                <h1>Lumina</h1>
+                <p>Criar nova conta</p>
+            </div>
+
+            <form id="registerForm" class="login-form">
+                <div class="form-group">
+                    <label for="regNome">Nome completo</label>
+                    <input type="text" id="regNome" name="nome" required placeholder="Seu nome completo">
+                    <span class="error-message" id="regNomeError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail">E-mail</label>
+                    <input type="email" id="regEmail" name="email" required placeholder="seu@email.com">
+                    <span class="error-message" id="regEmailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="regSenha">Senha</label>
+                    <input type="password" id="regSenha" name="senha" required placeholder="Sua senha" minlength="6">
+                    <span class="error-message" id="regSenhaError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="regConfirmarSenha">Confirmar senha</label>
+                    <input type="password" id="regConfirmarSenha" name="confirmarSenha" required placeholder="Confirme sua senha">
+                    <span class="error-message" id="regConfirmarSenhaError"></span>
+                </div>
+
+                <button type="submit" class="login-btn" id="registerBtn">
+                    <span class="btn-text">Criar conta</span>
+                    <span class="btn-loading" style="display: none;">
+                            <span class="spinner"></span> Criando conta...
+                        </span>
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>ou</span>
+            </div>
+
+            <button class="secondary-btn" id="showLoginBtn">
+                Fazer login
+            </button>
+
+            <div id="registerMessage" class="message" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard Principal -->
+<div id="dashboardScreen" class="screen">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">Lumina</h1>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-section="pacientes">Pacientes</button>
+                <button class="nav-btn" data-section="agendamentos">Agendamentos</button>
+                <button class="nav-btn" data-section="eventos">Eventos</button>
+                <button class="nav-btn" data-section="email">E-mail</button>
+            </nav>
+            <div class="user-menu">
+                <span id="userName">Usuário</span>
+                <button id="logoutBtn" class="logout-btn">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <!-- Pacientes -->
+        <section id="pacientes" class="content-section active">
+            <div class="section-header">
+                <h2>Gerenciar Pacientes</h2>
+                <button class="btn-primary" id="novoPacienteBtn">Novo Paciente</button>
+            </div>
+            <div class="content-card">
+                <div class="table-container">
+                    <table id="pacientesTable" class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Email</th>
+                            <th>Data Nasc.</th>
+                            <th>Cartão SUS</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody id="pacientesTableBody">
+                        <!-- Dados carregados via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Agendamentos -->
+        <section id="agendamentos" class="content-section">
+            <div class="section-header">
+                <h2>Gerenciar Agendamentos</h2>
+                <button class="btn-primary" id="novoAgendamentoBtn">Novo Agendamento</button>
+            </div>
+            <div class="content-card">
+                <div class="table-container">
+                    <table id="agendamentosTable" class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Tipo Visita</th>
+                            <th>Data</th>
+                            <th>Observações</th>
+                            <th>Arquivos</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody id="agendamentosTableBody">
+                        <!-- Dados carregados via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Eventos -->
+        <section id="eventos" class="content-section">
+            <div class="section-header">
+                <h2>Gerenciar Eventos</h2>
+                <button class="btn-primary" id="novoEventoBtn">Novo Evento</button>
+            </div>
+            <div class="content-card">
+                <div class="table-container">
+                    <table id="eventosTable" class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Situação</th>
+                            <th>Arquivos</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody id="eventosTableBody">
+                        <!-- Dados carregados via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- E-mail -->
+        <section id="email" class="content-section">
+            <div class="section-header">
+                <h2>Enviar E-mail</h2>
+            </div>
+            <div class="content-card">
+                <form id="emailForm" class="email-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="emailDestinatario">Destinatário</label>
+                            <input type="email" id="emailDestinatario" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailAssunto">Assunto</label>
+                            <input type="text" id="emailAssunto" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailConteudo">Conteúdo</label>
+                        <textarea id="emailConteudo" rows="6" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailAnexo">Anexo (opcional)</label>
+                        <input type="file" id="emailAnexo">
+                    </div>
+                    <button type="submit" class="btn-primary">Enviar E-mail</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Modais -->
+<div id="modalOverlay" class="modal-overlay" style="display: none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Modal</h3>
+            <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Conteúdo do modal -->
+        </div>
+    </div>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/usuarioService.js"></script>
+<script src="js/pacienteService.js"></script>
+<script src="js/agendamentoService.js"></script>
+<script src="js/eventoService.js"></script>
+<script src="js/arquivoService.js"></script>
+<script src="js/emailService.js"></script>
+<script src="js/router.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

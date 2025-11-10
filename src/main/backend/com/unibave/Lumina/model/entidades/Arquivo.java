@@ -8,12 +8,13 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "arquivo", schema = "public")
 public class Arquivo extends Entidade implements Serializable {

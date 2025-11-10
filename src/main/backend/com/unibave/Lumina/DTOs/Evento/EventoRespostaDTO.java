@@ -21,7 +21,6 @@ public class EventoRespostaDTO {
     private LocalDateTime dtModificacao;
     private String situacao;
     private UsuarioDTO usuario;
-    private List<ArquivoListDTO> arquivoList;
 
     @Getter
     @Setter

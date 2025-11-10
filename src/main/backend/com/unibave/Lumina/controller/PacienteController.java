@@ -45,7 +45,6 @@ public class PacienteController {
         return ResponseEntity.ok(contador);
     }
 
-    // GET /paciente/buscar/todos
     @GetMapping("/buscar/todos")
     @Operation(summary = "Buscar todos os pacientes", description = "Retorna todos os pacientes")
     @ApiResponses({
@@ -54,7 +53,11 @@ public class PacienteController {
     })
     public ResponseEntity<List<PacienteRespostaDTO>> buscarTodos() {
         List<Paciente> pacientes = pacienteService.buscarTodos();
-        return ResponseEntity.ok(Collections.singletonList(pacienteMapper.toDto((Paciente) pacientes)));
+
+        // Use o método do mapper que converte a lista inteira
+        List<PacienteRespostaDTO> pacienteDTOs = pacienteMapper.toDto(pacientes);
+
+        return ResponseEntity.ok(pacienteDTOs);
     }
 
     // GET /paciente/buscar/id?id=...
