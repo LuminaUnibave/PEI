@@ -10,14 +10,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "paciente" , schema = "lumina")
+@Table(name = "paciente" , schema = "public")
 public class Paciente extends Entidade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,5 +53,6 @@ public class Paciente extends Entidade implements Serializable {
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @JsonIgnore
     List<Agendamento> agendamentoList;
 }

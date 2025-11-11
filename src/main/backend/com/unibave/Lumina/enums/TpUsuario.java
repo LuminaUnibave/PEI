@@ -5,5 +5,6 @@ import lombok.Getter;
 @Getter
 public enum TpUsuario {
     OPERADOR,
-    ADMINISTRADOR
+    ADMINISTRADOR,
+    VISITANTE
 }

@@ -8,6 +8,8 @@ import com.unibave.Lumina.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +18,13 @@ public class AgendamentoService {
 
     private final AgendamentoRepository agendamentoRepository;
     private final PacienteRepository pacienteRepository;
+    private final EnvioEmailNotificacaoService envioEmailNotificacaoService;
 
     @Autowired
-    public AgendamentoService(AgendamentoRepository agendamentoRepository, PacienteRepository pacienteRepository) {
+    public AgendamentoService(AgendamentoRepository agendamentoRepository, PacienteRepository pacienteRepository, EnvioEmailNotificacaoService envioEmailNotificacaoService) {
         this.agendamentoRepository = agendamentoRepository;
         this.pacienteRepository = pacienteRepository;
+        this.envioEmailNotificacaoService = envioEmailNotificacaoService;
     }
 
     //GET
@@ -58,7 +62,10 @@ public class AgendamentoService {
     public List<Agendamento> buscarPorPacienteNome(String nome) {
         return agendamentoRepository.findByPaciente_NomeContainingIgnoreCase(nome);
     }
-
+    @Transactional(readOnly = true)
+    public List<Agendamento> buscarPorDtAgendamentoEntre(LocalDateTime depois, LocalDateTime antes){
+        return agendamentoRepository.findByDtAgendamentoBetween(depois, antes);
+    }
 
     //POST
     @Transactional
@@ -66,7 +73,10 @@ public class AgendamentoService {
         Paciente paciente = pacienteRepository.findById(agendamento.getPaciente().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado"));
         agendamento.setPaciente(paciente);
-        return agendamentoRepository.save(agendamento);
+
+        Agendamento agendamentoSalvo = agendamentoRepository.save(agendamento);
+        envioEmailNotificacaoService.lembreteConsulta(agendamentoSalvo);
+        return agendamentoSalvo;
     }
 
     //DELETE
@@ -77,4 +87,6 @@ public class AgendamentoService {
         }
         agendamentoRepository.deleteById(id);
     }
+
+
 }

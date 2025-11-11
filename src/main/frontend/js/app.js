@@ -1,0 +1,988 @@
+class LuminaApp {
+    constructor() {
+        this.authService = new AuthService();
+        this.usuarioService = new UsuarioService();
+        this.pacienteService = new PacienteService();
+        this.agendamentoService = new AgendamentoService();
+        this.eventoService = new EventoService();
+        this.arquivoService = new ArquivoService();
+        this.emailService = new EmailService();
+        this.router = new Router();
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.checkAuth();
+    }
+
+    bindEvents() {
+        // Login/Cadastro
+        document.getElementById('loginForm').addEventListener('submit', (e) => this.handleLogin(e));
+        document.getElementById('registerForm').addEventListener('submit', (e) => this.handleRegister(e));
+        document.getElementById('showRegisterBtn').addEventListener('click', () => this.showRegister());
+        document.getElementById('showLoginBtn').addEventListener('click', () => this.showLogin());
+
+        // Dashboard
+        document.getElementById('logoutBtn').addEventListener('click', () => this.handleLogout());
+        document.getElementById('novoPacienteBtn').addEventListener('click', () => this.showNovoPacienteModal());
+        document.getElementById('novoAgendamentoBtn').addEventListener('click', () => this.showNovoAgendamentoModal());
+        document.getElementById('novoEventoBtn').addEventListener('click', () => this.showNovoEventoModal());
+        document.getElementById('emailForm').addEventListener('submit', (e) => this.handleEnviarEmail(e));
+
+        // Modal
+        document.getElementById('modalClose').addEventListener('click', () => this.hideModal());
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) {
+                this.hideModal();
+            }
+        });
+    }
+
+    checkAuth() {
+        try {
+            const isAuthenticated = this.authService.isAuthenticated();
+            console.log('CheckAuth - Autenticado:', isAuthenticated);
+
+            if (isAuthenticated) {
+                this.showDashboard();
+            } else {
+                this.showAuth();
+            }
+        } catch (error) {
+            console.error('Erro ao verificar autenticação:', error);
+            this.showAuth();
+        }
+    }
+
+    async handleLogin(event) {
+        event.preventDefault();
+
+        Utils.clearErrors();
+        Utils.hideMessage();
+
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+
+        if (!email || !senha) {
+            Utils.showMessage('Por favor, preencha todos os campos');
+            return;
+        }
+
+        if (!Utils.validateEmail(email)) {
+            Utils.showMessage('Por favor, insira um e-mail válido');
+            return;
+        }
+
+        Utils.setLoading(true, 'loginBtn');
+
+        try {
+            console.log('=== INICIANDO LOGIN ===');
+            console.log('Email:', email);
+
+            // Primeiro tenta login normal
+            let result = await this.authService.login(email, senha);
+
+            // Se falhar, tenta login básico
+            if (!result.success) {
+                console.log('Login normal falhou, tentando login básico...');
+                result = await this.authService.loginBasico(email, senha);
+            }
+
+            console.log('Resultado final do login:', result);
+
+            if (result.success) {
+                Utils.showMessage('Login realizado com sucesso!', 'success');
+
+                // Debug do status de autenticação
+                this.authService.debugAuthStatus();
+
+                // Pequeno delay para mostrar a mensagem de sucesso
+                setTimeout(() => {
+                    this.showDashboard();
+                }, 1000);
+            } else {
+                Utils.showMessage(result.error || 'Erro ao fazer login');
+            }
+        } catch (error) {
+            console.error('Erro no login:', error);
+            Utils.showMessage('Erro inesperado ao fazer login: ' + error.message);
+        } finally {
+            Utils.setLoading(false, 'loginBtn');
+        }
+    }
+
+    async handleRegister(event) {
+        event.preventDefault();
+
+        Utils.clearErrors();
+        document.getElementById('registerMessage').style.display = 'none';
+
+        const nome = document.getElementById('regNome').value;
+        const email = document.getElementById('regEmail').value;
+        const senha = document.getElementById('regSenha').value;
+        const confirmarSenha = document.getElementById('regConfirmarSenha').value;
+
+        if (!nome || !email || !senha || !confirmarSenha) {
+            this.showRegisterMessage('Por favor, preencha todos os campos', 'error');
+            return;
+        }
+
+        if (senha !== confirmarSenha) {
+            this.showRegisterMessage('As senhas não coincidem', 'error');
+            return;
+        }
+
+        if (senha.length < 6) {
+            this.showRegisterMessage('A senha deve ter pelo menos 6 caracteres', 'error');
+            return;
+        }
+
+        Utils.setLoading(true, 'registerBtn');
+
+        try {
+            const result = await this.usuarioService.cadastrarVisitante({
+                nome: nome,
+                email: email,
+                senha: senha
+            });
+
+            if (result.success) {
+                this.showRegisterMessage(result.message, 'success');
+
+                // FAZ LOGIN AUTOMÁTICO APÓS O CADASTRO
+                if (result.usuario) {
+                    console.log('Fazendo login automático com usuário criado:', result.usuario);
+
+                    // Simula o login salvando os dados do usuário
+                    this.authService.setUserData({
+                        id: result.usuario.id,
+                        nome: result.usuario.nome,
+                        email: result.usuario.email,
+                        tpUsuario: result.usuario.tpUsuario
+                    });
+
+                    setTimeout(() => {
+                        this.showDashboard();
+                    }, 2000);
+                } else {
+                    // Se não veio o usuário na resposta, volta para login
+                    setTimeout(() => {
+                        this.showLogin();
+                    }, 2000);
+                }
+            } else {
+                this.showRegisterMessage(result.error, 'error');
+            }
+        } catch (error) {
+            console.error('Erro no cadastro:', error);
+            this.showRegisterMessage('Erro inesperado ao criar conta', 'error');
+        } finally {
+            Utils.setLoading(false, 'registerBtn');
+        }
+    }
+
+    showLogin() {
+        document.getElementById('loginCard').style.display = 'block';
+        document.getElementById('registerCard').style.display = 'none';
+        Utils.hideMessage();
+        document.getElementById('registerMessage').style.display = 'none';
+    }
+
+    showRegister() {
+        document.getElementById('loginCard').style.display = 'none';
+        document.getElementById('registerCard').style.display = 'block';
+        Utils.hideMessage();
+        document.getElementById('registerMessage').style.display = 'none';
+        this.clearRegisterForm();
+    }
+
+    clearRegisterForm() {
+        document.getElementById('registerForm').reset();
+        Utils.clearErrors();
+    }
+
+    showRegisterMessage(message, type) {
+        const messageEl = document.getElementById('registerMessage');
+        messageEl.textContent = message;
+        messageEl.className = `message ${type}`;
+        messageEl.style.display = 'block';
+    }
+
+    showDashboard() {
+        console.log('Mostrando dashboard...');
+
+        // Esconde a tela de auth
+        document.getElementById('authScreen').classList.remove('active');
+
+        // Mostra a tela do dashboard
+        document.getElementById('dashboardScreen').classList.add('active');
+
+        // Atualiza o nome do usuário no header
+        const userData = this.authService.getUserData();
+        if (userData && userData.nome) {
+            document.getElementById('userName').textContent = userData.nome;
+        } else {
+            document.getElementById('userName').textContent = 'Usuário';
+        }
+
+        console.log('Dashboard mostrado, usuário:', userData);
+
+        // Carrega os dados iniciais
+        this.router.showSection('pacientes');
+    }
+
+    showAuth() {
+        console.log('Mostrando tela de autenticação...');
+
+        // Esconde o dashboard
+        document.getElementById('dashboardScreen').classList.remove('active');
+
+        // Mostra a tela de auth
+        document.getElementById('authScreen').classList.add('active');
+
+        // Garante que mostra o login
+        this.showLogin();
+
+        console.log('Tela de autenticação mostrada');
+    }
+
+    handleLogout() {
+        this.authService.logout();
+        this.showAuth();
+    }
+
+    showModal(title, content) {
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalBody').innerHTML = content;
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    hideModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    formatDateTimeForInput(dateTimeString) {
+        if (!dateTimeString) return '';
+        const date = new Date(dateTimeString);
+        return date.toISOString().slice(0, 16);
+    }
+
+    // ========== PACIENTES ==========
+    showNovoPacienteModal() {
+        const content = `
+            <form id="pacienteForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pacienteNome">Nome *</label>
+                        <input type="text" id="pacienteNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteSobrenome">Sobrenome</label>
+                        <input type="text" id="pacienteSobrenome">
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteCpf">CPF *</label>
+                        <input type="text" id="pacienteCpf" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteEmail">Email</label>
+                        <input type="email" id="pacienteEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteDtNascimento">Data Nascimento *</label>
+                        <input type="date" id="pacienteDtNascimento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteCrtSus">Cartão SUS</label>
+                        <input type="text" id="pacienteCrtSus">
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteContato">Contato</label>
+                        <input type="text" id="pacienteContato">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Salvar</button>
+                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                </div>
+            </form>
+        `;
+        this.showModal('Novo Paciente', content);
+
+        document.getElementById('pacienteForm').addEventListener('submit', (e) => this.salvarPaciente(e));
+    }
+
+    async salvarPaciente(event) {
+        event.preventDefault();
+
+        const userId = this.authService.getUserId();
+        if (!userId) {
+            Utils.showNotification('Usuário não autenticado', 'error');
+            return;
+        }
+
+        const pacienteData = {
+            nome: document.getElementById('pacienteNome').value,
+            sobrenome: document.getElementById('pacienteSobrenome').value,
+            cpf: document.getElementById('pacienteCpf').value,
+            email: document.getElementById('pacienteEmail').value,
+            dtNascimento: document.getElementById('pacienteDtNascimento').value,
+            crtSus: document.getElementById('pacienteCrtSus').value,
+            contato: document.getElementById('pacienteContato').value
+        };
+
+        try {
+            await this.pacienteService.salvar(pacienteData, userId);
+            Utils.showNotification('Paciente salvo com sucesso!');
+            this.hideModal();
+            this.router.loadPacientesData();
+        } catch (error) {
+            console.error('Erro ao salvar paciente:', error);
+            Utils.showNotification('Erro ao salvar paciente', 'error');
+        }
+    }
+
+    async editarPaciente(id) {
+        try {
+            const paciente = await this.pacienteService.buscarPorId(id);
+            const userId = this.authService.getUserId();
+
+            if (!userId) {
+                Utils.showNotification('Usuário não autenticado', 'error');
+                return;
+            }
+
+            const content = `
+                <form id="pacienteForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="pacienteNome">Nome *</label>
+                            <input type="text" id="pacienteNome" value="${paciente.nome || ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pacienteSobrenome">Sobrenome</label>
+                            <input type="text" id="pacienteSobrenome" value="${paciente.sobrenome || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label for="pacienteCpf">CPF *</label>
+                            <input type="text" id="pacienteCpf" value="${paciente.cpf || ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pacienteEmail">Email</label>
+                            <input type="email" id="pacienteEmail" value="${paciente.email || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label for="pacienteDtNascimento">Data Nascimento *</label>
+                            <input type="date" id="pacienteDtNascimento" value="${paciente.dtNascimento || ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pacienteCrtSus">Cartão SUS</label>
+                            <input type="text" id="pacienteCrtSus" value="${paciente.crtSus || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label for="pacienteContato">Contato</label>
+                            <input type="text" id="pacienteContato" value="${paciente.contato || ''}">
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-primary">Atualizar</button>
+                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    </div>
+                </form>
+            `;
+            this.showModal('Editar Paciente', content);
+
+            document.getElementById('pacienteForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const updatedData = {
+                    id: id,
+                    nome: document.getElementById('pacienteNome').value,
+                    sobrenome: document.getElementById('pacienteSobrenome').value,
+                    cpf: document.getElementById('pacienteCpf').value,
+                    email: document.getElementById('pacienteEmail').value,
+                    dtNascimento: document.getElementById('pacienteDtNascimento').value,
+                    crtSus: document.getElementById('pacienteCrtSus').value,
+                    contato: document.getElementById('pacienteContato').value
+                };
+
+                try {
+                    await this.pacienteService.atualizar(updatedData, userId);
+                    Utils.showNotification('Paciente atualizado com sucesso!');
+                    this.hideModal();
+                    this.router.loadPacientesData();
+                } catch (error) {
+                    console.error('Erro ao atualizar paciente:', error);
+                    Utils.showNotification('Erro ao atualizar paciente', 'error');
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao carregar paciente:', error);
+            Utils.showNotification('Erro ao carregar paciente', 'error');
+        }
+    }
+
+    async deletarPaciente(id) {
+        if (confirm('Tem certeza que deseja excluir este paciente?')) {
+            try {
+                await this.pacienteService.deletar(id);
+                Utils.showNotification('Paciente excluído com sucesso!');
+                this.router.loadPacientesData();
+            } catch (error) {
+                console.error('Erro ao excluir paciente:', error);
+                Utils.showNotification('Erro ao excluir paciente', 'error');
+            }
+        }
+    }
+
+    // ========== AGENDAMENTOS ==========
+    async showNovoAgendamentoModal() {
+        try {
+            // Busca pacientes para o dropdown
+            const pacientes = await this.agendamentoService.buscarPacientesParaAgendamento();
+
+            let pacientesOptions = '<option value="">Selecione um paciente</option>';
+            pacientes.forEach(paciente => {
+                pacientesOptions += `<option value="${paciente.id}">${paciente.nome} ${paciente.sobrenome || ''} - ${paciente.cpf || 'Sem CPF'}</option>`;
+            });
+
+            const content = `
+                <form id="agendamentoForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="agendamentoPacienteId">Paciente *</label>
+                            <select id="agendamentoPacienteId" required>
+                                ${pacientesOptions}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agendamentoTpVisita">Tipo de Visita *</label>
+                            <select id="agendamentoTpVisita" required>
+                                <option value="VISITA">Visita</option>
+                                <option value="CONSULTA">Consulta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agendamentoData">Data e Hora *</label>
+                            <input type="datetime-local" id="agendamentoData" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="agendamentoObservacao">Observações</label>
+                            <textarea id="agendamentoObservacao" rows="3" placeholder="Observações sobre o agendamento..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-primary">Salvar</button>
+                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    </div>
+                </form>
+            `;
+            this.showModal('Novo Agendamento', content);
+
+            document.getElementById('agendamentoForm').addEventListener('submit', (e) => this.salvarAgendamento(e));
+        } catch (error) {
+            console.error('Erro ao carregar pacientes:', error);
+            Utils.showNotification('Erro ao carregar lista de pacientes', 'error');
+        }
+    }
+
+    async salvarAgendamento(event) {
+        event.preventDefault();
+
+        const userId = this.authService.getUserId();
+        if (!userId) {
+            Utils.showNotification('Usuário não autenticado', 'error');
+            return;
+        }
+
+        const pacienteSelect = document.getElementById('agendamentoPacienteId');
+        const pacienteId = pacienteSelect.value;
+
+        if (!pacienteId) {
+            Utils.showNotification('Selecione um paciente', 'error');
+            return;
+        }
+
+        const agendamentoData = {
+            idPaciente: parseInt(pacienteId),
+            tpVisita: document.getElementById('agendamentoTpVisita').value,
+            dtAgendamento: document.getElementById('agendamentoData').value,
+            observacao: document.getElementById('agendamentoObservacao').value
+        };
+
+        try {
+            const agendamentoSalvo = await this.agendamentoService.salvar(agendamentoData, userId);
+            Utils.showNotification('Agendamento salvo com sucesso!');
+
+            // Pergunta se deseja adicionar arquivo
+            if (confirm('Deseja adicionar um arquivo a este agendamento?')) {
+                this.hideModal();
+                this.adicionarArquivoAgendamento(agendamentoSalvo.id);
+            } else {
+                this.hideModal();
+                this.router.loadAgendamentosData();
+            }
+        } catch (error) {
+            console.error('Erro ao salvar agendamento:', error);
+            Utils.showNotification('Erro ao salvar agendamento', 'error');
+        }
+    }
+
+    async editarAgendamento(id) {
+        try {
+            const agendamento = await this.agendamentoService.buscarPorId(id);
+            const pacientes = await this.agendamentoService.buscarPacientesParaAgendamento();
+            const userId = this.authService.getUserId();
+
+            if (!userId) {
+                Utils.showNotification('Usuário não autenticado', 'error');
+                return;
+            }
+
+            let pacientesOptions = '<option value="">Selecione um paciente</option>';
+            pacientes.forEach(paciente => {
+                const selected = paciente.id === agendamento.paciente?.id ? 'selected' : '';
+                pacientesOptions += `<option value="${paciente.id}" ${selected}>${paciente.nome} ${paciente.sobrenome || ''} - ${paciente.cpf || 'Sem CPF'}</option>`;
+            });
+
+            const content = `
+                <form id="agendamentoForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="agendamentoPacienteId">Paciente *</label>
+                            <select id="agendamentoPacienteId" required>
+                                ${pacientesOptions}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agendamentoTpVisita">Tipo de Visita *</label>
+                            <select id="agendamentoTpVisita" required>
+                                <option value="VISITA" ${agendamento.tpVisita === 'VISITA' ? 'selected' : ''}>Visita</option>
+                                <option value="CONSULTA" ${agendamento.tpVisita === 'CONSULTA' ? 'selected' : ''}>Consulta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agendamentoData">Data e Hora *</label>
+                            <input type="datetime-local" id="agendamentoData" value="${this.formatDateTimeForInput(agendamento.dtAgendamento)}" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="agendamentoObservacao">Observações</label>
+                            <textarea id="agendamentoObservacao" rows="3">${agendamento.observacao || ''}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-primary">Atualizar</button>
+                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    </div>
+                </form>
+            `;
+            this.showModal('Editar Agendamento', content);
+
+            document.getElementById('agendamentoForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const updatedData = {
+                    id: id,
+                    idPaciente: parseInt(document.getElementById('agendamentoPacienteId').value),
+                    tpVisita: document.getElementById('agendamentoTpVisita').value,
+                    dtAgendamento: document.getElementById('agendamentoData').value,
+                    observacao: document.getElementById('agendamentoObservacao').value
+                };
+
+                try {
+                    await this.agendamentoService.atualizar(updatedData, userId);
+                    Utils.showNotification('Agendamento atualizado com sucesso!');
+                    this.hideModal();
+                    this.router.loadAgendamentosData();
+                } catch (error) {
+                    console.error('Erro ao atualizar agendamento:', error);
+                    Utils.showNotification('Erro ao atualizar agendamento', 'error');
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao carregar agendamento:', error);
+            Utils.showNotification('Erro ao carregar agendamento', 'error');
+        }
+    }
+
+    async deletarAgendamento(id) {
+        if (confirm('Tem certeza que deseja excluir este agendamento?')) {
+            try {
+                await this.agendamentoService.deletar(id);
+                Utils.showNotification('Agendamento excluído com sucesso!');
+                this.router.loadAgendamentosData();
+            } catch (error) {
+                console.error('Erro ao excluir agendamento:', error);
+                Utils.showNotification('Erro ao excluir agendamento', 'error');
+            }
+        }
+    }
+
+    async adicionarArquivoAgendamento(agendamentoId) {
+        const content = `
+            <div class="file-section">
+                <h4>Adicionar Arquivo ao Agendamento</h4>
+                <form id="arquivoForm">
+                    <div class="form-group">
+                        <label for="arquivoFile">Selecione o arquivo *</label>
+                        <input type="file" id="arquivoFile" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-primary">Upload</button>
+                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        this.showModal('Adicionar Arquivo - Agendamento', content);
+
+        document.getElementById('arquivoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('arquivoFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                Utils.showNotification('Selecione um arquivo', 'error');
+                return;
+            }
+
+            try {
+                await this.arquivoService.uploadArquivo(file, agendamentoId, 'AGENDAMENTO');
+                Utils.showNotification('Arquivo adicionado com sucesso!');
+                this.hideModal();
+                this.router.loadAgendamentosData();
+            } catch (error) {
+                console.error('Erro ao adicionar arquivo:', error);
+                Utils.showNotification('Erro ao adicionar arquivo', 'error');
+            }
+        });
+    }
+
+    async verArquivosAgendamento(agendamentoId) {
+        try {
+            const arquivos = await this.arquivoService.listarPorEntidade(agendamentoId, 'AGENDAMENTO');
+
+            let arquivosHTML = '';
+            if (arquivos.length > 0) {
+                arquivosHTML = arquivos.map(arquivo => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #FFE6F0;">
+                        <span>${arquivo.nmArquivo}</span>
+                        <div>
+                            <button class="btn-action btn-view" onclick="app.downloadArquivo(${arquivo.id})">Download</button>
+                            <button class="btn-action btn-delete" onclick="app.deletarArquivo(${arquivo.id})">Excluir</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                arquivosHTML = '<p>Nenhum arquivo encontrado</p>';
+            }
+
+            const content = `
+                <div class="file-section">
+                    <h4>Arquivos do Agendamento</h4>
+                    ${arquivosHTML}
+                </div>
+            `;
+            this.showModal('Arquivos do Agendamento', content);
+        } catch (error) {
+            console.error('Erro ao carregar arquivos:', error);
+            Utils.showNotification('Erro ao carregar arquivos', 'error');
+        }
+    }
+
+    // ========== EVENTOS ==========
+    showNovoEventoModal() {
+        const content = `
+            <form id="eventoForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="eventoNome">Nome do Evento *</label>
+                        <input type="text" id="eventoNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventoData">Data e Hora *</label>
+                        <input type="datetime-local" id="eventoData" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="eventoDescricao">Descrição</label>
+                        <textarea id="eventoDescricao" rows="3" placeholder="Descrição do evento..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Salvar</button>
+                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                </div>
+            </form>
+        `;
+        this.showModal('Novo Evento', content);
+
+        document.getElementById('eventoForm').addEventListener('submit', (e) => this.salvarEvento(e));
+    }
+
+    async salvarEvento(event) {
+        event.preventDefault();
+
+        const userId = this.authService.getUserId();
+        if (!userId) {
+            Utils.showNotification('Usuário não autenticado', 'error');
+            return;
+        }
+
+        const eventoData = {
+            nmEvento: document.getElementById('eventoNome').value,
+            dtEvento: document.getElementById('eventoData').value,
+            descricao: document.getElementById('eventoDescricao').value
+        };
+
+        try {
+            const eventoSalvo = await this.eventoService.salvar(eventoData, userId);
+            Utils.showNotification('Evento salvo com sucesso!');
+
+            // Pergunta se deseja adicionar arquivo
+            if (confirm('Deseja adicionar um arquivo a este evento?')) {
+                this.hideModal();
+                this.adicionarArquivoEvento(eventoSalvo.id);
+            } else {
+                this.hideModal();
+                this.router.loadEventosData();
+            }
+        } catch (error) {
+            console.error('Erro ao salvar evento:', error);
+            Utils.showNotification('Erro ao salvar evento', 'error');
+        }
+    }
+
+    async editarEvento(id) {
+        try {
+            const evento = await this.eventoService.buscarPorId(id);
+            const userId = this.authService.getUserId();
+
+            if (!userId) {
+                Utils.showNotification('Usuário não autenticado', 'error');
+                return;
+            }
+
+            const content = `
+                <form id="eventoForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="eventoNome">Nome do Evento *</label>
+                            <input type="text" id="eventoNome" value="${evento.nmEvento || ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventoData">Data e Hora *</label>
+                            <input type="datetime-local" id="eventoData" value="${this.formatDateTimeForInput(evento.dtEvento)}" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="eventoDescricao">Descrição</label>
+                            <textarea id="eventoDescricao" rows="3">${evento.descricao || ''}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-primary">Atualizar</button>
+                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    </div>
+                </form>
+            `;
+            this.showModal('Editar Evento', content);
+
+            document.getElementById('eventoForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const updatedData = {
+                    id: id,
+                    nmEvento: document.getElementById('eventoNome').value,
+                    dtEvento: document.getElementById('eventoData').value,
+                    descricao: document.getElementById('eventoDescricao').value
+                };
+
+                try {
+                    await this.eventoService.atualizar(updatedData, userId);
+                    Utils.showNotification('Evento atualizado com sucesso!');
+                    this.hideModal();
+                    this.router.loadEventosData();
+                } catch (error) {
+                    console.error('Erro ao atualizar evento:', error);
+                    Utils.showNotification('Erro ao atualizar evento', 'error');
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao carregar evento:', error);
+            Utils.showNotification('Erro ao carregar evento', 'error');
+        }
+    }
+
+    async deletarEvento(id) {
+        if (confirm('Tem certeza que deseja excluir este evento?')) {
+            try {
+                await this.eventoService.deletar(id);
+                Utils.showNotification('Evento excluído com sucesso!');
+                this.router.loadEventosData();
+            } catch (error) {
+                console.error('Erro ao excluir evento:', error);
+                Utils.showNotification('Erro ao excluir evento', 'error');
+            }
+        }
+    }
+
+    async adicionarArquivoEvento(eventoId) {
+        const content = `
+            <div class="file-section">
+                <h4>Adicionar Arquivo ao Evento</h4>
+                <form id="arquivoForm">
+                    <div class="form-group">
+                        <label for="arquivoFile">Selecione o arquivo *</label>
+                        <input type="file" id="arquivoFile" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-primary">Upload</button>
+                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        this.showModal('Adicionar Arquivo - Evento', content);
+
+        document.getElementById('arquivoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('arquivoFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                Utils.showNotification('Selecione um arquivo', 'error');
+                return;
+            }
+
+            try {
+                await this.arquivoService.uploadArquivo(file, eventoId, 'EVENTO');
+                Utils.showNotification('Arquivo adicionado com sucesso!');
+                this.hideModal();
+                this.router.loadEventosData();
+            } catch (error) {
+                console.error('Erro ao adicionar arquivo:', error);
+                Utils.showNotification('Erro ao adicionar arquivo', 'error');
+            }
+        });
+    }
+
+    async verArquivosEvento(eventoId) {
+        try {
+            const arquivos = await this.arquivoService.listarPorEntidade(eventoId, 'EVENTO');
+
+            let arquivosHTML = '';
+            if (arquivos.length > 0) {
+                arquivosHTML = arquivos.map(arquivo => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #FFE6F0;">
+                        <span>${arquivo.nmArquivo}</span>
+                        <div>
+                            <button class="btn-action btn-view" onclick="app.downloadArquivo(${arquivo.id})">Download</button>
+                            <button class="btn-action btn-delete" onclick="app.deletarArquivo(${arquivo.id})">Excluir</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                arquivosHTML = '<p>Nenhum arquivo encontrado</p>';
+            }
+
+            const content = `
+                <div class="file-section">
+                    <h4>Arquivos do Evento</h4>
+                    ${arquivosHTML}
+                </div>
+            `;
+            this.showModal('Arquivos do Evento', content);
+        } catch (error) {
+            console.error('Erro ao carregar arquivos:', error);
+            Utils.showNotification('Erro ao carregar arquivos', 'error');
+        }
+    }
+
+    // ========== ARQUIVOS ==========
+    async downloadArquivo(id) {
+        try {
+            const blob = await this.arquivoService.downloadArquivo(id);
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `arquivo-${id}`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } catch (error) {
+            console.error('Erro ao baixar arquivo:', error);
+            Utils.showNotification('Erro ao baixar arquivo', 'error');
+        }
+    }
+
+    async deletarArquivo(id) {
+        if (confirm('Tem certeza que deseja excluir este arquivo?')) {
+            try {
+                await this.arquivoService.deletarArquivo(id);
+                Utils.showNotification('Arquivo excluído com sucesso!');
+                this.hideModal();
+                this.router.loadAgendamentosData();
+                this.router.loadEventosData();
+            } catch (error) {
+                console.error('Erro ao excluir arquivo:', error);
+                Utils.showNotification('Erro ao excluir arquivo', 'error');
+            }
+        }
+    }
+
+    // ========== EMAIL ==========
+    async handleEnviarEmail(event) {
+        event.preventDefault();
+
+        const destinatario = document.getElementById('emailDestinatario').value;
+        const assunto = document.getElementById('emailAssunto').value;
+        const conteudo = document.getElementById('emailConteudo').value;
+        const anexoInput = document.getElementById('emailAnexo');
+        const anexo = anexoInput.files[0] || null;
+
+        if (!destinatario || !assunto || !conteudo) {
+            Utils.showNotification('Preencha todos os campos obrigatórios', 'error');
+            return;
+        }
+
+        try {
+            const result = await this.emailService.enviarEmail(destinatario, assunto, conteudo, anexo);
+
+            if (result.success) {
+                Utils.showNotification(result.message);
+                document.getElementById('emailForm').reset();
+            } else {
+                Utils.showNotification(result.error, 'error');
+            }
+        } catch (error) {
+            console.error('Erro ao enviar e-mail:', error);
+            Utils.showNotification('Erro ao enviar e-mail', 'error');
+        }
+    }
+}
+
+// Inicializar aplicação
+let app;
+
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        const authService = new AuthService();
+        const isAuthenticated = authService.isAuthenticated();
+        console.log('Inicialização - Autenticado:', isAuthenticated);
+
+        app = new LuminaApp();
+
+        if (isAuthenticated) {
+            console.log('Usuário autenticado, mostrando dashboard...');
+            app.showDashboard();
+        } else {
+            console.log('Usuário não autenticado, mostrando login...');
+            app.showAuth();
+        }
+    } catch (error) {
+        console.error('Erro na inicialização:', error);
+        // Força mostrar a tela de auth em caso de erro
+        document.getElementById('authScreen').classList.add('active');
+        document.getElementById('dashboardScreen').classList.remove('active');
+    }
+});

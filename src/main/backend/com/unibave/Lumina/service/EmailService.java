@@ -17,7 +17,23 @@ public class EmailService { // Realiza o envio dos emails
     @Autowired
     private JavaMailSender javaMailService;
 
-    public void enviarEmail(String destinatario, String assunto, String conteudo, MultipartFile anexo) {
+    public void enviarEmail(String destinatario, String assunto, String conteudo) { // Sem anexo
+        try {
+            MimeMessage mensagem = javaMailService.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");
+
+            helper.setFrom("lumina.unibave@gmail.com");
+            helper.setTo(destinatario);
+            helper.setSubject(assunto);
+            helper.setText(conteudo, true);
+            javaMailService.send(mensagem);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException("Erro ao enviar e-mail " + e.getMessage());
+        }
+    }
+
+    public void enviarEmail(String destinatario, String assunto, String conteudo, MultipartFile anexo) { // Com anexo
         try {
             MimeMessage mensagem = javaMailService.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");

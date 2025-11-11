@@ -49,9 +49,10 @@ public class EventoController {
             @ApiResponse(responseCode = "200", description = "Evento(s) encontrado(s)"),
             @ApiResponse(responseCode = "404", description = "Evento(s) não encontrado(s)")
     })
-    public ResponseEntity<List<EventoRespostaDTO>> buscarTodos(){
+    public ResponseEntity<List<EventoRespostaDTO>> buscarTodos() {
         List<Evento> eventos = eventoService.buscarTodos();
-        return ResponseEntity.ok(Collections.singletonList(eventoMapper.toDto((Evento) eventos)));
+        List<EventoRespostaDTO> eventoDTOs = eventoMapper.toDto(eventos); // Se seu EventoMapper tiver método similar
+        return ResponseEntity.ok(eventoDTOs);
     }
 
     @GetMapping("/buscar/id")

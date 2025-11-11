@@ -1,13 +1,15 @@
 <configuration>
-    <property name="LOG_PATH" value="C:/PEI/logs"/>
+    <timestamp key="currentDate" datePattern="yyyy-MM"/>
+    <property name="LOG_PATH" value="C:\Workspace\Repositorys\PEI\logs"/>
 
-    <!-- Appender JSON -->
+
+    <!-- ==================== JSON LOGS ==================== -->
     <appender name="FILE_JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/app-log.json</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/app-log-%d{yyyy-MM-dd}.json</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>${LOG_PATH}/json/app-log-%d{yyyy-MM}.json</fileNamePattern>
+            <maxHistory>12</maxHistory>
         </rollingPolicy>
+
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <prettyPrint>true</prettyPrint>
             <providers>
@@ -21,7 +23,6 @@
                 <message><fieldName>message</fieldName></message>
                 <stackTrace><fieldName>stacktrace</fieldName></stackTrace>
 
-                <!-- Campos customizados -->
                 <mdc><fieldName>usuario</fieldName><mdcKey>usuario</mdcKey></mdc>
                 <mdc><fieldName>requestId</fieldName><mdcKey>requestId</mdcKey></mdc>
                 <mdc><fieldName>ip</fieldName><mdcKey>ip</mdcKey></mdc>
@@ -29,33 +30,42 @@
         </encoder>
     </appender>
 
-    <!-- Appender log normal (TXT) -->
+    <!-- ==================== TXT LOGS COM CORES ANSI ==================== -->
     <appender name="FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/app-log.txt</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/app-log-%d{yyyy-MM-dd}.txt</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>${LOG_PATH}/txt/app-log-%d{yyyy-MM}.txt</fileNamePattern>
+            <maxHistory>12</maxHistory>
         </rollingPolicy>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Desativa logs desnecessários do Spring e libs externas -->
-    <logger name="org.springframework" level="OFF"/>
-    <logger name="org.springframework.boot" level="OFF"/>
-    <logger name="org.hibernate" level="OFF"/>
-    <logger name="org.apache" level="OFF"/>
-    <logger name="com.zaxxer" level="OFF"/>
-    <logger name="org.flywaydb" level="OFF"/>
-    <logger name="org.postgresql" level="OFF"/>
+    <!-- ==================== NÍVEIS DE LOG ==================== -->
 
-    <!-- Somente seu pacote principal loga -->
+    <!-- SOMENTE SEU PACOTE PRINCIPAL -->
     <logger name="com.unibave.Lumina" level="INFO"/>
 
-    <!-- Root logger envia para ambos appenders -->
+    <!-- DESATIVA TUDO O RESTANTE -->
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.boot" level="INFO"/>
+    <logger name="org.springframework.security" level="INFO"/>
+    <logger name="org.hibernate" level="INFO"/>
+    <logger name="org.apache" level="INFO"/>
+    <logger name="org.flywaydb" level="INFO"/>
+    <logger name="com.zaxxer.hikari" level="INFO"/>
+    <logger name="org.postgresql" level="INFO"/>
+    <logger name="reactor.netty" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
+    <logger name="jakarta" level="INFO"/>
+
+
+
+    <!-- ROOT: SOMENTE ARQUIVOS (SEM CONSOLE) -->
+
     <root level="INFO">
         <appender-ref ref="FILE_JSON"/>
         <appender-ref ref="FILE_LOG"/>
     </root>
+
 </configuration>

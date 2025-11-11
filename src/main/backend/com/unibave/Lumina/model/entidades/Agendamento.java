@@ -5,20 +5,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.unibave.Lumina.model.abstratos.Entidade;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "agendamento", schema = "lumina")
+@Table(name = "agendamento", schema = "public")
 public class Agendamento extends Entidade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +30,7 @@ public class Agendamento extends Entidade implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"agendamentos"})
     @JoinColumn(name = "id_paciente")
+    @JsonBackReference
     private Paciente paciente;
 
     @Enumerated(EnumType.STRING)
@@ -39,8 +42,6 @@ public class Agendamento extends Entidade implements Serializable {
 
     @Column(name = "observacao")
     private String observacao;
-
-    private List<Arquivo> arquivos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
