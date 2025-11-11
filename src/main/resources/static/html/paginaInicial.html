@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Lumina tela inicial</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../img/luminaIcon.jpg" alt="Logo Lumina" class="logo-img">
+            <h1>Lumina</h1>
+        </div>
+        <nav class="nav">
+            <button class="contact-button">Contate-nos</button>
+            <button class="menu-icon" aria-label="Menu principal">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+        </nav>
+    </header>
+
+    <div class="home-container">
+        <div class="carousel" id="carousel">
+            <div class="carousel-slide"></div>
+            <div class="carousel-slide"></div>
+            <div class="carousel-slide"></div>
+        </div>
+
+        <div class="carousel-indicators">
+            <span class="indicator active" onclick="currentSlide(0)"></span>
+            <span class="indicator" onclick="currentSlide(1)"></span>
+            <span class="indicator" onclick="currentSlide(2)"></span>
+        </div>
+
+        <section id="home">
+            <div class="content">
+                <h3>Previna-se, hoje, amanhã e sempre!</h3>
+                <a href="#" class="btn">Contate-nos</a>
+            </div>
+        </section>
+    </div>
+
+    <section class="about" id="about">
+        <div class="container">
+            <h3>Conheça Nossa História</h3>
+            <h1>Desde 1998 ajudando as mulheres.</h1>
+            <div class="about-content">
+                <div class="about-image" >
+                    <img src="../img/RFCCUnibave.jpeg" alt="Grupo RFCC">
+                </div>
+                <div class="about-text">
+                    <p style="font-size: 1.3rem;">A Rede Feminina de Combate ao Câncer (RFCC) de Orleans foi fundada em 8 de maio de 1998, a partir da iniciativa e do trabalho de um grupo de mulheres voluntárias. Desde sua criação, a entidade tem se dedicado a oferecer assistência gratuita, conscientização e prevenção do câncer, principalmente o de mama e o do colo de útero, às mulheres da comunidade.</p>
+                    <a href="historia.html" class="btn">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="prevention" id="prevention">
+    <div class="container">
+        <h3>Cuidados e Prevenção</h3>
+        <h1>Prevenir é o melhor caminho para salvar vidas</h1>
+
+        <div class="prevention-content">
+            <div class="prevention-text">
+                <p style="font-size: 1.3rem;">
+                    A Rede Feminina de Combate ao Câncer dedica-se a orientar e conscientizar mulheres sobre a importância da prevenção e do diagnóstico precoce. 
+                    O cuidado começa com o autoconhecimento e com hábitos saudáveis que ajudam a reduzir os riscos de câncer.
+                </p>
+                <ul>
+                    <li>💗 Realize o autoexame das mamas mensalmente.</li>
+                    <li>💗 Faça exames preventivos regularmente, como a mamografia e o papanicolau.</li>
+                    <li>💗 Mantenha uma alimentação equilibrada e pratique atividades físicas.</li>
+                    <li>💗 Evite o consumo excessivo de álcool e não fume.</li>
+                    <li>💗 Consulte seu médico e siga as orientações para check-ups periódicos.</li>
+                </ul>
+                <a href="cuidados.html" class="btn">Saiba mais sobre Prevenção</a>
+            </div>
+
+            <div class="prevention-image">
+                <img src="../img/prevenção.jpg" alt="Cuidados e Prevenção">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="event" id="event">
+    <div class="container">
+        <h3>Nossos Eventos</h3>
+        <h1>Campanhas e Ações da Rede Feminina de Orleans</h1>
+
+        <div class="event-content">
+            <div class="event-text">
+                <p style="font-size: 1.2rem;">
+                    A Rede Feminina de Combate ao Câncer de Orleans realiza diversos eventos ao longo do ano,
+                    com o objetivo de promover a prevenção, arrecadar recursos e fortalecer a solidariedade na comunidade.
+                </p>
+                <ul>
+                    <li>🎀 <strong>Outubro Rosa:</strong> campanhas de conscientização e palestras educativas.</li>
+                    <li>💐 <strong>Bazar Solidário:</strong> arrecadação de fundos e roupas doadas pela comunidade.</li>
+                    <li>💖 <strong>Caminhadas e Corridas da Esperança:</strong> incentivo à atividade física e à prevenção.</li>
+                    <li>🌸 <strong>Chás Beneficentes:</strong> encontros para fortalecer laços e compartilhar histórias de superação.</li>
+                </ul>
+                <a href="evento.html" class="btn">Ver todos os eventos</a>
+            </div>
+
+            <div class="event-image">
+                <img src="../img/events.jpg" alt="Evento RFCC Orleans">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="address" id="address">
+    <div class="container">
+        <h3>Nosso Endereço</h3>
+        <h1>Rede Feminina de Combate ao Câncer de Orleans</h1>
+
+        <div class="address-content">
+            <div class="address-text">
+                <p style="font-size: 1.3rem;">
+                    Você pode nos encontrar em nossa sede no município de <strong>Orleans, Santa Catarina</strong>.
+                    Estamos de portas abertas para acolher, orientar e ajudar mulheres em todas as fases da vida.
+                </p>
+                <p>
+                    📍 <strong>Endereço:</strong> R. Profa. Otília Mendes Mazuco, 270 - Rio Belo, Orleans - SC, 88870-000<br>
+                    ☎️ <strong>Telefone:</strong> (48) 99926-4507<br>
+                    ⏰ <strong>Horário de Atendimento:</strong> Segunda a Sexta, das 8h às 12h e das 13h30 às 17h
+                </p>
+            </div>
+
+            <div class="address-map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d422.3301866509736!2d-49.284058982337164!3d-28.350265236635224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95210fdde1e9fc3d%3A0xd4fe7a6039548f6e!2sRede%20Feminina%20de%20Combate%20ao%20C%C3%A2ncer%20de%20Orleans!5e0!3m2!1spt-BR!2sbr!4v1762779525602!5m2!1spt-BR!2sbr"
+                    width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact" id="contact">
+    <div class="container">
+        <h3>Entre em Contato</h3>
+        <h1>Fale conosco, participe e ajude a transformar vidas 💕</h1>
+
+        <div class="contact-content">
+            <div class="contact-info">
+                <p><strong>📍 Endereço:</strong> R. Profa. Otília Mendes Mazuco, 270 - Rio Belo, Orleans - SC, 88870-000</p>
+                <p><strong>📞 Telefone:</strong> (48) 99926-4507</p>
+                <p><strong>✉️ E-mail:</strong> redefemininaorleans@gmail.com</p>
+                <p><strong>⏰ Horário de Atendimento:</strong> Segunda a Sexta - 13h às 17h</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/RedeFemininaOrleans/?locale=pt_BR" target="_blank">
+                        <img src="../img/facebook.jpg" width="45" height="45" alt="Facebook">
+                    </a>
+                    <a href="https://www.instagram.com/redefemininaorleans/" target="_blank">
+                        <img src="../img/instagram.jpg" width="50" height="50" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <form action="https://formsubmit.co/redefemininaorleans@gmail.com" method="POST">
+                    <input type="text" name="name" placeholder="Seu nome" required>
+                    <input type="email" name="email" placeholder="Seu e-mail" required>
+                    <textarea name="message" rows="5" placeholder="Sua mensagem" required></textarea>
+                    <button type="submit" class="btn">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+    <script src="../js/script.js"></script>
+</body>
+</html>
