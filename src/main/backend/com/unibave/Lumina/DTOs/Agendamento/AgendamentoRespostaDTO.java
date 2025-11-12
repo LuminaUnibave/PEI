@@ -1,5 +1,6 @@
 package com.unibave.Lumina.DTOs.Agendamento;
 
+import com.unibave.Lumina.model.entidades.Agendamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class AgendamentoRespostaDTO {
 
     private Long id;
     private PacienteDTO paciente;
-    private String tpVisita;
+    private Agendamento.TpVisita tpVisita;
     private LocalDateTime dtAgendamento;
     private UsuarioDTO usuario;
     private LocalDateTime dtCadastro;
@@ -35,5 +36,6 @@ public class AgendamentoRespostaDTO {
     @NoArgsConstructor
     public static class PacienteDTO {
         private Long id;
+        private String nome;
     }
 }

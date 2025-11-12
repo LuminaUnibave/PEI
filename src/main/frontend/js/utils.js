@@ -71,16 +71,70 @@ class Utils {
         }, 5000);
     }
 
-    static formatDate(dateString) {
-        if (!dateString) return '';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('pt-BR');
+    static parseBackendDate(dateData) {
+        if (!dateData) return null;
+
+        try {
+            // Se for um array [ano, mês, dia, hora, minuto]
+            if (Array.isArray(dateData)) {
+                console.log('Convertendo array de data:', dateData);
+                const [year, month, day, hour = 0, minute = 0] = dateData;
+
+                // O mês no JavaScript é 0-indexed (0 = Janeiro, 11 = Dezembro)
+                // Mas no array do backend parece ser 1-indexed, então subtraímos 1
+                const jsMonth = month - 1;
+
+                const date = new Date(year, jsMonth, day, hour, minute);
+                console.log('Data convertida:', date);
+                return date;
+            }
+
+            // Se for uma string no formato "2025-11-29 00:06:00.000"
+            if (typeof dateData === 'string') {
+                // Substitui o espaço por 'T' para criar formato ISO
+                const isoString = dateData.replace(' ', 'T');
+                const date = new Date(isoString);
+                if (!isNaN(date.getTime())) {
+                    return date;
+                }
+            }
+
+            // Se for um timestamp ou outro formato
+            const date = new Date(dateData);
+            if (!isNaN(date.getTime())) {
+                return date;
+            }
+
+            console.warn('Formato de data não reconhecido:', dateData);
+            return null;
+        } catch (error) {
+            console.error('Erro ao converter data:', error, dateData);
+            return null;
+        }
     }
 
-    static formatDateTime(dateTimeString) {
-        if (!dateTimeString) return '';
-        const date = new Date(dateTimeString);
-        return date.toLocaleString('pt-BR');
+    static formatDate(dateData) {
+        if (!dateData) return '';
+        try {
+            const date = Utils.parseBackendDate(dateData);
+            if (!date || isNaN(date.getTime())) return '';
+            return date.toLocaleDateString('pt-BR');
+        } catch (error) {
+            console.error('Erro ao formatar data:', error);
+            return '';
+        }
+    }
+
+    static formatDateTime(dateData) {
+        if (!dateData) return '';
+        try {
+            const date = Utils.parseBackendDate(dateData);
+            if (!date || isNaN(date.getTime())) return '';
+            return date.toLocaleString('pt-BR');
+        } catch (error) {
+            console.error('Erro ao formatar data/hora:', error);
+            return '';
+        }
     }
 
     static formatFileSize(bytes) {

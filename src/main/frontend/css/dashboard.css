@@ -213,20 +213,6 @@
     gap: 1rem;
 }
 
-.email-form {
-    max-width: 600px;
-}
-
-.email-form textarea {
-    resize: vertical;
-    min-height: 120px;
-    border: 2px solid #FFE6F0;
-}
-
-.email-form textarea:focus {
-    border-color: #F8609B;
-}
-
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -277,14 +263,53 @@
     padding: 1.5rem;
 }
 
-.form-grid {
+/* Estilos para formulários dentro do modal */
+.modal-body .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
 }
 
-.form-group.full-width {
+.modal-body .form-group {
+    margin-bottom: 1rem;
+}
+
+.modal-body .form-group.full-width {
     grid-column: 1 / -1;
+}
+
+.modal-body label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #1A1B37;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.modal-body input,
+.modal-body textarea,
+.modal-body select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #FFE6F0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.modal-body input:focus,
+.modal-body textarea:focus,
+.modal-body select:focus {
+    outline: none;
+    border-color: #F8609B;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(248, 96, 155, 0.1);
+}
+
+.modal-body textarea {
+    resize: vertical;
+    min-height: 80px;
 }
 
 .modal-actions {
@@ -292,6 +317,8 @@
     gap: 1rem;
     justify-content: flex-end;
     margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #FFE6F0;
 }
 
 .btn-secondary {
@@ -357,5 +384,9 @@
     .btn-action {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
+    }
+
+    .modal-body .form-grid {
+        grid-template-columns: 1fr;
     }
 }

@@ -6,7 +6,6 @@ class LuminaApp {
         this.agendamentoService = new AgendamentoService();
         this.eventoService = new EventoService();
         this.arquivoService = new ArquivoService();
-        this.emailService = new EmailService();
         this.router = new Router();
         this.init();
     }
@@ -28,7 +27,6 @@ class LuminaApp {
         document.getElementById('novoPacienteBtn').addEventListener('click', () => this.showNovoPacienteModal());
         document.getElementById('novoAgendamentoBtn').addEventListener('click', () => this.showNovoAgendamentoModal());
         document.getElementById('novoEventoBtn').addEventListener('click', () => this.showNovoEventoModal());
-        document.getElementById('emailForm').addEventListener('submit', (e) => this.handleEnviarEmail(e));
 
         // Modal
         document.getElementById('modalClose').addEventListener('click', () => this.hideModal());
@@ -262,10 +260,71 @@ class LuminaApp {
         document.getElementById('modalOverlay').style.display = 'none';
     }
 
-    formatDateTimeForInput(dateTimeString) {
-        if (!dateTimeString) return '';
-        const date = new Date(dateTimeString);
-        return date.toISOString().slice(0, 16);
+    parseBackendDate(dateData) {
+        if (!dateData) return null;
+
+        try {
+            // Se for um array [ano, mês, dia, hora, minuto]
+            if (Array.isArray(dateData)) {
+                console.log('Convertendo array de data:', dateData);
+                const [year, month, day, hour = 0, minute = 0] = dateData;
+
+                // O mês no JavaScript é 0-indexed (0 = Janeiro, 11 = Dezembro)
+                // Mas no array do backend parece ser 1-indexed, então subtraímos 1
+                const jsMonth = month - 1;
+
+                const date = new Date(year, jsMonth, day, hour, minute);
+                console.log('Data convertida:', date);
+                return date;
+            }
+
+            // Se for uma string no formato "2025-11-29 00:06:00.000"
+            if (typeof dateData === 'string') {
+                // Substitui o espaço por 'T' para criar formato ISO
+                const isoString = dateData.replace(' ', 'T');
+                const date = new Date(isoString);
+                if (!isNaN(date.getTime())) {
+                    return date;
+                }
+            }
+
+            // Se for um timestamp ou outro formato
+            const date = new Date(dateData);
+            if (!isNaN(date.getTime())) {
+                return date;
+            }
+
+            console.warn('Formato de data não reconhecido:', dateData);
+            return null;
+        } catch (error) {
+            console.error('Erro ao converter data:', error, dateData);
+            return null;
+        }
+    }
+
+    formatDateTimeForInput(dateData) {
+        if (!dateData) return '';
+
+        try {
+            const date = this.parseBackendDate(dateData);
+
+            if (!date || isNaN(date.getTime())) {
+                console.warn('Data inválida para formatação:', dateData);
+                return '';
+            }
+
+            // Formata para o formato esperado pelo input datetime-local (YYYY-MM-DDTHH:MM)
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        } catch (error) {
+            console.error('Erro ao formatar data:', error, dateData);
+            return '';
+        }
     }
 
     // ========== PACIENTES ==========
@@ -506,9 +565,11 @@ class LuminaApp {
         const agendamentoData = {
             idPaciente: parseInt(pacienteId),
             tpVisita: document.getElementById('agendamentoTpVisita').value,
-            dtAgendamento: document.getElementById('agendamentoData').value,
-            observacao: document.getElementById('agendamentoObservacao').value
+            data: document.getElementById('agendamentoData').value,
+            observacoes: document.getElementById('agendamentoObservacao').value
         };
+
+        console.log('Dados do agendamento a serem salvos:', agendamentoData);
 
         try {
             const agendamentoSalvo = await this.agendamentoService.salvar(agendamentoData, userId);
@@ -539,11 +600,16 @@ class LuminaApp {
                 return;
             }
 
+            console.log('Agendamento carregado para edição:', agendamento);
+
             let pacientesOptions = '<option value="">Selecione um paciente</option>';
             pacientes.forEach(paciente => {
-                const selected = paciente.id === agendamento.paciente?.id ? 'selected' : '';
+                const selected = paciente.id === agendamento.idPaciente ? 'selected' : '';
                 pacientesOptions += `<option value="${paciente.id}" ${selected}>${paciente.nome} ${paciente.sobrenome || ''} - ${paciente.cpf || 'Sem CPF'}</option>`;
             });
+
+            const formattedDate = this.formatDateTimeForInput(agendamento.data);
+            console.log('Data formatada para input:', formattedDate);
 
             const content = `
                 <form id="agendamentoForm">
@@ -563,11 +629,11 @@ class LuminaApp {
                         </div>
                         <div class="form-group">
                             <label for="agendamentoData">Data e Hora *</label>
-                            <input type="datetime-local" id="agendamentoData" value="${this.formatDateTimeForInput(agendamento.dtAgendamento)}" required>
+                            <input type="datetime-local" id="agendamentoData" value="${formattedDate}" required>
                         </div>
                         <div class="form-group full-width">
                             <label for="agendamentoObservacao">Observações</label>
-                            <textarea id="agendamentoObservacao" rows="3">${agendamento.observacao || ''}</textarea>
+                            <textarea id="agendamentoObservacao" rows="3">${agendamento.observacoes || ''}</textarea>
                         </div>
                     </div>
                     <div class="modal-actions">
@@ -584,9 +650,11 @@ class LuminaApp {
                     id: id,
                     idPaciente: parseInt(document.getElementById('agendamentoPacienteId').value),
                     tpVisita: document.getElementById('agendamentoTpVisita').value,
-                    dtAgendamento: document.getElementById('agendamentoData').value,
-                    observacao: document.getElementById('agendamentoObservacao').value
+                    data: document.getElementById('agendamentoData').value,
+                    observacoes: document.getElementById('agendamentoObservacao').value
                 };
+
+                console.log('Dados do agendamento a serem atualizados:', updatedData);
 
                 try {
                     await this.agendamentoService.atualizar(updatedData, userId);
@@ -693,27 +761,27 @@ class LuminaApp {
     // ========== EVENTOS ==========
     showNovoEventoModal() {
         const content = `
-            <form id="eventoForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="eventoNome">Nome do Evento *</label>
-                        <input type="text" id="eventoNome" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="eventoData">Data e Hora *</label>
-                        <input type="datetime-local" id="eventoData" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="eventoDescricao">Descrição</label>
-                        <textarea id="eventoDescricao" rows="3" placeholder="Descrição do evento..."></textarea>
-                    </div>
+        <form id="eventoForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="eventoNome">Nome do Evento *</label>
+                    <input type="text" id="eventoNome" required>
                 </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn-primary">Salvar</button>
-                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                <div class="form-group">
+                    <label for="eventoData">Data e Hora *</label>
+                    <input type="datetime-local" id="eventoData" required>
                 </div>
-            </form>
-        `;
+                <div class="form-group full-width">
+                    <label for="eventoDescricao">Descrição *</label>
+                    <textarea id="eventoDescricao" rows="3" placeholder="Descrição do evento..." required></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" class="btn-primary">Salvar</button>
+                <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+            </div>
+        </form>
+    `;
         this.showModal('Novo Evento', content);
 
         document.getElementById('eventoForm').addEventListener('submit', (e) => this.salvarEvento(e));
@@ -731,8 +799,10 @@ class LuminaApp {
         const eventoData = {
             nmEvento: document.getElementById('eventoNome').value,
             dtEvento: document.getElementById('eventoData').value,
-            descricao: document.getElementById('eventoDescricao').value
+            descricao: document.getElementById('eventoDescricao').value // CORREÇÃO: descricao em vez de dsEvento
         };
+
+        console.log('Dados do evento a serem salvos:', eventoData);
 
         try {
             const eventoSalvo = await this.eventoService.salvar(eventoData, userId);
@@ -748,7 +818,7 @@ class LuminaApp {
             }
         } catch (error) {
             console.error('Erro ao salvar evento:', error);
-            Utils.showNotification('Erro ao salvar evento', 'error');
+            Utils.showNotification('Erro ao salvar evento: ' + error.message, 'error');
         }
     }
 
@@ -762,28 +832,33 @@ class LuminaApp {
                 return;
             }
 
+            console.log('Evento carregado para edição:', evento);
+
+            const formattedDate = this.formatDateTimeForInput(evento.dtEvento);
+            console.log('Data do evento formatada:', formattedDate);
+
             const content = `
-                <form id="eventoForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="eventoNome">Nome do Evento *</label>
-                            <input type="text" id="eventoNome" value="${evento.nmEvento || ''}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="eventoData">Data e Hora *</label>
-                            <input type="datetime-local" id="eventoData" value="${this.formatDateTimeForInput(evento.dtEvento)}" required>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="eventoDescricao">Descrição</label>
-                            <textarea id="eventoDescricao" rows="3">${evento.descricao || ''}</textarea>
-                        </div>
+            <form id="eventoForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="eventoNome">Nome do Evento *</label>
+                        <input type="text" id="eventoNome" value="${evento.nmEvento || ''}" required>
                     </div>
-                    <div class="modal-actions">
-                        <button type="submit" class="btn-primary">Atualizar</button>
-                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    <div class="form-group">
+                        <label for="eventoData">Data e Hora *</label>
+                        <input type="datetime-local" id="eventoData" value="${formattedDate}" required>
                     </div>
-                </form>
-            `;
+                    <div class="form-group full-width">
+                        <label for="eventoDescricao">Descrição *</label>
+                        <textarea id="eventoDescricao" rows="3" required>${evento.descricao || ''}</textarea>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Atualizar</button>
+                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                </div>
+            </form>
+        `;
             this.showModal('Editar Evento', content);
 
             document.getElementById('eventoForm').addEventListener('submit', async (e) => {
@@ -792,8 +867,10 @@ class LuminaApp {
                     id: id,
                     nmEvento: document.getElementById('eventoNome').value,
                     dtEvento: document.getElementById('eventoData').value,
-                    descricao: document.getElementById('eventoDescricao').value
+                    descricao: document.getElementById('eventoDescricao').value // CORREÇÃO: descricao em vez de dsEvento
                 };
+
+                console.log('Dados do evento a serem atualizados:', updatedData);
 
                 try {
                     await this.eventoService.atualizar(updatedData, userId);
@@ -802,12 +879,12 @@ class LuminaApp {
                     this.router.loadEventosData();
                 } catch (error) {
                     console.error('Erro ao atualizar evento:', error);
-                    Utils.showNotification('Erro ao atualizar evento', 'error');
+                    Utils.showNotification('Erro ao atualizar evento: ' + error.message, 'error');
                 }
             });
         } catch (error) {
             console.error('Erro ao carregar evento:', error);
-            Utils.showNotification('Erro ao carregar evento', 'error');
+            Utils.showNotification('Erro ao carregar evento: ' + error.message, 'error');
         }
     }
 
@@ -819,27 +896,27 @@ class LuminaApp {
                 this.router.loadEventosData();
             } catch (error) {
                 console.error('Erro ao excluir evento:', error);
-                Utils.showNotification('Erro ao excluir evento', 'error');
+                Utils.showNotification('Erro ao excluir evento: ' + error.message, 'error');
             }
         }
     }
 
     async adicionarArquivoEvento(eventoId) {
         const content = `
-            <div class="file-section">
-                <h4>Adicionar Arquivo ao Evento</h4>
-                <form id="arquivoForm">
-                    <div class="form-group">
-                        <label for="arquivoFile">Selecione o arquivo *</label>
-                        <input type="file" id="arquivoFile" required>
-                    </div>
-                    <div class="modal-actions">
-                        <button type="submit" class="btn-primary">Upload</button>
-                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        `;
+        <div class="file-section">
+            <h4>Adicionar Arquivo ao Evento</h4>
+            <form id="arquivoForm">
+                <div class="form-group">
+                    <label for="arquivoFile">Selecione o arquivo *</label>
+                    <input type="file" id="arquivoFile" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Upload</button>
+                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    `;
         this.showModal('Adicionar Arquivo - Evento', content);
 
         document.getElementById('arquivoForm').addEventListener('submit', async (e) => {
@@ -860,7 +937,7 @@ class LuminaApp {
                 this.router.loadEventosData();
             } catch (error) {
                 console.error('Erro ao adicionar arquivo:', error);
-                Utils.showNotification('Erro ao adicionar arquivo', 'error');
+                Utils.showNotification('Erro ao adicionar arquivo: ' + error.message, 'error');
             }
         });
     }
@@ -872,28 +949,28 @@ class LuminaApp {
             let arquivosHTML = '';
             if (arquivos.length > 0) {
                 arquivosHTML = arquivos.map(arquivo => `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #FFE6F0;">
-                        <span>${arquivo.nmArquivo}</span>
-                        <div>
-                            <button class="btn-action btn-view" onclick="app.downloadArquivo(${arquivo.id})">Download</button>
-                            <button class="btn-action btn-delete" onclick="app.deletarArquivo(${arquivo.id})">Excluir</button>
-                        </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #FFE6F0;">
+                    <span>${arquivo.nmArquivo}</span>
+                    <div>
+                        <button class="btn-action btn-view" onclick="app.downloadArquivo(${arquivo.id})">Download</button>
+                        <button class="btn-action btn-delete" onclick="app.deletarArquivo(${arquivo.id})">Excluir</button>
                     </div>
-                `).join('');
+                </div>
+            `).join('');
             } else {
                 arquivosHTML = '<p>Nenhum arquivo encontrado</p>';
             }
 
             const content = `
-                <div class="file-section">
-                    <h4>Arquivos do Evento</h4>
-                    ${arquivosHTML}
-                </div>
-            `;
+            <div class="file-section">
+                <h4>Arquivos do Evento</h4>
+                ${arquivosHTML}
+            </div>
+        `;
             this.showModal('Arquivos do Evento', content);
         } catch (error) {
             console.error('Erro ao carregar arquivos:', error);
-            Utils.showNotification('Erro ao carregar arquivos', 'error');
+            Utils.showNotification('Erro ao carregar arquivos: ' + error.message, 'error');
         }
     }
 
@@ -927,36 +1004,6 @@ class LuminaApp {
                 console.error('Erro ao excluir arquivo:', error);
                 Utils.showNotification('Erro ao excluir arquivo', 'error');
             }
-        }
-    }
-
-    // ========== EMAIL ==========
-    async handleEnviarEmail(event) {
-        event.preventDefault();
-
-        const destinatario = document.getElementById('emailDestinatario').value;
-        const assunto = document.getElementById('emailAssunto').value;
-        const conteudo = document.getElementById('emailConteudo').value;
-        const anexoInput = document.getElementById('emailAnexo');
-        const anexo = anexoInput.files[0] || null;
-
-        if (!destinatario || !assunto || !conteudo) {
-            Utils.showNotification('Preencha todos os campos obrigatórios', 'error');
-            return;
-        }
-
-        try {
-            const result = await this.emailService.enviarEmail(destinatario, assunto, conteudo, anexo);
-
-            if (result.success) {
-                Utils.showNotification(result.message);
-                document.getElementById('emailForm').reset();
-            } else {
-                Utils.showNotification(result.error, 'error');
-            }
-        } catch (error) {
-            console.error('Erro ao enviar e-mail:', error);
-            Utils.showNotification('Erro ao enviar e-mail', 'error');
         }
     }
 }

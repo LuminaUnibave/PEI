@@ -165,20 +165,20 @@ class Router {
                 const arquivosCount = evento.arquivos ? evento.arquivos.length : 0;
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${evento.nmEvento || ''}</td>
-                    <td>${Utils.formatDateTime(evento.dtEvento)}</td>
-                    <td>${evento.dsEvento || ''}</td>
-                    <td><span class="status-badge status-ativo">${evento.stEvento || 'ATIVO'}</span></td>
-                    <td>
-                        <span>${arquivosCount} arquivo(s)</span>
-                        ${arquivosCount > 0 ? `<button class="btn-action btn-view" onclick="app.verArquivosEvento(${evento.id})">Ver</button>` : ''}
-                        <button class="btn-action btn-file" onclick="app.adicionarArquivoEvento(${evento.id})">+ Arquivo</button>
-                    </td>
-                    <td>
-                        <button class="btn-action btn-edit" onclick="app.editarEvento(${evento.id})">Editar</button>
-                        <button class="btn-action btn-delete" onclick="app.deletarEvento(${evento.id})">Excluir</button>
-                    </td>
-                `;
+                <td>${evento.nmEvento || ''}</td>
+                <td>${Utils.formatDateTime(evento.dtEvento)}</td>
+                <td>${evento.descricao || ''}</td> <!-- CORREÇÃO: descricao em vez de dsEvento -->
+                <td><span class="status-badge status-ativo">${evento.situacao || 'ATIVO'}</span></td>
+                <td>
+                    <span>${arquivosCount} arquivo(s)</span>
+                    ${arquivosCount > 0 ? `<button class="btn-action btn-view" onclick="app.verArquivosEvento(${evento.id})">Ver</button>` : ''}
+                    <button class="btn-action btn-file" onclick="app.adicionarArquivoEvento(${evento.id})">+ Arquivo</button>
+                </td>
+                <td>
+                    <button class="btn-action btn-edit" onclick="app.editarEvento(${evento.id})">Editar</button>
+                    <button class="btn-action btn-delete" onclick="app.deletarEvento(${evento.id})">Excluir</button>
+                </td>
+            `;
                 tbody.appendChild(row);
             });
         } else {

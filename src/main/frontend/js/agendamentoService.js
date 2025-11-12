@@ -125,18 +125,25 @@ class AgendamentoService {
                 headers['Authorization'] = `Bearer ${token}`;
             }
 
+            console.log('Atualizando agendamento:', dadosComUsuario);
+
             const response = await fetch(`${this.baseUrl}/atualizar`, {
                 method: 'PUT',
                 headers: headers,
                 body: JSON.stringify(dadosComUsuario)
             });
 
+            console.log('Resposta da atualização - Status:', response.status);
+
             if (response.ok) {
-                return await response.json();
+                const data = await response.json();
+                console.log('Agendamento atualizado com sucesso:', data);
+                return data;
             } else if (response.status === 401) {
                 throw new Error('Usuário não autenticado');
             } else {
                 const errorText = await response.text();
+                console.error('Erro ao atualizar agendamento:', errorText);
                 throw new Error(`Erro ao atualizar agendamento: ${errorText}`);
             }
         } catch (error) {

@@ -69,15 +69,11 @@ public class EventoController {
     }
 
     @GetMapping("/buscar/nmEvento")
-    @Operation(summary = "Buscar evento por nome", description = "Retorna o(s) evento(s) pelo nome")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Evento(s) encontrado(s)"),
-            @ApiResponse(responseCode = "404", description = "Evento(s) não encontrado(s)")
-    })
     public ResponseEntity<List<EventoRespostaDTO>> buscarPorNome(
             @RequestParam("nmEvento") String nmEvento){
         List<Evento> eventos = eventoService.buscarPorNmEvento(nmEvento);
-        return ResponseEntity.ok(Collections.singletonList(eventoMapper.toDto((Evento) eventos)));
+        List<EventoRespostaDTO> eventoDTOs = eventoMapper.toDto(eventos);
+        return ResponseEntity.ok(eventoDTOs);
     }
 
     @GetMapping("/buscar/stEvento")
@@ -89,6 +85,7 @@ public class EventoController {
     public ResponseEntity<List<EventoRespostaDTO>> buscarPorStEvento(
             @RequestParam("stEvento") Situacao stEvento){
         List<Evento> eventos = eventoService.buscarPorStEvento(stEvento);
+        List<EventoRespostaDTO> eventoDTOs = eventoMapper.toDto(eventos);
         return ResponseEntity.ok(Collections.singletonList(eventoMapper.toDto((Evento) eventos)));
     }
 
@@ -101,6 +98,7 @@ public class EventoController {
     public ResponseEntity<List<EventoRespostaDTO>> buscarPorDtEvento(
             @RequestParam("dtEvento") LocalDateTime dtEvento){
         List<Evento> eventos = eventoService.buscarPorDtEvento(dtEvento);
+        List<EventoRespostaDTO> eventoDTOs = eventoMapper.toDto(eventos);
         return ResponseEntity.ok(Collections.singletonList(eventoMapper.toDto((Evento) eventos)));
     }
 
@@ -113,6 +111,7 @@ public class EventoController {
     public ResponseEntity<List<EventoRespostaDTO>> buscarPorDtEventoAntes(
             @RequestParam("antes") LocalDateTime antes){
         List<Evento> eventos = eventoService.buscarPorDtEventoAntes(antes);
+        List<EventoRespostaDTO> eventoDTOs = eventoMapper.toDto(eventos);
         return ResponseEntity.ok(Collections.singletonList(eventoMapper.toDto((Evento) eventos)));
     }
 
@@ -125,19 +124,17 @@ public class EventoController {
     public ResponseEntity<List<EventoRespostaDTO>> buscarPorDtEventoDepois(
             @RequestParam("depois") LocalDateTime depois){
         List<Evento> eventos = eventoService.buscarPorDtEventoDepois(depois);
+        List<EventoRespostaDTO> eventoDTOs = eventoMapper.toDto(eventos);
         return ResponseEntity.ok(Collections.singletonList(eventoMapper.toDto((Evento) eventos)));
     }
 
     @GetMapping("/buscar/dtEvento/entre")
-    @Operation(summary = "Buscar evento pela data entre o período", description = "Retorna o(s) evento(s) pela data entre o período")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Evento(s) encontrado(s)"),
-            @ApiResponse(responseCode = "404", description = "Evento(s) não encontrado(s)")
-    })
     public ResponseEntity<List<EventoRespostaDTO>> buscarPorDtEventoEntre(
-            @RequestParam("entre") LocalDateTime depois, LocalDateTime antes){
+            @RequestParam("depois") LocalDateTime depois,
+            @RequestParam("antes") LocalDateTime antes){ // Adicionar @RequestParam
         List<Evento> eventos = eventoService.buscarPorDtEventoEntre(depois, antes);
-        return ResponseEntity.ok(Collections.singletonList(eventoMapper.toDto((Evento) eventos)));
+        List<EventoRespostaDTO> eventoDTOs = eventoMapper.toDto(eventos);
+        return ResponseEntity.ok(eventoDTOs);
     }
 
     @PostMapping("/salvar")
