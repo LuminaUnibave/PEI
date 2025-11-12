@@ -11,6 +11,9 @@ logs/
 # Ignorar relatorios
 relatorios/
 
+# Ignorar uploads
+uploads/
+
 # Ignorar logback
 src/main/resources/logback-spring.xml
 ### STS ###
