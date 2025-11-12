@@ -6,6 +6,7 @@ class Router {
 
     init() {
         this.bindNavigation();
+        this.bindSearchEvents();
         this.showSection('pacientes');
     }
 
@@ -37,7 +38,12 @@ class Router {
 
     async loadSectionData(sectionName) {
         try {
-            switch(sectionName) {
+            // Atualizar o dashboard sempre que mudar de seção
+            if (app.dashboardService) {
+                await app.dashboardService.atualizarDashboard();
+            }
+
+            switch (sectionName) {
                 case 'pacientes':
                     await this.loadPacientesData();
                     break;
@@ -109,16 +115,16 @@ class Router {
             pacientes.forEach(paciente => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${paciente.nome || ''}</td>
-                    <td>${paciente.cpf || ''}</td>
-                    <td>${paciente.email || ''}</td>
-                    <td>${Utils.formatDate(paciente.dtNascimento)}</td>
-                    <td>${paciente.crtSus || ''}</td>
-                    <td>
-                        <button class="btn-action btn-edit" onclick="app.editarPaciente(${paciente.id})">Editar</button>
-                        <button class="btn-action btn-delete" onclick="app.deletarPaciente(${paciente.id})">Excluir</button>
-                    </td>
-                `;
+                <td>${paciente.nome || ''} ${paciente.sobrenome || ''}</td>
+                <td>${Utils.formatDate(paciente.dtNascimento)}</td>
+                <td>${paciente.email || ''}</td>
+                <td>${paciente.contato || ''}</td>
+                <td><span class="status-badge status-ativo">ATIVO</span></td>
+                <td>
+                    <button class="btn-action btn-edit" onclick="app.editarPaciente(${paciente.id})">Editar</button>
+                    <button class="btn-action btn-delete" onclick="app.deletarPaciente(${paciente.id})">Excluir</button>
+                </td>
+            `;
                 tbody.appendChild(row);
             });
         } else {
@@ -135,20 +141,21 @@ class Router {
                 const arquivosCount = agendamento.arquivos ? agendamento.arquivos.length : 0;
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${agendamento.paciente?.nome || ''}</td>
-                    <td>${agendamento.tpVisita || ''}</td>
-                    <td>${Utils.formatDateTime(agendamento.data)}</td>
-                    <td>${agendamento.observacoes || ''}</td>
-                    <td>
-                        <span>${arquivosCount} arquivo(s)</span>
-                        ${arquivosCount > 0 ? `<button class="btn-action btn-view" onclick="app.verArquivosAgendamento(${agendamento.id})">Ver</button>` : ''}
-                        <button class="btn-action btn-file" onclick="app.adicionarArquivoAgendamento(${agendamento.id})">+ Arquivo</button>
-                    </td>
-                    <td>
-                        <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})">Editar</button>
-                        <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})">Excluir</button>
-                    </td>
-                `;
+                <td>${agendamento.paciente?.nome || 'N/A'} ${agendamento.paciente?.sobrenome || ''}</td>
+                <td>${agendamento.tpVisita || ''}</td>
+                <td>${Utils.formatDateTime(agendamento.data)}</td>
+                <td><span class="status-badge status-ativo">AGENDADO</span></td>
+                <td>${agendamento.observacoes || ''}</td>
+                <td>
+                    <span>${arquivosCount} arquivo(s)</span>
+                    ${arquivosCount > 0 ? `<button class="btn-action btn-view" onclick="app.verArquivosAgendamento(${agendamento.id})">Ver</button>` : ''}
+                    <button class="btn-action btn-file" onclick="app.adicionarArquivoAgendamento(${agendamento.id})">+ Arquivo</button>
+                </td>
+                <td>
+                    <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})">Editar</button>
+                    <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})">Excluir</button>
+                </td>
+            `;
                 tbody.appendChild(row);
             });
         } else {
@@ -195,5 +202,132 @@ class Router {
                 </td>
             </tr>
         `;
+    }
+
+    bindSearchEvents() {
+
+        const clearFilterDate = document.getElementById('clearFilterDate');
+        if (clearFilterDate) {
+            clearFilterDate.addEventListener('click', () => {
+                document.getElementById('filterDate').value = '';
+                this.filterAgendamentosPorData('');
+            });
+        }
+        
+        // Busca para pacientes
+        const searchPacientes = document.getElementById('searchPacientes');
+        if (searchPacientes) {
+            searchPacientes.addEventListener('input', (e) => {
+                this.filterPacientes(e.target.value);
+            });
+        }
+
+        // Filtro para agendamentos por data
+        const filterDate = document.getElementById('filterDate');
+        if (filterDate) {
+            filterDate.addEventListener('change', (e) => {
+                this.filterAgendamentosPorData(e.target.value);
+            });
+        }
+
+        // Filtro para eventos
+        const filterEventos = document.getElementById('filterEventos');
+        if (filterEventos) {
+            filterEventos.addEventListener('change', (e) => {
+                this.filterEventos(e.target.value);
+            });
+        }
+    }
+
+    async filterPacientes(termo) {
+        try {
+            const pacienteService = new PacienteService();
+            let pacientes;
+
+            if (termo.trim() === '') {
+                pacientes = await pacienteService.buscarTodos();
+            } else {
+                // Aqui você pode implementar busca por nome no backend
+                // Por enquanto, vamos filtrar localmente
+                const todosPacientes = await pacienteService.buscarTodos();
+                pacientes = todosPacientes.filter(paciente =>
+                    paciente.nome.toLowerCase().includes(termo.toLowerCase()) ||
+                    (paciente.sobrenome && paciente.sobrenome.toLowerCase().includes(termo.toLowerCase())) ||
+                    (paciente.email && paciente.email.toLowerCase().includes(termo.toLowerCase()))
+                );
+            }
+
+            this.renderPacientesTable(pacientes);
+        } catch (error) {
+            console.error('Erro ao filtrar pacientes:', error);
+        }
+    }
+
+    async filterAgendamentosPorData(data) {
+        try {
+            const agendamentoService = new AgendamentoService();
+            const arquivoService = new ArquivoService();
+            let agendamentos;
+
+            if (!data) {
+                agendamentos = await agendamentoService.buscarTodos();
+            } else {
+                const todosAgendamentos = await agendamentoService.buscarTodos();
+                agendamentos = todosAgendamentos.filter(agendamento => {
+                    const dataAgendamento = app.parseBackendDate(agendamento.data);
+                    if (!dataAgendamento) return false;
+
+                    return dataAgendamento.toISOString().split('T')[0] === data;
+                });
+            }
+
+            // Carrega arquivos para os agendamentos filtrados
+            for (let agendamento of agendamentos) {
+                agendamento.arquivos = await arquivoService.listarPorEntidade(agendamento.id, 'AGENDAMENTO');
+            }
+
+            this.renderAgendamentosTable(agendamentos);
+        } catch (error) {
+            console.error('Erro ao filtrar agendamentos:', error);
+        }
+    }
+
+    async filterEventos(tipo) {
+        try {
+            const eventoService = new EventoService();
+            const arquivoService = new ArquivoService();
+            let eventos;
+
+            if (!tipo) {
+                eventos = await eventoService.buscarTodos();
+            } else {
+                const todosEventos = await eventoService.buscarTodos();
+                const agora = new Date();
+
+                eventos = todosEventos.filter(evento => {
+                    const dataEvento = app.parseBackendDate(evento.dtEvento);
+
+                    switch (tipo) {
+                        case 'ativo':
+                            return evento.situacao === 'ATIVO';
+                        case 'concluido':
+                            return evento.situacao === 'CONCLUIDO';
+                        case 'futuro':
+                            return dataEvento && dataEvento > agora;
+                        default:
+                            return true;
+                    }
+                });
+            }
+
+            // Carrega arquivos para os eventos filtrados
+            for (let evento of eventos) {
+                evento.arquivos = await arquivoService.listarPorEntidade(evento.id, 'EVENTO');
+            }
+
+            this.renderEventosTable(eventos);
+        } catch (error) {
+            console.error('Erro ao filtrar eventos:', error);
+        }
     }
 }

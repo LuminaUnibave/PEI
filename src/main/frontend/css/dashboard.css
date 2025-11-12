@@ -348,6 +348,37 @@
     margin-bottom: 0.5rem;
 }
 
+/* ===== CORREÇÕES PARA TEMA ESCURO NO DASHBOARD ===== */
+[data-theme="dark"] .main-content {
+    background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .content-card {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .data-table th {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-bottom-color: var(--primary-color);
+}
+
+[data-theme="dark"] .data-table td {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .data-table tr:hover {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .data-table tr:hover td {
+    color: var(--text-primary);
+}
+
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;

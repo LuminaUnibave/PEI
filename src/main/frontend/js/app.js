@@ -6,6 +6,7 @@ class LuminaApp {
         this.agendamentoService = new AgendamentoService();
         this.eventoService = new EventoService();
         this.arquivoService = new ArquivoService();
+        this.dashboardService = new DashboardService(); // ← ADICIONE ESTA LINHA
         this.router = new Router();
         this.init();
     }
@@ -395,7 +396,11 @@ class LuminaApp {
             await this.pacienteService.salvar(pacienteData, userId);
             Utils.showNotification('Paciente salvo com sucesso!');
             this.hideModal();
+
+            // Atualizar os dados do dashboard
+            await this.dashboardService.atualizarDashboard();
             this.router.loadPacientesData();
+
         } catch (error) {
             console.error('Erro ao salvar paciente:', error);
             Utils.showNotification('Erro ao salvar paciente', 'error');
@@ -574,6 +579,8 @@ class LuminaApp {
         try {
             const agendamentoSalvo = await this.agendamentoService.salvar(agendamentoData, userId);
             Utils.showNotification('Agendamento salvo com sucesso!');
+
+            await this.dashboardService.atualizarDashboard();
 
             // Pergunta se deseja adicionar arquivo
             if (confirm('Deseja adicionar um arquivo a este agendamento?')) {
@@ -808,6 +815,8 @@ class LuminaApp {
             const eventoSalvo = await this.eventoService.salvar(eventoData, userId);
             Utils.showNotification('Evento salvo com sucesso!');
 
+            await this.dashboardService.atualizarDashboard();
+
             // Pergunta se deseja adicionar arquivo
             if (confirm('Deseja adicionar um arquivo a este evento?')) {
                 this.hideModal();
@@ -1011,7 +1020,11 @@ class LuminaApp {
 // Inicializar aplicação
 let app;
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    // Aplicar tema salvo
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
     try {
         const authService = new AuthService();
         const isAuthenticated = authService.isAuthenticated();
