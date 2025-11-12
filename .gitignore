@@ -8,6 +8,11 @@ target/
 # Ignorar logs
 logs/
 
+# Ignorar relatorios
+relatorios/
+
+# Ignorar logback
+src/main/resources/logback-spring.xml
 ### STS ###
 .apt_generated
 .classpath
