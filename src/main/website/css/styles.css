@@ -384,7 +384,7 @@ section {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .event {
@@ -461,7 +461,7 @@ section {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .address {
@@ -525,7 +525,7 @@ section {
 
 .address-map iframe {
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .contact {
@@ -600,7 +600,7 @@ section {
     background: white;
     padding: 1.2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .contact-form form {
@@ -728,6 +728,7 @@ section {
     height: auto;
     min-height: calc(100vh - 60px);
     padding: 20px;
+    margin-top: 100px;
 }
 
 .title-eventos {
@@ -918,7 +919,7 @@ section {
     margin-bottom: 30px;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .modal-event-time {
@@ -957,7 +958,7 @@ section {
     margin: 0 auto;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .details h1 {
@@ -1019,7 +1020,7 @@ section {
 .history-image img {
     max-width: 100%;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .timeline {
@@ -1049,7 +1050,7 @@ section {
 
 .event-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .event-header {
@@ -1124,7 +1125,8 @@ section {
     border-top: 3px solid var(--light-pink);
 }
 
-.imagens-section, .outros-arquivos-section {
+.imagens-section,
+.outros-arquivos-section {
     margin-bottom: 30px;
 }
 
@@ -1149,7 +1151,7 @@ section {
     height: 500px;
     object-fit: contain;
     border-radius: 12px;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
     border: 3px solid white;
     display: block;
     margin: 0 auto;
@@ -1162,7 +1164,7 @@ section {
     padding: 25px;
     border-radius: 15px;
     border: 2px solid var(--secondary-pink);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .outros-arquivos-section strong {
@@ -1239,6 +1241,34 @@ section {
     font-size: 1.2em;
 }
 
+.modal-event-description {
+    white-space: pre-line !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Para títulos longos também */
+.modal-event-title {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Para garantir que o container do modal permita quebra */
+#modal-event-details {
+    word-wrap: break-word !important;
+}
+
+/* Para os itens de evento no modal */
+.event-item {
+    word-wrap: break-word !important;
+}
+
+/* Para garantir que textos longos em arquivos também quebrem */
+.arquivo-nome {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     html {
@@ -1283,7 +1313,8 @@ section {
         align-items: center;
     }
 
-    .contact-info, .contact-form {
+    .contact-info,
+    .contact-form {
         max-width: 100%;
         text-align: center;
     }
@@ -1292,7 +1323,8 @@ section {
         align-items: center;
     }
 
-    .contact-form input, .contact-form textarea {
+    .contact-form input,
+    .contact-form textarea {
         font-size: 1rem;
     }
 
