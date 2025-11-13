@@ -418,7 +418,7 @@ class LuminaApp {
 
         try {
             await this.pacienteService.salvar(pacienteData, userId);
-            Utils.showNotification('Paciente salvo com sucesso!');
+            Utils.showNotification('Paciente salvo com sucesso!', 'success');
             this.hideModal();
 
             // Atualizar os dados do dashboard
@@ -504,7 +504,7 @@ class LuminaApp {
 
                 try {
                     await this.pacienteService.atualizar(updatedData, userId);
-                    Utils.showNotification('Paciente atualizado com sucesso!');
+                    Utils.showNotification('Paciente atualizado com sucesso!', 'success');
                     this.hideModal();
                     this.router.loadPacientesData();
                 } catch (error) {
@@ -523,7 +523,7 @@ class LuminaApp {
         if (confirm('Tem certeza que deseja excluir este paciente?')) {
             try {
                 await this.pacienteService.deletar(id);
-                Utils.showNotification('Paciente excluído com sucesso!');
+                Utils.showNotification('Paciente excluído com sucesso!', 'success');
 
                 // Atualizar os dados do dashboard
                 await this.dashboardService.atualizarDashboard();
@@ -629,7 +629,7 @@ class LuminaApp {
             const agendamentoSalvo = await this.agendamentoService.salvar(agendamentoData, userId);
             console.log('Agendamento salvo:', agendamentoSalvo);
 
-            Utils.showNotification('Agendamento salvo com sucesso!');
+            Utils.showNotification('Agendamento salvo com sucesso!', 'success');
 
             await this.dashboardService.atualizarDashboard();
 
@@ -721,7 +721,7 @@ class LuminaApp {
 
                 try {
                     await this.agendamentoService.atualizar(updatedData, userId);
-                    Utils.showNotification('Agendamento atualizado com sucesso!');
+                    Utils.showNotification('Agendamento atualizado com sucesso!', 'success');
                     this.hideModal();
                     this.router.loadAgendamentosData();
                 } catch (error) {
@@ -739,7 +739,7 @@ class LuminaApp {
         if (confirm('Tem certeza que deseja excluir este agendamento?')) {
             try {
                 await this.agendamentoService.deletar(id);
-                Utils.showNotification('Agendamento excluído com sucesso!');
+                Utils.showNotification('Agendamento excluído com sucesso!', 'success');
                 this.router.loadAgendamentosData();
             } catch (error) {
                 console.error('Erro ao excluir agendamento:', error);
@@ -763,7 +763,7 @@ class LuminaApp {
             try {
                 Utils.showNotification('Enviando arquivo...', 'success');
                 await this.arquivoService.uploadArquivo(file, agendamentoId, 'AGENDAMENTO');
-                Utils.showNotification('Arquivo adicionado com sucesso!');
+                Utils.showNotification('Arquivo adicionado com sucesso!', 'success');
                 this.router.loadAgendamentosData();
             } catch (error) {
                 console.error('Erro ao adicionar arquivo:', error);
@@ -854,7 +854,7 @@ class LuminaApp {
 
         try {
             const eventoSalvo = await this.eventoService.salvar(eventoData, userId);
-            Utils.showNotification('Evento salvo com sucesso!');
+            Utils.showNotification('Evento salvo com sucesso!', 'success');
 
             await this.dashboardService.atualizarDashboard();
 
@@ -924,7 +924,7 @@ class LuminaApp {
 
                 try {
                     await this.eventoService.atualizar(updatedData, userId);
-                    Utils.showNotification('Evento atualizado com sucesso!');
+                    Utils.showNotification('Evento atualizado com sucesso!', 'success');
                     this.hideModal();
                     this.router.loadEventosData();
                 } catch (error) {
@@ -942,7 +942,7 @@ class LuminaApp {
         if (confirm('Tem certeza que deseja excluir este evento?')) {
             try {
                 await this.eventoService.deletar(id);
-                Utils.showNotification('Evento excluído com sucesso!');
+                Utils.showNotification('Evento excluído com sucesso!', 'success');
                 this.router.loadEventosData();
             } catch (error) {
                 console.error('Erro ao excluir evento:', error);
@@ -966,7 +966,7 @@ class LuminaApp {
             try {
                 Utils.showNotification('Enviando arquivo...', 'success');
                 await this.arquivoService.uploadArquivo(file, eventoId, 'EVENTO');
-                Utils.showNotification('Arquivo adicionado com sucesso!');
+                Utils.showNotification('Arquivo adicionado com sucesso!', 'success');
                 this.router.loadEventosData();
             } catch (error) {
                 console.error('Erro ao adicionar arquivo:', error);
@@ -1026,7 +1026,7 @@ class LuminaApp {
             a.click();
             window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
-            Utils.showNotification('Download iniciado!');
+            Utils.showNotification('Download iniciado!', 'success');
         } catch (error) {
             console.error('Erro ao baixar arquivo:', error);
             Utils.showNotification('Erro ao baixar arquivo: ' + error.message, 'error');
@@ -1037,7 +1037,7 @@ class LuminaApp {
         if (confirm('Tem certeza que deseja excluir este arquivo?')) {
             try {
                 await this.arquivoService.deletarArquivo(id);
-                Utils.showNotification('Arquivo excluído com sucesso!');
+                Utils.showNotification('Arquivo excluído com sucesso!', 'success');
                 // Recarrega as seções para atualizar a contagem de arquivos
                 this.router.loadAgendamentosData();
                 this.router.loadEventosData();
@@ -1082,7 +1082,7 @@ class LuminaApp {
                 for (let arquivo of arquivos) {
                     await this.arquivoService.deletarArquivo(arquivo.id);
                 }
-                Utils.showNotification('Todos os arquivos foram excluídos com sucesso!');
+                Utils.showNotification('Todos os arquivos foram excluídos com sucesso!', 'success');
                 this.router.loadEventosData();
             } catch (error) {
                 console.error('Erro ao excluir arquivos:', error);
@@ -1098,7 +1098,7 @@ class LuminaApp {
                 for (let arquivo of arquivos) {
                     await this.arquivoService.deletarArquivo(arquivo.id);
                 }
-                Utils.showNotification('Todos os arquivos foram excluídos com sucesso!');
+                Utils.showNotification('Todos os arquivos foram excluídos com sucesso!', 'success');
                 this.router.loadAgendamentosData();
             } catch (error) {
                 console.error('Erro ao excluir arquivos:', error);

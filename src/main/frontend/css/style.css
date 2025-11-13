@@ -1626,7 +1626,7 @@ tbody tr:last-child td {
 }
 
 .notification.success {
-    background: var(--primary-color);
+    background: var(--success-color);
 }
 
 .notification.error {
