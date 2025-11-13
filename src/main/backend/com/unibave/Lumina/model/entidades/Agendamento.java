@@ -40,7 +40,7 @@ public class Agendamento extends Entidade implements Serializable {
     @Column(name = "dt_agendamento", nullable = false)
     private LocalDateTime dtAgendamento;
 
-    @Column(name = "observacao")
+    @Column(name = "observacao", length = 1000)
     private String observacao;
 
     @ManyToOne(fetch = FetchType.LAZY)

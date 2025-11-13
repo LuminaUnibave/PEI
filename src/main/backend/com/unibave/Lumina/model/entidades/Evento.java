@@ -7,8 +7,6 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -31,7 +29,7 @@ public class Evento extends Entidade implements Serializable {
     @Column(name = "nm_evento")
     protected String nmEvento;
 
-    @Column(name = "dsc_evento")
+    @Column(name = "dsc_evento", length = 500)
     protected String descricao;
 
     @ManyToOne(fetch = FetchType.LAZY)
