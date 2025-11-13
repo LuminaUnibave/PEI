@@ -9,6 +9,7 @@ class Router {
         this.bindSearchEvents();
         this.showSection('pacientes');
         this.initObservacaoPopup();
+        this.initDescricaoPopup();
     }
 
     initObservacaoPopup() {
@@ -46,6 +47,84 @@ class Router {
                 this.hideObservacaoPopup();
             }
         });
+    }
+
+    initDescricaoPopup() {
+        // Cria o pop-up dinamicamente para descrição de eventos
+        const popupHTML = `
+        <div class="descricao-popup" id="descricaoPopup">
+            <div class="descricao-popup-content">
+                <div class="descricao-popup-header">
+                    <h3>Descrição do Evento</h3>
+                    <button class="descricao-popup-close" id="descricaoPopupClose">&times;</button>
+                </div>
+                <div class="descricao-popup-body">
+                    <div class="descricao-text" id="descricaoPopupText"></div>
+                </div>
+            </div>
+        </div>
+    `;
+
+        document.body.insertAdjacentHTML('beforeend', popupHTML);
+
+        // Adiciona event listeners
+        document.getElementById('descricaoPopupClose').addEventListener('click', () => {
+            this.hideDescricaoPopup();
+        });
+
+        document.getElementById('descricaoPopup').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('descricaoPopup')) {
+                this.hideDescricaoPopup();
+            }
+        });
+
+        // Fecha com ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('descricaoPopup').classList.contains('active')) {
+                this.hideDescricaoPopup();
+            }
+        });
+    }
+
+    showDescricaoPopup(texto) {
+        const popupText = document.getElementById('descricaoPopupText');
+        const popup = document.getElementById('descricaoPopup');
+
+        if (!texto || texto.trim() === '') {
+            popupText.innerHTML = '<span class="descricao-empty">Nenhuma descrição cadastrada</span>';
+        } else {
+            // Usar textContent para evitar problemas com HTML
+            popupText.textContent = texto;
+        }
+
+        popup.classList.add('active');
+
+        // Adiciona classe active à célula clicada
+        const activeCells = document.querySelectorAll('.descricao-cell.active');
+        activeCells.forEach(cell => cell.classList.remove('active'));
+
+        // Encontra e marca a célula que foi clicada
+        const cells = document.querySelectorAll('.descricao-cell');
+        cells.forEach(cell => {
+            if (cell.getAttribute('data-full-text') === texto) {
+                cell.classList.add('active');
+            }
+        });
+
+        // Foca no botão de fechar para melhor acessibilidade
+        setTimeout(() => {
+            const closeBtn = document.getElementById('descricaoPopupClose');
+            if (closeBtn) closeBtn.focus();
+        }, 100);
+    }
+
+    hideDescricaoPopup() {
+        const popup = document.getElementById('descricaoPopup');
+        popup.classList.remove('active');
+
+        // Remove classe active de todas as células
+        const activeCells = document.querySelectorAll('.descricao-cell.active');
+        activeCells.forEach(cell => cell.classList.remove('active'));
     }
 
     showObservacaoPopup(texto) {
@@ -197,10 +276,14 @@ class Router {
                 const statusClass = situacao === 'ATIVO' ? 'status-ativo' : 'status-pendente';
                 const statusText = situacao === 'ATIVO' ? 'ATIVO' : 'PENDENTE';
 
+                // Formatar CPF se existir
+                const cpfFormatado = paciente.cpf ? this.formatarCPF(paciente.cpf) : '';
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${paciente.id || ''}</td>
                 <td>${paciente.nome || ''} ${paciente.sobrenome || ''}</td>
+                <td>${cpfFormatado}</td>
                 <td>${Utils.formatDate(paciente.dtNascimento)}</td>
                 <td>${paciente.email || ''}</td>
                 <td>${paciente.contato || ''}</td>
@@ -221,6 +304,21 @@ class Router {
         } else {
             this.renderEmptyTable('pacientesTableBody', 'Nenhum paciente encontrado');
         }
+    }
+
+    formatarCPF(cpf) {
+        if (!cpf) return '';
+
+        // Remove caracteres não numéricos
+        const cpfLimpo = cpf.replace(/\D/g, '');
+
+        // Aplica a formatação XXX.XXX.XXX-XX
+        if (cpfLimpo.length === 11) {
+            return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+
+        // Retorna o CPF original se não tiver 11 dígitos
+        return cpf;
     }
 
     renderAgendamentosTable(agendamentos) {
@@ -249,6 +347,19 @@ class Router {
                     statusClass = `status-${agendamento.status.toLowerCase()}`;
                 }
 
+                // Formatar data/hora de forma mais legível
+                let dataFormatada = 'Data inválida';
+
+                if (dataAgendamento && !isNaN(dataAgendamento.getTime())) {
+                    dataFormatada = dataAgendamento.toLocaleString('pt-BR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                }
+
                 // Tratar observações para evitar problemas com aspas e caracteres especiais
                 const observacao = agendamento.observacao || '';
                 const observacaoTruncada = observacao.length > 50 ? observacao.substring(0, 50) + '...' : observacao;
@@ -261,47 +372,47 @@ class Router {
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                <td>${agendamento.id || ''}</td>
-                <td>${agendamento.paciente?.nome || 'N/A'} ${agendamento.paciente?.sobrenome || ''}</td>
-                <td>${agendamento.tpVisita || ''}</td>
-                <td>${Utils.formatDateTime(agendamento.dtAgendamento)}</td>
-                <td><span class="status-badge ${statusClass}">${status}</span></td>
-                <td>
-                    <div class="observacao-cell" 
-                        data-full-text="${observacaoEscapada}"
-                        onclick="app.router.showObservacaoPopup('${observacao.replace(/'/g, "\\'")}')"
-                        title="${observacao ? 'Clique para ver observação completa' : 'Sem observações'}">
-                        ${observacaoTruncada || '<span class="observacao-empty">Nenhuma</span>'}
-                    </div>
-                </td>
-                <td>
-                    <div class="arquivos-container">
-                        <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
-                        <div class="arquivos-actions">
-                            ${arquivosCount > 0 ?
+            <td>${agendamento.id || ''}</td>
+            <td>${agendamento.paciente?.nome || 'N/A'} ${agendamento.paciente?.sobrenome || ''}</td>
+            <td>${agendamento.tpVisita || ''}</td>
+            <td class="datetime-cell">${dataFormatada}</td>
+            <td><span class="status-badge ${statusClass}">${status}</span></td>
+            <td>
+                <div class="observacao-cell" 
+                    data-full-text="${observacaoEscapada}"
+                    onclick="app.router.showObservacaoPopup('${observacao.replace(/'/g, "\\'")}')"
+                    title="${observacao ? 'Clique para ver observação completa' : 'Sem observações'}">
+                    ${observacaoTruncada || '<span class="observacao-empty">Nenhuma</span>'}
+                </div>
+            </td>
+            <td>
+                <div class="arquivos-container">
+                    <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
+                    <div class="arquivos-actions">
+                        ${arquivosCount > 0 ?
                         `       <button class="btn-action btn-view btn-small" onclick="app.verArquivosAgendamento(${agendamento.id})" title="Baixar arquivos">
-                                    Download
-                                </button>
-                                <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosAgendamento(${agendamento.id})" title="Excluir todos os arquivos">
-                                     Excluir
-                                </button>` : ''}
-                            <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoAgendamento(${agendamento.id})" title="Adicionar arquivo">
-                                + Arquivo
+                                Download
                             </button>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="acoes-container">
-                        <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})" title="Editar agendamento">
-                            Editar
-                        </button>
-                        <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})" title="Excluir agendamento">
-                            Excluir
+                            <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosAgendamento(${agendamento.id})" title="Excluir todos os arquivos">
+                                 Excluir
+                            </button>` : ''}
+                        <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoAgendamento(${agendamento.id})" title="Adicionar arquivo">
+                            + Arquivo
                         </button>
                     </div>
-                </td>
-            `;
+                </div>
+            </td>
+            <td>
+                <div class="acoes-container">
+                    <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})" title="Editar agendamento">
+                        Editar
+                    </button>
+                    <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})" title="Excluir agendamento">
+                        Excluir
+                    </button>
+                </div>
+            </td>
+        `;
                 tbody.appendChild(row);
             });
         } else {
@@ -316,12 +427,44 @@ class Router {
         if (eventos && eventos.length > 0) {
             eventos.forEach(evento => {
                 const arquivosCount = evento.arquivos ? evento.arquivos.length : 0;
+
+                // Formatar data/hora de forma mais legível
+                const dataEvento = app.parseBackendDate(evento.dtEvento);
+                let dataFormatada = 'Data inválida';
+
+                if (dataEvento && !isNaN(dataEvento.getTime())) {
+                    dataFormatada = dataEvento.toLocaleString('pt-BR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                }
+
+                // Tratar descrição para evitar problemas com aspas e caracteres especiais
+                const descricao = evento.descricao || '';
+                const descricaoTruncada = descricao.length > 50 ? descricao.substring(0, 50) + '...' : descricao;
+
+                // Escapar aspas e quebras de linha para o atributo data-full-text
+                const descricaoEscapada = descricao
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;')
+                    .replace(/\n/g, ' ');
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${evento.id || ''}</td>
                 <td>${evento.nmEvento || ''}</td>
-                <td>${Utils.formatDateTime(evento.dtEvento)}</td>
-                <td>${evento.descricao || ''}</td>
+                <td class="datetime-cell">${dataFormatada}</td>
+                <td>
+                    <div class="descricao-cell" 
+                        data-full-text="${descricaoEscapada}"
+                        onclick="app.router.showDescricaoPopup('${descricao.replace(/'/g, "\\'")}')"
+                        title="${descricao ? 'Clique para ver descrição completa' : 'Sem descrição'}">
+                        ${descricaoTruncada || '<span class="descricao-empty">Nenhuma</span>'}
+                    </div>
+                </td>
                 <td><span class="status-badge status-ativo">${evento.situacao || 'ATIVO'}</span></td>
                 <td>
                     <div class="arquivos-container">
@@ -329,11 +472,11 @@ class Router {
                         <div class="arquivos-actions">
                             ${arquivosCount > 0 ?
                         `<button class="btn-action btn-view btn-small" onclick="app.verArquivosEvento(${evento.id})" title="Baixar arquivos">
-                                    Download
-                                </button>
-                                <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosEvento(${evento.id})" title="Excluir todos os arquivos">
-                                    Excluir
-                                </button>` : ''}
+                                Download
+                            </button>
+                            <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosEvento(${evento.id})" title="Excluir todos os arquivos">
+                                Excluir
+                            </button>` : ''}
                             <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoEvento(${evento.id})" title="Adicionar arquivo">
                                 + Arquivo
                             </button>
@@ -343,10 +486,10 @@ class Router {
                 <td>
                     <div class="acoes-container">
                         <button class="btn-action btn-edit" onclick="app.editarEvento(${evento.id})" title="Editar evento">
-                             Editar
+                            Editar
                         </button>
                         <button class="btn-action btn-delete" onclick="app.deletarEvento(${evento.id})" title="Excluir evento">
-                             Excluir
+                            Excluir
                         </button>
                     </div>
                 </td>
@@ -360,12 +503,12 @@ class Router {
 
     renderEmptyTable(tbodyId, message) {
         const tbody = document.getElementById(tbodyId);
-        let colspan = 7; // Para pacientes (6 colunas + ações)
+        let colspan = 8; // Para pacientes
 
         if (tbodyId === 'agendamentosTableBody') {
             colspan = 8; // Para agendamentos
         } else if (tbodyId === 'eventosTableBody') {
-            colspan = 7; // Para eventos
+            colspan = 7; // Para eventos (agora com 7 colunas)
         }
 
         tbody.innerHTML = `
@@ -420,15 +563,32 @@ class Router {
             if (termo.trim() === '') {
                 pacientes = await pacienteService.buscarTodos();
             } else {
-                // Busca por nome, email, contato ou ID
+                // Busca por ID, nome, CPF (formatado e não formatado), email, contato
                 const todosPacientes = await pacienteService.buscarTodos();
-                pacientes = todosPacientes.filter(paciente =>
-                    paciente.nome.toLowerCase().includes(termo.toLowerCase()) ||
-                    (paciente.sobrenome && paciente.sobrenome.toLowerCase().includes(termo.toLowerCase())) ||
-                    (paciente.email && paciente.email.toLowerCase().includes(termo.toLowerCase())) ||
-                    (paciente.contato && paciente.contato.includes(termo)) ||
-                    (paciente.id && paciente.id.toString().includes(termo))
-                );
+                const termoLower = termo.toLowerCase();
+                const isNumericTerm = !isNaN(termo) && termo.trim() !== '';
+
+                pacientes = todosPacientes.filter(paciente => {
+                    const cpfFormatado = this.formatarCPF(paciente.cpf);
+                    const cpfLimpo = paciente.cpf ? paciente.cpf.replace(/\D/g, '') : '';
+
+                    return (
+                        // Busca por ID (exato ou parcial)
+                        (isNumericTerm && paciente.id && paciente.id.toString().includes(termo)) ||
+                        // Busca por nome (case insensitive)
+                        (paciente.nome && paciente.nome.toLowerCase().includes(termoLower)) ||
+                        // Busca por sobrenome (case insensitive)
+                        (paciente.sobrenome && paciente.sobrenome.toLowerCase().includes(termoLower)) ||
+                        // Busca por CPF formatado
+                        (cpfFormatado && cpfFormatado.includes(termo)) ||
+                        // Busca por CPF não formatado
+                        (cpfLimpo && cpfLimpo.includes(termo)) ||
+                        // Busca por email (case insensitive)
+                        (paciente.email && paciente.email.toLowerCase().includes(termoLower)) ||
+                        // Busca por contato
+                        (paciente.contato && paciente.contato.includes(termo))
+                    );
+                });
             }
 
             this.renderPacientesTable(pacientes);
