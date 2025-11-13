@@ -485,14 +485,13 @@ body {
 }
 
 .user-avatar {
-    width: 36px;
-    height: 36px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: var(--primary-light);
-    display: flex;
+    background-image: url(../../resources/static/img/luminaIcon.jpg);
+    background-size: cover;
     align-items: center;
     justify-content: center;
-    color: var(--primary-dark);
     font-weight: bold;
     border: 2px solid rgba(255, 255, 255, 0.3);
     font-size: 0.9rem;

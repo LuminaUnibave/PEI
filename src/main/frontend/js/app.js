@@ -502,6 +502,32 @@ class LuminaApp {
         }
     }
 
+    // ========== EXCLUIR PACIENTE ==========
+    async deletarPaciente(id) {
+        if (confirm('Tem certeza que deseja excluir este paciente?')) {
+            try {
+                await this.pacienteService.deletar(id);
+                Utils.showNotification('Paciente excluído com sucesso!');
+
+                // Atualizar os dados do dashboard
+                await this.dashboardService.atualizarDashboard();
+                this.router.loadPacientesData();
+
+            } catch (error) {
+                console.error('Erro ao excluir paciente:', error);
+
+                if (error.message.includes('não autenticado')) {
+                    Utils.showNotification('Usuário não autenticado. Faça login novamente.', 'error');
+                    this.handleLogout();
+                } else if (error.message.includes('possui agendamentos')) {
+                    Utils.showNotification('Não é possível excluir paciente que possui agendamentos ativos.', 'error');
+                } else {
+                    Utils.showNotification('Erro ao excluir paciente: ' + error.message, 'error');
+                }
+            }
+        }
+    }
+
     // ========== AGENDAMENTOS ==========
     async showNovoAgendamentoModal() {
         try {
@@ -570,17 +596,23 @@ class LuminaApp {
             return;
         }
 
+        // Formatar a data corretamente para o backend
+        const dataInput = document.getElementById('agendamentoData').value;
+        const observacoes = document.getElementById('agendamentoObservacao').value;
+
         const agendamentoData = {
             idPaciente: parseInt(pacienteId),
             tpVisita: document.getElementById('agendamentoTpVisita').value,
-            dtAgendamento: document.getElementById('agendamentoData').value,
-            observacoes: document.getElementById('agendamentoObservacao').value
+            dtAgendamento: dataInput, // Já está no formato correto para o input datetime-local
+            observacao: observacoes || null // Garantir que seja null se vazio
         };
 
-        console.log('Dados do agendamento a serem salvos:', agendamentoData);
+        console.log('Dados completos do agendamento a serem salvos:', agendamentoData);
 
         try {
             const agendamentoSalvo = await this.agendamentoService.salvar(agendamentoData, userId);
+            console.log('Agendamento salvo:', agendamentoSalvo);
+
             Utils.showNotification('Agendamento salvo com sucesso!');
 
             await this.dashboardService.atualizarDashboard();
@@ -595,7 +627,7 @@ class LuminaApp {
             }
         } catch (error) {
             console.error('Erro ao salvar agendamento:', error);
-            Utils.showNotification('Erro ao salvar agendamento', 'error');
+            Utils.showNotification('Erro ao salvar agendamento: ' + error.message, 'error');
         }
     }
 
@@ -622,46 +654,51 @@ class LuminaApp {
             console.log('Data formatada para input:', formattedDate);
 
             const content = `
-            <form id="agendamentoForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="agendamentoPacienteId">Paciente *</label>
-                        <select id="agendamentoPacienteId" required>
-                            ${pacientesOptions}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="agendamentoTpVisita">Tipo de Visita *</label>
-                        <select id="agendamentoTpVisita" required>
-                            <option value="VISITA" ${agendamento.tpVisita === 'VISITA' ? 'selected' : ''}>Visita</option>
-                            <option value="CONSULTA" ${agendamento.tpVisita === 'CONSULTA' ? 'selected' : ''}>Consulta</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="agendamentoData">Data e Hora *</label>
-                        <input type="datetime-local" id="agendamentoData" value="${formattedDate}" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="agendamentoObservacao">Observações</label>
-                        <textarea id="agendamentoObservacao" rows="3">${agendamento.observacoes || ''}</textarea>
-                    </div>
+        <form id="agendamentoForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="agendamentoPacienteId">Paciente *</label>
+                    <select id="agendamentoPacienteId" required>
+                        ${pacientesOptions}
+                    </select>
                 </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn-primary">Atualizar</button>
-                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                <div class="form-group">
+                    <label for="agendamentoTpVisita">Tipo de Visita *</label>
+                    <select id="agendamentoTpVisita" required>
+                        <option value="VISITA" ${agendamento.tpVisita === 'VISITA' ? 'selected' : ''}>Visita</option>
+                        <option value="CONSULTA" ${agendamento.tpVisita === 'CONSULTA' ? 'selected' : ''}>Consulta</option>
+                    </select>
                 </div>
-            </form>
-        `;
+                <div class="form-group">
+                    <label for="agendamentoData">Data e Hora *</label>
+                    <input type="datetime-local" id="agendamentoData" value="${formattedDate}" required>
+                </div>
+                <div class="form-group full-width">
+                    <label for="agendamentoObservacao">Observações</label>
+                    <textarea id="agendamentoObservacao" rows="3" placeholder="Observações sobre o agendamento...">${agendamento.observacoes || ''}</textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" class="btn-primary">Atualizar</button>
+                <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+            </div>
+        </form>
+    `;
             this.showModal('Editar Agendamento', content);
 
             document.getElementById('agendamentoForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
+
+                const pacienteId = document.getElementById('agendamentoPacienteId').value;
+                const dataInput = document.getElementById('agendamentoData').value;
+                const observacoes = document.getElementById('agendamentoObservacao').value;
+
                 const updatedData = {
                     id: id,
-                    idPaciente: parseInt(document.getElementById('agendamentoPacienteId').value),
+                    idPaciente: parseInt(pacienteId),
                     tpVisita: document.getElementById('agendamentoTpVisita').value,
-                    dtAgendamento: document.getElementById('agendamentoData').value,
-                    observacoes: document.getElementById('agendamentoObservacao').value
+                    dtAgendamento: dataInput,
+                    observacao: observacoes || null
                 };
 
                 console.log('Dados do agendamento a serem atualizados:', updatedData);
@@ -673,12 +710,12 @@ class LuminaApp {
                     this.router.loadAgendamentosData();
                 } catch (error) {
                     console.error('Erro ao atualizar agendamento:', error);
-                    Utils.showNotification('Erro ao atualizar agendamento', 'error');
+                    Utils.showNotification('Erro ao atualizar agendamento: ' + error.message, 'error');
                 }
             });
         } catch (error) {
             console.error('Erro ao carregar agendamento:', error);
-            Utils.showNotification('Erro ao carregar agendamento', 'error');
+            Utils.showNotification('Erro ao carregar agendamento: ' + error.message, 'error');
         }
     }
 

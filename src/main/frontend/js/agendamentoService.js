@@ -113,6 +113,8 @@ class AgendamentoService {
                 idUsuario: userId
             };
 
+            console.log('Dados enviados para salvar agendamento:', dadosComUsuario);
+
             const authService = new AuthService();
             const token = authService.getToken();
 
@@ -120,13 +122,9 @@ class AgendamentoService {
                 'Content-Type': 'application/json',
             };
 
-            // Adiciona token de autenticação se existir
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
             }
-
-            console.log('Enviando agendamento:', dadosComUsuario);
-            console.log('Headers:', headers);
 
             const response = await fetch(`${this.baseUrl}/salvar`, {
                 method: 'POST',
@@ -134,23 +132,17 @@ class AgendamentoService {
                 body: JSON.stringify(dadosComUsuario)
             });
 
-            console.log('Resposta do servidor - Status:', response.status);
-
             if (response.ok) {
-                const data = await response.json();
-                console.log('Agendamento salvo com sucesso:', data);
-                return data;
-            } else if (response.status === 401) {
-                const errorText = await response.text();
-                console.error('Erro 401 - Não autenticado:', errorText);
-                throw new Error('Usuário não autenticado');
+                const resultado = await response.json();
+                console.log('Agendamento salvo com sucesso:', resultado);
+                return resultado;
             } else {
                 const errorText = await response.text();
-                console.error('Erro ao salvar agendamento:', errorText);
-                throw new Error(`Erro ao salvar agendamento: ${response.status} - ${errorText}`);
+                console.error('Erro ao salvar agendamento:', response.status, errorText);
+                throw new Error(`Erro ao salvar agendamento: ${response.status}`);
             }
         } catch (error) {
-            console.error('Erro na requisição:', error);
+            console.error('Erro:', error);
             throw error;
         }
     }
@@ -162,6 +154,8 @@ class AgendamentoService {
                 idUsuario: userId
             };
 
+            console.log('Dados enviados para atualizar agendamento:', dadosComUsuario);
+
             const authService = new AuthService();
             const token = authService.getToken();
 
@@ -173,26 +167,20 @@ class AgendamentoService {
                 headers['Authorization'] = `Bearer ${token}`;
             }
 
-            console.log('Atualizando agendamento:', dadosComUsuario);
-
             const response = await fetch(`${this.baseUrl}/atualizar`, {
                 method: 'PUT',
                 headers: headers,
                 body: JSON.stringify(dadosComUsuario)
             });
 
-            console.log('Resposta da atualização - Status:', response.status);
-
             if (response.ok) {
-                const data = await response.json();
-                console.log('Agendamento atualizado com sucesso:', data);
-                return data;
-            } else if (response.status === 401) {
-                throw new Error('Usuário não autenticado');
+                const resultado = await response.json();
+                console.log('Agendamento atualizado com sucesso:', resultado);
+                return resultado;
             } else {
                 const errorText = await response.text();
-                console.error('Erro ao atualizar agendamento:', errorText);
-                throw new Error(`Erro ao atualizar agendamento: ${errorText}`);
+                console.error('Erro ao atualizar agendamento:', response.status, errorText);
+                throw new Error(`Erro ao atualizar agendamento: ${response.status}`);
             }
         } catch (error) {
             console.error('Erro:', error);

@@ -50,15 +50,25 @@ public class AgendamentoController {
 
     @GetMapping("/buscar/todos")
     @Operation(summary = "Buscar todos os agendamentos", description = "Retorna todos os agendamentos")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Agendamento(s) encontrado(s)"),
-            @ApiResponse(responseCode = "404", description = "Agendamento(s) não encontrado(s)")
+        @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Agendamento(s) encontrado(s)"),
+        @ApiResponse(responseCode = "404", description = "Agendamento(s) não encontrado(s)")
     })
     public ResponseEntity<List<AgendamentoRespostaDTO>> buscarTodos(){
         List<Agendamento> agendamentos = agendamentoService.buscarTodos();
-        List<AgendamentoRespostaDTO> agendamentoDTOs = agendamentoMapper.toDto(agendamentos);
-        return ResponseEntity.ok(agendamentoDTOs);
-    }
+    
+    // Garantir que os pacientes sejam carregados com seus dados completos
+    agendamentos.forEach(agendamento -> {
+        if (agendamento.getPaciente() != null) {
+            // Isso força o carregamento dos dados do paciente se estiver usando LAZY loading
+            agendamento.getPaciente().getNome();
+            agendamento.getPaciente().getSobrenome();
+        }
+    });
+    
+    List<AgendamentoRespostaDTO> agendamentoDTOs = agendamentoMapper.toDto(agendamentos);
+    return ResponseEntity.ok(agendamentoDTOs);
+}
 
     // GET /agendamento/buscar/id?id=...
     @GetMapping("/buscar/id")
@@ -148,31 +158,37 @@ public class AgendamentoController {
     @PutMapping("/atualizar")
     @Operation(summary = "Atualizar agendamento", description = "Atualiza o agendamento")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Agendamento atualizado"),
-            @ApiResponse(responseCode = "404", description = "Agendamento não atualizado")
+        @ApiResponse(responseCode = "200", description = "Agendamento atualizado"),
+        @ApiResponse(responseCode = "404", description = "Agendamento não atualizado")
     })
     public ResponseEntity<AgendamentoRespostaDTO> atualizar(
-            @RequestBody AgendamentoAtualizarDTO agendamentoAtualizarDTO) {
-        Agendamento agendamento = agendamentoMapper.toEntity(agendamentoAtualizarDTO);
+        @RequestBody AgendamentoAtualizarDTO agendamentoAtualizarDTO) {
+    
+    // Primeiro busca o agendamento existente
+    Agendamento agendamentoExistente = agendamentoService.buscarPorId(agendamentoAtualizarDTO.getId())
+            .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
 
-        // Busca as entidades referenciadas
-        Optional<Paciente> paciente = pacienteService.buscarPorId(agendamentoAtualizarDTO.getIdPaciente());
-        Optional<Usuario> usuario = usuarioService.buscarPorId(agendamentoAtualizarDTO.getIdUsuario());
+    // Busca as entidades referenciadas
+    Optional<Paciente> paciente = pacienteService.buscarPorId(agendamentoAtualizarDTO.getIdPaciente());
+    Optional<Usuario> usuario = usuarioService.buscarPorId(agendamentoAtualizarDTO.getIdUsuario());
 
-        if (paciente.isEmpty()) {
-            throw new RuntimeException("Paciente não encontrado");
-        }
-        if (usuario.isEmpty()) {
-            throw new RuntimeException("Usuário não encontrado");
-        }
+    if (paciente.isEmpty()) {
+        throw new RuntimeException("Paciente não encontrado");
+    }
+    if (usuario.isEmpty()) {
+        throw new RuntimeException("Usuário não encontrado");
+    }
 
-        // Set das entidades no agendamento
-        agendamento.setPaciente(paciente.get());
-        agendamento.setUsuario(usuario.get());
+    // Atualiza apenas os campos necessários na entidade existente
+    agendamentoExistente.setTpVisita(Agendamento.TpVisita.valueOf(agendamentoAtualizarDTO.getTpVisita()));
+    agendamentoExistente.setDtAgendamento(agendamentoAtualizarDTO.getDtAgendamento());
+    agendamentoExistente.setObservacao(agendamentoAtualizarDTO.getObservacao());
+    agendamentoExistente.setPaciente(paciente.get());
+    agendamentoExistente.setUsuario(usuario.get());
 
-        // Salva o agendamento
-        agendamento = agendamentoService.salvar(agendamento);
-        return ResponseEntity.ok(agendamentoMapper.toDto(agendamento));
+    // Salva o agendamento atualizado
+    Agendamento agendamentoAtualizado = agendamentoService.salvar(agendamentoExistente);
+    return ResponseEntity.ok(agendamentoMapper.toDto(agendamentoAtualizado));
     }
 
     // DELETE /agendamento/deletar/id?id=...

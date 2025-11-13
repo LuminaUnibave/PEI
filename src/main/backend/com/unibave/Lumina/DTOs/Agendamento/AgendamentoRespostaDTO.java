@@ -22,6 +22,7 @@ public class AgendamentoRespostaDTO {
     private LocalDateTime dtCadastro;
     private LocalDateTime dtModificacao;
     private String situacao;
+    private String observacao;
 
     @Getter
     @Setter
@@ -37,5 +38,6 @@ public class AgendamentoRespostaDTO {
     public static class PacienteDTO {
         private Long id;
         private String nome;
+        private String sobrenome;
     }
 }

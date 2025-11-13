@@ -120,6 +120,7 @@ class Router {
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
+                <td>${paciente.id || ''}</td>
                 <td>${paciente.nome || ''} ${paciente.sobrenome || ''}</td>
                 <td>${Utils.formatDate(paciente.dtNascimento)}</td>
                 <td>${paciente.email || ''}</td>
@@ -128,10 +129,10 @@ class Router {
                 <td>
                     <div class="acoes-container">
                         <button class="btn-action btn-edit" onclick="app.editarPaciente(${paciente.id})" title="Editar paciente">
-                                Editar
+                            Editar
                         </button>
                         <button class="btn-action btn-delete" onclick="app.deletarPaciente(${paciente.id})" title="Excluir paciente">
-                                Excluir
+                            Excluir
                         </button>
                     </div>
                 </td>
@@ -171,11 +172,12 @@ class Router {
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
+                <td>${agendamento.id || ''}</td>
                 <td>${agendamento.paciente?.nome || 'N/A'} ${agendamento.paciente?.sobrenome || ''}</td>
                 <td>${agendamento.tpVisita || ''}</td>
                 <td>${Utils.formatDateTime(agendamento.dtAgendamento)}</td>
                 <td><span class="status-badge ${statusClass}">${status}</span></td>
-                <td>${agendamento.observacoes || ''}</td>
+                <td>${agendamento.observacao || ''}</td> <!-- MUDADO DE observacoes PARA observacao -->
                 <td>
                     <div class="arquivos-container">
                         <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
@@ -221,6 +223,7 @@ class Router {
                 const arquivosCount = evento.arquivos ? evento.arquivos.length : 0;
                 const row = document.createElement('tr');
                 row.innerHTML = `
+                <td>${evento.id || ''}</td>
                 <td>${evento.nmEvento || ''}</td>
                 <td>${Utils.formatDateTime(evento.dtEvento)}</td>
                 <td>${evento.descricao || ''}</td>
@@ -263,13 +266,21 @@ class Router {
 
     renderEmptyTable(tbodyId, message) {
         const tbody = document.getElementById(tbodyId);
+        let colspan = 7; // Para pacientes (6 colunas + ações)
+
+        if (tbodyId === 'agendamentosTableBody') {
+            colspan = 8; // Para agendamentos
+        } else if (tbodyId === 'eventosTableBody') {
+            colspan = 7; // Para eventos
+        }
+
         tbody.innerHTML = `
-            <tr>
-                <td colspan="6" class="empty-state">
-                    <div>${message}</div>
-                </td>
-            </tr>
-        `;
+        <tr>
+            <td colspan="${colspan}" class="empty-state">
+                <div>${message}</div>
+            </td>
+        </tr>
+    `;
     }
 
     bindSearchEvents() {
@@ -315,13 +326,14 @@ class Router {
             if (termo.trim() === '') {
                 pacientes = await pacienteService.buscarTodos();
             } else {
-                // Aqui você pode implementar busca por nome no backend
-                // Por enquanto, vamos filtrar localmente
+                // Busca por nome, email, contato ou ID
                 const todosPacientes = await pacienteService.buscarTodos();
                 pacientes = todosPacientes.filter(paciente =>
                     paciente.nome.toLowerCase().includes(termo.toLowerCase()) ||
                     (paciente.sobrenome && paciente.sobrenome.toLowerCase().includes(termo.toLowerCase())) ||
-                    (paciente.email && paciente.email.toLowerCase().includes(termo.toLowerCase()))
+                    (paciente.email && paciente.email.toLowerCase().includes(termo.toLowerCase())) ||
+                    (paciente.contato && paciente.contato.includes(termo)) ||
+                    (paciente.id && paciente.id.toString().includes(termo))
                 );
             }
 
@@ -342,10 +354,14 @@ class Router {
             } else {
                 const todosAgendamentos = await agendamentoService.buscarTodos();
                 agendamentos = todosAgendamentos.filter(agendamento => {
-                    const dataAgendamento = app.parseBackendDate(agendamento.data);
-                    if (!dataAgendamento) return false;
+                    const dataAgendamento = app.parseBackendDate(agendamento.dtAgendamento);
 
-                    return dataAgendamento.toISOString().split('T')[0] === data;
+                    // Busca por data ou ID
+                    if (dataAgendamento) {
+                        return dataAgendamento.toISOString().split('T')[0] === data ||
+                            agendamento.id.toString().includes(data);
+                    }
+                    return agendamento.id.toString().includes(data);
                 });
             }
 
@@ -374,6 +390,11 @@ class Router {
 
                 eventos = todosEventos.filter(evento => {
                     const dataEvento = app.parseBackendDate(evento.dtEvento);
+
+                    // Se o tipo for numérico, busca por ID
+                    if (!isNaN(tipo)) {
+                        return evento.id.toString().includes(tipo);
+                    }
 
                     switch (tipo) {
                         case 'ativo':

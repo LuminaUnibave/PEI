@@ -124,8 +124,11 @@ class PacienteService {
                 return true;
             } else if (response.status === 401) {
                 throw new Error('Usuário não autenticado');
+            } else if (response.status === 409) {
+                throw new Error('Paciente possui agendamentos ativos');
             } else {
-                throw new Error('Erro ao deletar paciente');
+                const errorText = await response.text();
+                throw new Error(`Erro ao deletar paciente: ${response.status} - ${errorText}`);
             }
         } catch (error) {
             console.error('Erro:', error);
