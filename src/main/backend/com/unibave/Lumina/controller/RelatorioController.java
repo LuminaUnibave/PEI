@@ -34,4 +34,38 @@ public class RelatorioController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/agendamentos")
+    public ResponseEntity<byte[]> downloadRelatorioAgendamentos() {
+        try {
+            byte[] relatorioBytes = relatorioService.relatorioAgendamentos();
+            String filename = "relatorio_agendamentos_" +
+                    new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".txt";
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .header(HttpHeaders.CONTENT_TYPE, "text/plain")
+                    .body(relatorioBytes);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/pacientes")
+    public ResponseEntity<byte[]> downloadRelatorioPacientes() {
+        try {
+            byte[] relatorioBytes = relatorioService.relatorioPacientes();
+            String filename = "relatorio_pacientes_" +
+                    new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".txt";
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .header(HttpHeaders.CONTENT_TYPE, "text/plain")
+                    .body(relatorioBytes);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

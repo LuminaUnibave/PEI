@@ -55,8 +55,13 @@ public class RelatorioService {
         content.append("====================\n\n");
 
         for (Agendamento agendamento : agendamentos) {
-            content.append(String.format("ID: %d | Nome: %s | Data: %s | Descrição: %s\n",//verificar o resto dos atributos
-                    agendamento.getId())); //verificar o resto dos atributos
+            content.append(String.format("ID: %d | Pac. CPF: %s | Data: %s | Tp. Visita: %s | Observação: %s | Situção: %s\n",//verificar o resto dos atributos
+                    agendamento.getId(),
+                    agendamento.getPaciente().getCpf(),
+                    agendamento.getDtAgendamento(),
+                    agendamento.getTpVisita(),
+                    agendamento.getObservacao(),
+                    agendamento.getSituacao())); //verificar o resto dos atributos
         }
 
         return content.toString().getBytes();
@@ -70,14 +75,19 @@ public class RelatorioService {
         content.append("====================\n\n");
 
         for (Paciente paciente : pacientes) {
-            content.append(String.format("ID: %d | Nome: %s | Data: %s | Descrição: %s\n",//verificar o resto dos atributos
-                    paciente.getId()));//verificar o resto dos atributos
+            content.append(String.format("ID: %d | Nome: %s | Sobrenome: %s | CPF: %s | Nascimento: %s | Email: %s | Contato: %s | Situação: %s\n",//verificar o resto dos atributos
+                    paciente.getId(),
+                    paciente.getNome(),
+                    paciente.getSobrenome(),
+                    paciente.getCpf(),
+                    paciente.getDtNascimento(),
+                    paciente.getEmail(),
+                    paciente.getContato(),
+                    paciente.getSituacao()));//verificar o resto dos atributos
         }
 
         return content.toString().getBytes();
     }
-
-    // Métodos similares para agendamentos e pacientes...
 
     private String formatDate(LocalDateTime date) {
         if (date == null) return "N/A";
