@@ -967,15 +967,98 @@ tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* ===== CORREÇÕES PARA COLUNA DE OBSERVAÇÕES ===== */
+/* ===== AJUSTES ESPECÍFICOS PARA TABELA DE AGENDAMENTOS ===== */
+.data-table th:nth-child(1),
+/* ID */
+.data-table td:nth-child(1) {
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+}
+
+.data-table th:nth-child(2),
+/* Paciente */
+.data-table td:nth-child(2) {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.data-table th:nth-child(3),
+/* Tipo */
+.data-table td:nth-child(3) {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+/* COLUNA DATA/HORA - MAIOR E DESTACADA */
+.data-table th:nth-child(4),
+/* Data/Hora */
+.data-table td:nth-child(4) {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+    white-space: normal;
+}
+
+.data-table th:nth-child(5),
+/* Status */
+.data-table td:nth-child(5) {
+    width: 110px;
+    min-width: 110px;
+    max-width: 110px;
+}
+
 .data-table th:nth-child(6),
+/* Observações */
 .data-table td:nth-child(6) {
     width: 180px;
     min-width: 180px;
     max-width: 180px;
-    overflow: hidden;
 }
 
+.data-table th:nth-child(7),
+/* Arquivos */
+.data-table td:nth-child(7) {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+}
+
+.data-table th:nth-child(8),
+/* Ações */
+.data-table td:nth-child(8) {
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+}
+
+/* ===== ESTILO ESPECIAL PARA DATA/HORA - CORRIGIDO ===== */
+.datetime-cell {
+    background: var(--bg-primary);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    padding: 0.8rem 0.5rem;
+    margin: 0.2rem;
+    transition: all 0.3s ease;
+    white-space: normal;
+    line-height: 1.3;
+}
+
+.datetime-cell:hover {
+    background: var(--bg-secondary);
+    transform: scale(1.02);
+}
+
+/* Melhorar a hierarquia visual da tabela */
+.data-table tr:hover .datetime-cell {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* ===== CORREÇÕES PARA COLUNA DE OBSERVAÇÕES ===== */
 .observacao-cell {
     max-width: 180px;
     overflow: hidden;
@@ -992,12 +1075,10 @@ tbody tr:last-child td {
     color: inherit;
     display: block;
     border-radius: 6px;
-    border: 1px solid transparent;
 }
 
 .observacao-cell:hover {
     background: var(--primary-very-light);
-    border-color: var(--primary-color);
     transform: translateY(-1px);
 }
 
@@ -1035,21 +1116,6 @@ tbody tr:last-child td {
     max-width: 150px;
 }
 
-/* Ajuste para garantir que as colunas de arquivos e ações fiquem visíveis */
-.data-table th:nth-child(7),
-.data-table td:nth-child(7) {
-    width: 140px;
-    min-width: 140px;
-    max-width: 140px;
-}
-
-.data-table th:nth-child(8),
-.data-table td:nth-child(8) {
-    width: 160px;
-    min-width: 160px;
-    max-width: 160px;
-}
-
 /* Garantir que a tabela seja responsiva */
 .table-container {
     overflow-x: auto;
@@ -1057,39 +1123,138 @@ tbody tr:last-child td {
 }
 
 .data-table {
-    min-width: 1000px;
-    /* Largura mínima para evitar quebra */
+    min-width: 1200px;
+    /* Aumentado para acomodar melhor as colunas */
 }
 
-/* Em telas menores, ajustar ainda mais as colunas */
-@media (max-width: 1200px) {
-
-    .data-table th:nth-child(6),
-    .data-table td:nth-child(6) {
-        width: 150px;
-        min-width: 150px;
-        max-width: 150px;
-    }
-
-    .data-table th:nth-child(2),
-    .data-table td:nth-child(2) {
-        width: 120px;
-        min-width: 120px;
-        max-width: 120px;
-    }
+/* ===== POP-UP DE DESCRIÇÃO (IGUAL AO DE OBSERVAÇÃO) ===== */
+.descricao-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 20px;
 }
 
-@media (max-width: 768px) {
-    .data-table {
-        min-width: 800px;
-    }
+.descricao-popup.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
 
-    .data-table th:nth-child(6),
-    .data-table td:nth-child(6) {
-        width: 120px;
-        min-width: 120px;
-        max-width: 120px;
-    }
+.descricao-popup-content {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-hover);
+    width: 100%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 3px solid var(--primary-color);
+    animation: modalSlideIn 0.3s ease;
+    position: relative;
+}
+
+.descricao-popup-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--primary-very-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--primary-color);
+    color: white;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.descricao-popup-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.descricao-popup-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.descricao-popup-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.descricao-popup-body {
+    padding: 2rem;
+}
+
+.descricao-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.descricao-empty {
+    color: var(--text-tertiary);
+    font-style: italic;
+}
+
+/* Estilo para célula de descrição quando clicada */
+.descricao-cell.active {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border-radius: var(--radius-sm);
+}
+
+/* Estilo para célula de descrição na tabela */
+.descricao-cell {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    position: relative;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    display: block;
+    border-radius: 6px;
+}
+
+.descricao-cell:active {
+    transform: translateY(0);
 }
 
 /* ===== POP-UP DE OBSERVAÇÕES CORRIGIDO ===== */
@@ -1230,62 +1395,6 @@ tbody tr:last-child td {
 .data-table {
     table-layout: fixed;
     width: 100%;
-}
-
-.data-table th:nth-child(6),
-/* Coluna Observações */
-.data-table td:nth-child(6) {
-    width: 200px;
-    min-width: 200px;
-    max-width: 200px;
-}
-
-/* Ajuste para outras colunas */
-.data-table th:nth-child(1),
-/* ID */
-.data-table td:nth-child(1) {
-    width: 60px;
-}
-
-.data-table th:nth-child(2),
-/* Paciente */
-.data-table td:nth-child(2) {
-    width: 150px;
-}
-
-.data-table th:nth-child(3),
-/* Tipo */
-.data-table td:nth-child(3) {
-    width: 100px;
-}
-
-.data-table th:nth-child(4),
-/* Data/Hora */
-.data-table td:nth-child(4) {
-    width: 150px;
-}
-
-.data-table th:nth-child(5),
-/* Status */
-.data-table td:nth-child(5) {
-    width: 100px;
-}
-
-.data-table th:nth-child(7),
-/* Arquivos */
-.data-table td:nth-child(7) {
-    width: 120px;
-}
-
-.data-table th:nth-child(8),
-/* Ações */
-.data-table td:nth-child(8) {
-    width: 140px;
-}
-
-/* Ajustes específicos para coluna de ações */
-.data-table td:last-child {
-    min-width: 200px;
 }
 
 /* ===== BOTÕES DE MODAL MELHORADOS ===== */
@@ -1630,6 +1739,7 @@ tbody tr:last-child td {
 
 .report-icon {
     font-size: 3rem;
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
@@ -1958,18 +2068,31 @@ tbody tr:last-child td {
     color: var(--text-tertiary);
 }
 
+/* ===== CORREÇÕES ESPECÍFICAS PARA DATA/HORA NO TEMA ESCURO ===== */
+[data-theme="dark"] .datetime-cell {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .datetime-cell:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .data-table tr:hover .datetime-cell {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 1200px) {
 
-    .data-table th:nth-child(6),
-    .data-table td:nth-child(6) {
-        width: 150px;
-        min-width: 150px;
-        max-width: 150px;
-    }
-
-    .observacao-cell:hover::after {
-        max-width: 300px;
+    .data-table th:nth-child(4),
+    /* Data/Hora */
+    .data-table td:nth-child(4) {
+        width: 170px;
+        min-width: 170px;
+        max-width: 170px;
     }
 }
 
@@ -2033,6 +2156,7 @@ tbody tr:last-child td {
 
     .data-table {
         font-size: 0.9rem;
+        min-width: 1100px;
     }
 
     .btn-action {
@@ -2099,17 +2223,17 @@ tbody tr:last-child td {
         min-width: auto;
     }
 
-    .data-table th:nth-child(6),
-    .data-table td:nth-child(6) {
-        width: 120px;
-        min-width: 120px;
-        max-width: 120px;
+    /* Ajustes responsivos para data/hora */
+    .data-table th:nth-child(4),
+    .data-table td:nth-child(4) {
+        width: 160px;
+        min-width: 160px;
+        max-width: 160px;
     }
 
-    .observacao-cell:hover::after {
-        max-width: 250px;
-        font-size: 0.8rem;
-        padding: 8px;
+    .datetime-cell {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.3rem;
     }
 }
 
@@ -2173,15 +2297,25 @@ tbody tr:last-child td {
         font-size: 1rem;
     }
 
-    /* Ocultar colunas menos importantes em telas muito pequenas */
-    .data-table th:nth-child(3),
-    .data-table td:nth-child(3),
+    /* Ajustes mobile para data/hora */
     .data-table th:nth-child(4),
     .data-table td:nth-child(4) {
-        display: none;
+        width: 140px;
+        min-width: 140px;
+        max-width: 140px;
     }
 
+    .datetime-cell {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.2rem;
+    }
+
+    /* Ocultar colunas menos importantes em telas muito pequenas */
+    .data-table th:nth-child(5),
+    /* Email */
+    .data-table td:nth-child(5),
     .data-table th:nth-child(6),
+    /* Telefone */
     .data-table td:nth-child(6) {
         display: none;
     }
@@ -2233,4 +2367,12 @@ tbody tr:last-child td {
         max-height: 250px;
         padding: 0.8rem;
     }
+}
+
+/* Texto de ajuda para busca */
+.search-help {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    display: block;
 }

@@ -62,6 +62,14 @@ class LuminaApp {
         this.router.hideObservacaoPopup();
     }
 
+    showDescricaoPopup(texto) {
+        this.router.showDescricaoPopup(texto);
+    }
+
+    hideDescricaoPopup() {
+        this.router.hideDescricaoPopup();
+    }
+
     async handleLogin(event) {
         event.preventDefault();
 
