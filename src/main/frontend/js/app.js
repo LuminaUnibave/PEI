@@ -6,7 +6,7 @@ class LuminaApp {
         this.agendamentoService = new AgendamentoService();
         this.eventoService = new EventoService();
         this.arquivoService = new ArquivoService();
-        this.dashboardService = new DashboardService(); // ← ADICIONE ESTA LINHA
+        this.dashboardService = new DashboardService();
         this.router = new Router();
         this.init();
     }
@@ -570,7 +570,7 @@ class LuminaApp {
         const agendamentoData = {
             idPaciente: parseInt(pacienteId),
             tpVisita: document.getElementById('agendamentoTpVisita').value,
-            data: document.getElementById('agendamentoData').value,
+            dtAgendamento: document.getElementById('agendamentoData').value,
             observacoes: document.getElementById('agendamentoObservacao').value
         };
 
@@ -615,40 +615,40 @@ class LuminaApp {
                 pacientesOptions += `<option value="${paciente.id}" ${selected}>${paciente.nome} ${paciente.sobrenome || ''} - ${paciente.cpf || 'Sem CPF'}</option>`;
             });
 
-            const formattedDate = this.formatDateTimeForInput(agendamento.data);
+            const formattedDate = this.formatDateTimeForInput(agendamento.dtAgendamento);
             console.log('Data formatada para input:', formattedDate);
 
             const content = `
-                <form id="agendamentoForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="agendamentoPacienteId">Paciente *</label>
-                            <select id="agendamentoPacienteId" required>
-                                ${pacientesOptions}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="agendamentoTpVisita">Tipo de Visita *</label>
-                            <select id="agendamentoTpVisita" required>
-                                <option value="VISITA" ${agendamento.tpVisita === 'VISITA' ? 'selected' : ''}>Visita</option>
-                                <option value="CONSULTA" ${agendamento.tpVisita === 'CONSULTA' ? 'selected' : ''}>Consulta</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="agendamentoData">Data e Hora *</label>
-                            <input type="datetime-local" id="agendamentoData" value="${formattedDate}" required>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="agendamentoObservacao">Observações</label>
-                            <textarea id="agendamentoObservacao" rows="3">${agendamento.observacoes || ''}</textarea>
-                        </div>
+            <form id="agendamentoForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="agendamentoPacienteId">Paciente *</label>
+                        <select id="agendamentoPacienteId" required>
+                            ${pacientesOptions}
+                        </select>
                     </div>
-                    <div class="modal-actions">
-                        <button type="submit" class="btn-primary">Atualizar</button>
-                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    <div class="form-group">
+                        <label for="agendamentoTpVisita">Tipo de Visita *</label>
+                        <select id="agendamentoTpVisita" required>
+                            <option value="VISITA" ${agendamento.tpVisita === 'VISITA' ? 'selected' : ''}>Visita</option>
+                            <option value="CONSULTA" ${agendamento.tpVisita === 'CONSULTA' ? 'selected' : ''}>Consulta</option>
+                        </select>
                     </div>
-                </form>
-            `;
+                    <div class="form-group">
+                        <label for="agendamentoData">Data e Hora *</label>
+                        <input type="datetime-local" id="agendamentoData" value="${formattedDate}" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="agendamentoObservacao">Observações</label>
+                        <textarea id="agendamentoObservacao" rows="3">${agendamento.observacoes || ''}</textarea>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Atualizar</button>
+                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                </div>
+            </form>
+        `;
             this.showModal('Editar Agendamento', content);
 
             document.getElementById('agendamentoForm').addEventListener('submit', async (e) => {
@@ -657,7 +657,7 @@ class LuminaApp {
                     id: id,
                     idPaciente: parseInt(document.getElementById('agendamentoPacienteId').value),
                     tpVisita: document.getElementById('agendamentoTpVisita').value,
-                    data: document.getElementById('agendamentoData').value,
+                    dtAgendamento: document.getElementById('agendamentoData').value,
                     observacoes: document.getElementById('agendamentoObservacao').value
                 };
 
@@ -692,76 +692,61 @@ class LuminaApp {
         }
     }
 
+    // ========== ARQUIVOS - AGENDAMENTOS ==========
     async adicionarArquivoAgendamento(agendamentoId) {
-        const content = `
-            <div class="file-section">
-                <h4>Adicionar Arquivo ao Agendamento</h4>
-                <form id="arquivoForm">
-                    <div class="form-group">
-                        <label for="arquivoFile">Selecione o arquivo *</label>
-                        <input type="file" id="arquivoFile" required>
-                    </div>
-                    <div class="modal-actions">
-                        <button type="submit" class="btn-primary">Upload</button>
-                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        `;
-        this.showModal('Adicionar Arquivo - Agendamento', content);
-
-        document.getElementById('arquivoForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const fileInput = document.getElementById('arquivoFile');
-            const file = fileInput.files[0];
-
-            if (!file) {
-                Utils.showNotification('Selecione um arquivo', 'error');
-                return;
-            }
+        // Cria um input file oculto
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.style.display = 'none';
+        fileInput.accept = '*/*';
+        
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
 
             try {
+                Utils.showNotification('Enviando arquivo...', 'success');
                 await this.arquivoService.uploadArquivo(file, agendamentoId, 'AGENDAMENTO');
                 Utils.showNotification('Arquivo adicionado com sucesso!');
-                this.hideModal();
                 this.router.loadAgendamentosData();
             } catch (error) {
                 console.error('Erro ao adicionar arquivo:', error);
-                Utils.showNotification('Erro ao adicionar arquivo', 'error');
+                Utils.showNotification('Erro ao adicionar arquivo: ' + error.message, 'error');
+            } finally {
+                // Remove o input do DOM
+                document.body.removeChild(fileInput);
             }
         });
+
+        // Adiciona ao DOM e dispara o clique
+        document.body.appendChild(fileInput);
+        fileInput.click();
     }
 
     async verArquivosAgendamento(agendamentoId) {
         try {
             const arquivos = await this.arquivoService.listarPorEntidade(agendamentoId, 'AGENDAMENTO');
-
-            let arquivosHTML = '';
-            if (arquivos.length > 0) {
-                arquivosHTML = arquivos.map(arquivo => `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #FFE6F0;">
-                        <span>${arquivo.nmArquivo}</span>
-                        <div>
-                            <button class="btn-action btn-view" onclick="app.downloadArquivo(${arquivo.id})">Download</button>
-                            <button class="btn-action btn-delete" onclick="app.deletarArquivo(${arquivo.id})">Excluir</button>
-                        </div>
-                    </div>
-                `).join('');
-            } else {
-                arquivosHTML = '<p>Nenhum arquivo encontrado</p>';
+            
+            if (arquivos.length === 0) {
+                Utils.showNotification('Nenhum arquivo encontrado para este agendamento', 'warning');
+                return;
             }
 
-            const content = `
-                <div class="file-section">
-                    <h4>Arquivos do Agendamento</h4>
-                    ${arquivosHTML}
-                </div>
-            `;
-            this.showModal('Arquivos do Agendamento', content);
+            if (arquivos.length === 1) {
+                // Se tiver apenas um arquivo, faz download direto
+                await this.downloadArquivo(arquivos[0].id);
+            } else {
+                // Se tiver múltiplos arquivos, baixa todos
+                Utils.showNotification(`Iniciando download de ${arquivos.length} arquivos...`, 'success');
+                for (let arquivo of arquivos) {
+                    await this.downloadArquivo(arquivo.id);
+                    // Pequeno delay entre downloads
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+            }
         } catch (error) {
             console.error('Erro ao carregar arquivos:', error);
-            Utils.showNotification('Erro ao carregar arquivos', 'error');
+            Utils.showNotification('Erro ao carregar arquivos: ' + error.message, 'error');
         }
     }
 
@@ -806,7 +791,7 @@ class LuminaApp {
         const eventoData = {
             nmEvento: document.getElementById('eventoNome').value,
             dtEvento: document.getElementById('eventoData').value,
-            descricao: document.getElementById('eventoDescricao').value // CORREÇÃO: descricao em vez de dsEvento
+            descricao: document.getElementById('eventoDescricao').value
         };
 
         console.log('Dados do evento a serem salvos:', eventoData);
@@ -876,7 +861,7 @@ class LuminaApp {
                     id: id,
                     nmEvento: document.getElementById('eventoNome').value,
                     dtEvento: document.getElementById('eventoData').value,
-                    descricao: document.getElementById('eventoDescricao').value // CORREÇÃO: descricao em vez de dsEvento
+                    descricao: document.getElementById('eventoDescricao').value
                 };
 
                 console.log('Dados do evento a serem atualizados:', updatedData);
@@ -910,94 +895,85 @@ class LuminaApp {
         }
     }
 
+    // ========== ARQUIVOS - EVENTOS ==========
     async adicionarArquivoEvento(eventoId) {
-        const content = `
-        <div class="file-section">
-            <h4>Adicionar Arquivo ao Evento</h4>
-            <form id="arquivoForm">
-                <div class="form-group">
-                    <label for="arquivoFile">Selecione o arquivo *</label>
-                    <input type="file" id="arquivoFile" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn-primary">Upload</button>
-                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    `;
-        this.showModal('Adicionar Arquivo - Evento', content);
-
-        document.getElementById('arquivoForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const fileInput = document.getElementById('arquivoFile');
-            const file = fileInput.files[0];
-
-            if (!file) {
-                Utils.showNotification('Selecione um arquivo', 'error');
-                return;
-            }
+        // Cria um input file oculto
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.style.display = 'none';
+        fileInput.accept = '*/*';
+        
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
 
             try {
+                Utils.showNotification('Enviando arquivo...', 'success');
                 await this.arquivoService.uploadArquivo(file, eventoId, 'EVENTO');
                 Utils.showNotification('Arquivo adicionado com sucesso!');
-                this.hideModal();
                 this.router.loadEventosData();
             } catch (error) {
                 console.error('Erro ao adicionar arquivo:', error);
                 Utils.showNotification('Erro ao adicionar arquivo: ' + error.message, 'error');
+            } finally {
+                // Remove o input do DOM
+                document.body.removeChild(fileInput);
             }
         });
+
+        // Adiciona ao DOM e dispara o clique
+        document.body.appendChild(fileInput);
+        fileInput.click();
     }
 
     async verArquivosEvento(eventoId) {
         try {
             const arquivos = await this.arquivoService.listarPorEntidade(eventoId, 'EVENTO');
-
-            let arquivosHTML = '';
-            if (arquivos.length > 0) {
-                arquivosHTML = arquivos.map(arquivo => `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #FFE6F0;">
-                    <span>${arquivo.nmArquivo}</span>
-                    <div>
-                        <button class="btn-action btn-view" onclick="app.downloadArquivo(${arquivo.id})">Download</button>
-                        <button class="btn-action btn-delete" onclick="app.deletarArquivo(${arquivo.id})">Excluir</button>
-                    </div>
-                </div>
-            `).join('');
-            } else {
-                arquivosHTML = '<p>Nenhum arquivo encontrado</p>';
+            
+            if (arquivos.length === 0) {
+                Utils.showNotification('Nenhum arquivo encontrado para este evento', 'warning');
+                return;
             }
 
-            const content = `
-            <div class="file-section">
-                <h4>Arquivos do Evento</h4>
-                ${arquivosHTML}
-            </div>
-        `;
-            this.showModal('Arquivos do Evento', content);
+            if (arquivos.length === 1) {
+                // Se tiver apenas um arquivo, faz download direto
+                await this.downloadArquivo(arquivos[0].id);
+            } else {
+                // Se tiver múltiplos arquivos, baixa todos
+                Utils.showNotification(`Iniciando download de ${arquivos.length} arquivos...`, 'success');
+                for (let arquivo of arquivos) {
+                    await this.downloadArquivo(arquivo.id);
+                    // Pequeno delay entre downloads
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+            }
         } catch (error) {
             console.error('Erro ao carregar arquivos:', error);
             Utils.showNotification('Erro ao carregar arquivos: ' + error.message, 'error');
         }
     }
 
-    // ========== ARQUIVOS ==========
+    // ========== ARQUIVOS - FUNÇÕES GERAIS ==========
     async downloadArquivo(id) {
         try {
+            Utils.showNotification('Iniciando download...', 'success');
             const blob = await this.arquivoService.downloadArquivo(id);
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `arquivo-${id}`;
+            
+            // Tenta obter o nome do arquivo do blob ou usa um padrão
+            const fileName = `arquivo-${id}`;
+            a.download = fileName;
+            
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
+            Utils.showNotification('Download iniciado!');
         } catch (error) {
             console.error('Erro ao baixar arquivo:', error);
-            Utils.showNotification('Erro ao baixar arquivo', 'error');
+            Utils.showNotification('Erro ao baixar arquivo: ' + error.message, 'error');
         }
     }
 
@@ -1006,12 +982,71 @@ class LuminaApp {
             try {
                 await this.arquivoService.deletarArquivo(id);
                 Utils.showNotification('Arquivo excluído com sucesso!');
-                this.hideModal();
+                // Recarrega as seções para atualizar a contagem de arquivos
                 this.router.loadAgendamentosData();
                 this.router.loadEventosData();
             } catch (error) {
                 console.error('Erro ao excluir arquivo:', error);
-                Utils.showNotification('Erro ao excluir arquivo', 'error');
+                Utils.showNotification('Erro ao excluir arquivo: ' + error.message, 'error');
+            }
+        }
+    }
+
+    // Funções para download direto e exclusão em lote
+    async downloadArquivoDireto(idEntidade, tipoEntidade) {
+        try {
+            const arquivos = await this.arquivoService.listarPorEntidade(idEntidade, tipoEntidade);
+            
+            if (arquivos.length === 0) {
+                Utils.showNotification('Nenhum arquivo encontrado', 'warning');
+                return;
+            }
+
+            if (arquivos.length === 1) {
+                await this.downloadArquivo(arquivos[0].id);
+            } else {
+                // Baixa todos os arquivos
+                Utils.showNotification(`Iniciando download de ${arquivos.length} arquivos...`, 'success');
+                for (let arquivo of arquivos) {
+                    await this.downloadArquivo(arquivo.id);
+                    // Pequeno delay entre downloads
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao fazer download direto:', error);
+            Utils.showNotification('Erro ao fazer download: ' + error.message, 'error');
+        }
+    }
+
+    async deletarTodosArquivosEvento(eventoId) {
+        if (confirm('Tem certeza que deseja excluir TODOS os arquivos deste evento?')) {
+            try {
+                const arquivos = await this.arquivoService.listarPorEntidade(eventoId, 'EVENTO');
+                for (let arquivo of arquivos) {
+                    await this.arquivoService.deletarArquivo(arquivo.id);
+                }
+                Utils.showNotification('Todos os arquivos foram excluídos com sucesso!');
+                this.router.loadEventosData();
+            } catch (error) {
+                console.error('Erro ao excluir arquivos:', error);
+                Utils.showNotification('Erro ao excluir arquivos: ' + error.message, 'error');
+            }
+        }
+    }
+
+    async deletarTodosArquivosAgendamento(agendamentoId) {
+        if (confirm('Tem certeza que deseja excluir TODOS os arquivos deste agendamento?')) {
+            try {
+                const arquivos = await this.arquivoService.listarPorEntidade(agendamentoId, 'AGENDAMENTO');
+                for (let arquivo of arquivos) {
+                    await this.arquivoService.deletarArquivo(arquivo.id);
+                }
+                Utils.showNotification('Todos os arquivos foram excluídos com sucesso!');
+                this.router.loadAgendamentosData();
+            } catch (error) {
+                console.error('Erro ao excluir arquivos:', error);
+                Utils.showNotification('Erro ao excluir arquivos: ' + error.message, 'error');
             }
         }
     }

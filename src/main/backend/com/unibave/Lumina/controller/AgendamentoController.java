@@ -67,11 +67,11 @@ public class AgendamentoController {
             @ApiResponse(responseCode = "200", description = "Agendamento encontrado"),
             @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
     })
-    public ResponseEntity<Optional<AgendamentoRespostaDTO>> buscarPorId(
+    public ResponseEntity<AgendamentoRespostaDTO> buscarPorId(
             @RequestParam("id") Long id){
         Agendamento agendamento = agendamentoService.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
-        return ResponseEntity.ok(Optional.ofNullable(agendamentoMapper.toDto(agendamento)));
+                .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
+        return ResponseEntity.ok(agendamentoMapper.toDto(agendamento));
     }
 
     // GET /agendamento/buscar/tpvisita?tp_visita=...
@@ -82,9 +82,10 @@ public class AgendamentoController {
             @ApiResponse(responseCode = "404", description = "Agendamento(s) não encontrado(s)")
     })
     public ResponseEntity<List<AgendamentoRespostaDTO>> buscarPorTpVisita(
-            @RequestParam("tpVisita")Agendamento.TpVisita tpVisita) {
+            @RequestParam("tpVisita") Agendamento.TpVisita tpVisita) {
         List<Agendamento> agendamentos = agendamentoService.buscarTpVisita(tpVisita);
-        return ResponseEntity.ok(Collections.singletonList(agendamentoMapper.toDto((Agendamento) agendamentos)));
+        List<AgendamentoRespostaDTO> agendamentoDTOs = agendamentoMapper.toDto(agendamentos);
+        return ResponseEntity.ok(agendamentoDTOs);
     }
 
     // GET /agendamento/buscar/paciente/id?id=...
@@ -97,7 +98,8 @@ public class AgendamentoController {
     public ResponseEntity<List<AgendamentoRespostaDTO>> buscarPorPacienteId(
             @RequestParam("id") Long id) {
         List<Agendamento> agendamentos = agendamentoService.buscarPorPacienteId(id);
-        return ResponseEntity.ok(Collections.singletonList(agendamentoMapper.toDto((Agendamento) agendamentos)));
+        List<AgendamentoRespostaDTO> agendamentoDTOs = agendamentoMapper.toDto(agendamentos);
+        return ResponseEntity.ok(agendamentoDTOs);
     }
 
     // GET /agendamento/buscar/paciente/nome?nome=...
@@ -110,7 +112,8 @@ public class AgendamentoController {
     public ResponseEntity<List<AgendamentoRespostaDTO>> buscarPorPacienteNome(
             @RequestParam("nome") String nome) {
         List<Agendamento> agendamentos = agendamentoService.buscarPorPacienteNome(nome);
-        return ResponseEntity.ok(Collections.singletonList(agendamentoMapper.toDto((Agendamento) agendamentos)));
+        List<AgendamentoRespostaDTO> agendamentoDTOs = agendamentoMapper.toDto(agendamentos);
+        return ResponseEntity.ok(agendamentoDTOs);
     }
 
     // POST /agendamento/salvar
@@ -123,8 +126,18 @@ public class AgendamentoController {
     public ResponseEntity<AgendamentoRespostaDTO> salvar(
             @RequestBody AgendamentoRequisicaoDTO agendamentoRequisicaoDTO) {
         Agendamento agendamento = agendamentoMapper.toEntity(agendamentoRequisicaoDTO);
+
+        // Busca as entidades referenciadas
         Optional<Paciente> paciente = pacienteService.buscarPorId(agendamentoRequisicaoDTO.getIdPaciente());
         Optional<Usuario> usuario = usuarioService.buscarPorId(agendamentoRequisicaoDTO.getIdUsuario());
+
+        if (paciente.isEmpty()) {
+            throw new RuntimeException("Paciente não encontrado");
+        }
+        if (usuario.isEmpty()) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
         agendamento.setPaciente(paciente.get());
         agendamento.setUsuario(usuario.get());
         agendamento = agendamentoService.salvar(agendamento);
@@ -141,13 +154,23 @@ public class AgendamentoController {
     public ResponseEntity<AgendamentoRespostaDTO> atualizar(
             @RequestBody AgendamentoAtualizarDTO agendamentoAtualizarDTO) {
         Agendamento agendamento = agendamentoMapper.toEntity(agendamentoAtualizarDTO);
-        //Busca as entitades referenciadas
+
+        // Busca as entidades referenciadas
         Optional<Paciente> paciente = pacienteService.buscarPorId(agendamentoAtualizarDTO.getIdPaciente());
         Optional<Usuario> usuario = usuarioService.buscarPorId(agendamentoAtualizarDTO.getIdUsuario());
-        //Set das entidades no agendamento
+
+        if (paciente.isEmpty()) {
+            throw new RuntimeException("Paciente não encontrado");
+        }
+        if (usuario.isEmpty()) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
+        // Set das entidades no agendamento
         agendamento.setPaciente(paciente.get());
         agendamento.setUsuario(usuario.get());
-        //Salva o agendamento
+
+        // Salva o agendamento
         agendamento = agendamentoService.salvar(agendamento);
         return ResponseEntity.ok(agendamentoMapper.toDto(agendamento));
     }
@@ -177,7 +200,8 @@ public class AgendamentoController {
             @RequestParam("antes") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime antes){
 
         List<Agendamento> agendamentos = agendamentoService.buscarPorDtAgendamentoEntre(depois, antes);
+        List<AgendamentoRespostaDTO> agendamentoDTOs = agendamentoMapper.toDto(agendamentos);
 
-        return ResponseEntity.ok(agendamentoMapper.toDto(agendamentos));
-    }    
+        return ResponseEntity.ok(agendamentoDTOs);
+    }
 }

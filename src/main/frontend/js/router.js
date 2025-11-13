@@ -121,8 +121,14 @@ class Router {
                 <td>${paciente.contato || ''}</td>
                 <td><span class="status-badge status-ativo">ATIVO</span></td>
                 <td>
-                    <button class="btn-action btn-edit" onclick="app.editarPaciente(${paciente.id})">Editar</button>
-                    <button class="btn-action btn-delete" onclick="app.deletarPaciente(${paciente.id})">Excluir</button>
+                    <div class="acoes-container">
+                        <button class="btn-action btn-edit" onclick="app.editarPaciente(${paciente.id})" title="Editar paciente">
+                            ✏️ Editar
+                        </button>
+                        <button class="btn-action btn-delete" onclick="app.deletarPaciente(${paciente.id})" title="Excluir paciente">
+                            🗑️ Excluir
+                        </button>
+                    </div>
                 </td>
             `;
                 tbody.appendChild(row);
@@ -143,17 +149,36 @@ class Router {
                 row.innerHTML = `
                 <td>${agendamento.paciente?.nome || 'N/A'} ${agendamento.paciente?.sobrenome || ''}</td>
                 <td>${agendamento.tpVisita || ''}</td>
-                <td>${Utils.formatDateTime(agendamento.data)}</td>
+                <td>${Utils.formatDateTime(agendamento.dtAgendamento)}</td>
                 <td><span class="status-badge status-ativo">AGENDADO</span></td>
                 <td>${agendamento.observacoes || ''}</td>
                 <td>
-                    <span>${arquivosCount} arquivo(s)</span>
-                    ${arquivosCount > 0 ? `<button class="btn-action btn-view" onclick="app.verArquivosAgendamento(${agendamento.id})">Ver</button>` : ''}
-                    <button class="btn-action btn-file" onclick="app.adicionarArquivoAgendamento(${agendamento.id})">+ Arquivo</button>
+                    <div class="arquivos-container">
+                        <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
+                        <div class="arquivos-actions">
+                            ${arquivosCount > 0 ? 
+                                `<button class="btn-action btn-view btn-small" onclick="app.verArquivosAgendamento(${agendamento.id})" title="Baixar arquivos">
+                                    📥 Download
+                                </button>
+                                <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosAgendamento(${agendamento.id})" title="Excluir todos os arquivos">
+                                    🗑️ Excluir
+                                </button>` 
+                                : ''}
+                            <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoAgendamento(${agendamento.id})" title="Adicionar arquivo">
+                                ➕ Arquivo
+                            </button>
+                        </div>
+                    </div>
                 </td>
                 <td>
-                    <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})">Editar</button>
-                    <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})">Excluir</button>
+                    <div class="acoes-container">
+                        <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})" title="Editar agendamento">
+                            ✏️ Editar
+                        </button>
+                        <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})" title="Excluir agendamento">
+                            🗑️ Excluir
+                        </button>
+                    </div>
                 </td>
             `;
                 tbody.appendChild(row);
@@ -174,16 +199,35 @@ class Router {
                 row.innerHTML = `
                 <td>${evento.nmEvento || ''}</td>
                 <td>${Utils.formatDateTime(evento.dtEvento)}</td>
-                <td>${evento.descricao || ''}</td> <!-- CORREÇÃO: descricao em vez de dsEvento -->
+                <td>${evento.descricao || ''}</td>
                 <td><span class="status-badge status-ativo">${evento.situacao || 'ATIVO'}</span></td>
                 <td>
-                    <span>${arquivosCount} arquivo(s)</span>
-                    ${arquivosCount > 0 ? `<button class="btn-action btn-view" onclick="app.verArquivosEvento(${evento.id})">Ver</button>` : ''}
-                    <button class="btn-action btn-file" onclick="app.adicionarArquivoEvento(${evento.id})">+ Arquivo</button>
+                    <div class="arquivos-container">
+                        <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
+                        <div class="arquivos-actions">
+                            ${arquivosCount > 0 ? 
+                                `<button class="btn-action btn-view btn-small" onclick="app.verArquivosEvento(${evento.id})" title="Baixar arquivos">
+                                    📥 Download
+                                </button>
+                                <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosEvento(${evento.id})" title="Excluir todos os arquivos">
+                                    🗑️ Excluir
+                                </button>` 
+                                : ''}
+                            <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoEvento(${evento.id})" title="Adicionar arquivo">
+                                ➕ Arquivo
+                            </button>
+                        </div>
+                    </div>
                 </td>
                 <td>
-                    <button class="btn-action btn-edit" onclick="app.editarEvento(${evento.id})">Editar</button>
-                    <button class="btn-action btn-delete" onclick="app.deletarEvento(${evento.id})">Excluir</button>
+                    <div class="acoes-container">
+                        <button class="btn-action btn-edit" onclick="app.editarEvento(${evento.id})" title="Editar evento">
+                            ✏️ Editar
+                        </button>
+                        <button class="btn-action btn-delete" onclick="app.deletarEvento(${evento.id})" title="Excluir evento">
+                            🗑️ Excluir
+                        </button>
+                    </div>
                 </td>
             `;
                 tbody.appendChild(row);
@@ -213,7 +257,7 @@ class Router {
                 this.filterAgendamentosPorData('');
             });
         }
-        
+
         // Busca para pacientes
         const searchPacientes = document.getElementById('searchPacientes');
         if (searchPacientes) {

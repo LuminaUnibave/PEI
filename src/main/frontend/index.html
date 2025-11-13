@@ -12,9 +12,7 @@
     <!-- Tela de Autenticação -->
     <div id="authScreen" class="screen active">
         <div class="login-theme-toggle">
-            <span>🌙</span>
             <div id="themeToggle" class="theme-toggle" title="Alternar tema"></div>
-            <span>☀️</span>
         </div>
 
         <div class="auth-container">
@@ -172,30 +170,6 @@
                     </button>
                 </div>
 
-                <div class="dashboard-summary">
-                    <div class="summary-card primary">
-                        <div class="summary-icon">👥</div>
-                        <div class="summary-value" id="totalPacientes">0</div>
-                        <div class="summary-label">Total de Pacientes</div>
-                        <div class="summary-trend trend-up" id="trendPacientes">↑ 12% este mês</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">✅</div>
-                        <div class="summary-value" id="pacientesAtivos">0</div>
-                        <div class="summary-label">Pacientes Ativos</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">📅</div>
-                        <div class="summary-value" id="novosPacientesMes">0</div>
-                        <div class="summary-label">Novos Este Mês</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">🔄</div>
-                        <div class="summary-value" id="consultasHoje">0</div>
-                        <div class="summary-label">Consultas Hoje</div>
-                    </div>
-                </div>
-
                 <div class="content-card">
                     <div class="card-header">
                         <h3>Lista de Pacientes</h3>
@@ -238,30 +212,6 @@
                     </button>
                 </div>
 
-                <div class="dashboard-summary">
-                    <div class="summary-card primary">
-                        <div class="summary-icon">📅</div>
-                        <div class="summary-value" id="totalAgendamentos">0</div>
-                        <div class="summary-label">Agendamentos Totais</div>
-                        <div class="summary-trend trend-up" id="trendAgendamentos">↑ 8% esta semana</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">⏰</div>
-                        <div class="summary-value" id="agendamentosHoje">0</div>
-                        <div class="summary-label">Para Hoje</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">✅</div>
-                        <div class="summary-value" id="agendamentosConcluidos">0</div>
-                        <div class="summary-label">Concluídos</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">🔄</div>
-                        <div class="summary-value" id="agendamentosPendentes">0</div>
-                        <div class="summary-label">Pendentes</div>
-                    </div>
-                </div>
-
                 <div class="content-card">
                     <div class="card-header">
                         <h3>Agendamentos</h3>
@@ -291,6 +241,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- Seção Eventos -->
             <section id="eventos" class="content-section">
                 <div class="section-header">
@@ -301,30 +252,6 @@
                     <button class="btn-new" id="novoEventoBtn">
                         Novo Evento
                     </button>
-                </div>
-
-                <div class="dashboard-summary">
-                    <div class="summary-card primary">
-                        <div class="summary-icon">🎯</div>
-                        <div class="summary-value" id="totalEventos">0</div>
-                        <div class="summary-label">Eventos Totais</div>
-                        <div class="summary-trend trend-up" id="trendEventos">↑ 15% este mês</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">📌</div>
-                        <div class="summary-value" id="eventosAtivos">0</div>
-                        <div class="summary-label">Eventos Ativos</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">✅</div>
-                        <div class="summary-value" id="eventosConcluidos">0</div>
-                        <div class="summary-label">Concluídos</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">🔜</div>
-                        <div class="summary-value" id="eventosFuturos">0</div>
-                        <div class="summary-label">Próximos</div>
-                    </div>
                 </div>
 
                 <div class="content-card">
@@ -348,7 +275,7 @@
                                     <th>Data</th>
                                     <th>Descrição</th>
                                     <th>Status</th>
-                                    <th>Participantes</th>
+                                    <th>Arquivos</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -370,30 +297,6 @@
                     <button class="btn-new" id="gerarRelatorioBtn">
                         Gerar Relatório
                     </button>
-                </div>
-
-                <div class="dashboard-summary">
-                    <div class="summary-card primary">
-                        <div class="summary-icon">📊</div>
-                        <div class="summary-value" id="totalRelatorios">12</div>
-                        <div class="summary-label">Relatórios Gerados</div>
-                        <div class="summary-trend trend-up">↑ 3 este mês</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">👥</div>
-                        <div class="summary-value" id="crescimentoPacientes">+24%</div>
-                        <div class="summary-label">Crescimento</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">⭐</div>
-                        <div class="summary-value" id="satisfacao">94%</div>
-                        <div class="summary-label">Satisfação</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">🎯</div>
-                        <div class="summary-value" id="eficiencia">87%</div>
-                        <div class="summary-label">Eficiência</div>
-                    </div>
                 </div>
 
                 <div class="content-card">
@@ -456,7 +359,6 @@
         </div>
     </div>
 
-
     <script src="js/utils.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/usuarioService.js"></script>
@@ -469,4 +371,5 @@
     <script src="js/theme.js"></script>
     <script src="js/dashboardService.js"></script>
 </body>
+
 </html>
