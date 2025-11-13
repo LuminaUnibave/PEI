@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina - Rede Feminina de Combate ao Câncer</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="logo-container">
+        <img src="img/luminaIcon.jpg" alt="Logo Lumina" class="logo-img">
+        <h1>Lumina</h1>
+    </div>
+    <nav class="nav">
+        <button class="nav-button" data-page="home">Início</button>
+        <button class="nav-button" data-page="evento">Agenda</button>
+        <button class="nav-button" data-page="login">Login</button>
+        <button class="nav-button" data-page="contact">Contate-nos</button>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main>
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <div class="home-container">
+            <div class="carousel" id="carousel">
+                <div class="carousel-slide"></div>
+                <div class="carousel-slide"></div>
+                <div class="carousel-slide"></div>
+            </div>
+
+            <div class="carousel-indicators">
+                <span class="indicator active" onclick="currentSlide(0)"></span>
+                <span class="indicator" onclick="currentSlide(1)"></span>
+                <span class="indicator" onclick="currentSlide(2)"></span>
+            </div>
+
+            <section id="home">
+                <div class="content">
+                    <h3>Previna-se, hoje, amanhã e sempre!</h3>
+                    <a href="#" class="btn" data-page="contact">Contate-nos</a>
+                </div>
+            </section>
+        </div>
+
+        <section class="about" id="about">
+            <div class="container">
+                <h3>Conheça Nossa História</h3>
+                <h1>Desde 1998 ajudando as mulheres.</h1>
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="img/RFCCUnibave.jpeg" alt="Grupo RFCC">
+                    </div>
+                    <div class="about-text">
+                        <p style="font-size: 1.3rem;">A Rede Feminina de Combate ao Câncer (RFCC) de Orleans foi fundada em 8 de maio de 1998, a partir da iniciativa e do trabalho de um grupo de mulheres voluntárias. Desde sua criação, a entidade tem se dedicado a oferecer assistência gratuita, conscientização e prevenção do câncer, principalmente o de mama e o do colo de útero, às mulheres da comunidade.</p>
+                        <a href="#" class="btn" data-page="historia">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prevention" id="prevention">
+            <div class="container">
+                <h3>Cuidados e Prevenção</h3>
+                <h1>Prevenir é o melhor caminho para salvar vidas</h1>
+
+                <div class="prevention-content">
+                    <div class="prevention-text">
+                        <p style="font-size: 1.3rem;">
+                            A Rede Feminina de Combate ao Câncer dedica-se a orientar e conscientizar mulheres sobre a importância da prevenção e do diagnóstico precoce.
+                            O cuidado começa com o autoconhecimento e com hábitos saudáveis que ajudam a reduzir os riscos de câncer.
+                        </p>
+                        <ul>
+                            <li>💗 Realize o autoexame das mamas mensalmente.</li>
+                            <li>💗 Faça exames preventivos regularmente, como a mamografia e o papanicolau.</li>
+                            <li>💗 Mantenha uma alimentação equilibrada e pratique atividades físicas.</li>
+                            <li>💗 Evite o consumo excessivo de álcool e não fume.</li>
+                            <li>💗 Consulte seu médico e siga as orientações para check-ups periódicos.</li>
+                        </ul>
+                        <a href="#" class="btn" data-page="cuidados">Saiba mais sobre Prevenção</a>
+                    </div>
+
+                    <div class="prevention-image">
+                        <img src="img/prevenção.jpg" alt="Cuidados e Prevenção">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="event" id="event">
+            <div class="container">
+                <h3>Nossos Eventos</h3>
+                <h1>Campanhas e Ações da Rede Feminina de Orleans</h1>
+
+                <div class="event-content">
+                    <div class="event-text">
+                        <p style="font-size: 1.2rem;">
+                            A Rede Feminina de Combate ao Câncer de Orleans realiza diversos eventos ao longo do ano,
+                            com o objetivo de promover a prevenção, arrecadar recursos e fortalecer a solidariedade na comunidade.
+                        </p>
+                        <ul>
+                            <li>🎀 <strong>Outubro Rosa:</strong> campanhas de conscientização e palestras educativas.</li>
+                            <li>💐 <strong>Bazar Solidário:</strong> arrecadação de fundos e roupas doadas pela comunidade.</li>
+                            <li>💖 <strong>Caminhadas e Corridas da Esperança:</strong> incentivo à atividade física e à prevenção.</li>
+                            <li>🌸 <strong>Chás Beneficentes:</strong> encontros para fortalecer laços e compartilhar histórias de superação.</li>
+                        </ul>
+                        <a href="#" class="btn" data-page="evento">Ver todos os eventos</a>
+                    </div>
+
+                    <div class="event-image">
+                        <img src="img/events.jpg" alt="Evento RFCC Orleans">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="address" id="address">
+            <div class="container">
+                <h3>Nosso Endereço</h3>
+                <h1>Rede Feminina de Combate ao Câncer de Orleans</h1>
+
+                <div class="address-content">
+                    <div class="address-text">
+                        <p style="font-size: 1.3rem;">
+                            Você pode nos encontrar em nossa sede no município de <strong>Orleans, Santa Catarina</strong>.
+                            Estamos de portas abertas para acolher, orientar e ajudar mulheres em todas as fases da vida.
+                        </p>
+                        <p>
+                            📍 <strong>Endereço:</strong> R. Profa. Otília Mendes Mazuco, 270 - Rio Belo, Orleans - SC, 88870-000<br>
+                            ☎️ <strong>Telefone:</strong> (48) 99926-4507<br>
+                            ⏰ <strong>Horário de Atendimento:</strong> Segunda a Sexta, das 8h às 12h e das 13h30 às 17h
+                        </p>
+                    </div>
+
+                    <div class="address-map">
+                        <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d422.3301866509736!2d-49.284058982337164!3d-28.350265236635224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95210fdde1e9fc3d%3A0xd4fe7a6039548f6e!2sRede%20Feminina%20de%20Combate%20ao%20C%C3%A2ncer%20de%20Orleans!5e0!3m2!1spt-BR!2sbr!4v1762779525602!5m2!1spt-BR!2sbr"
+                                width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="container">
+                <h3>Entre em Contato</h3>
+                <h1>Fale conosco, participe e ajude a transformar vidas 💕</h1>
+
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <p><strong>📍 Endereço:</strong> R. Profa. Otília Mendes Mazuco, 270 - Rio Belo, Orleans - SC, 88870-000</p>
+                        <p><strong>📞 Telefone:</strong> (48) 99926-4507</p>
+                        <p><strong>✉️ E-mail:</strong> redefemininaorleans@gmail.com</p>
+                        <p><strong>⏰ Horário de Atendimento:</strong> Segunda a Sexta - 13h às 17h</p>
+                        <div class="social-icons">
+                            <a href="https://www.facebook.com/RedeFemininaOrleans/?locale=pt_BR" target="_blank">
+                                <img src="img/facebook.jpg" width="45" height="45" alt="Facebook">
+                            </a>
+                            <a href="https://www.instagram.com/redefemininaorleans/" target="_blank">
+                                <img src="img/instagram.jpg" width="50" height="50" alt="Instagram">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <form action="https://formsubmit.co/redefemininaorleans@gmail.com" method="POST">
+                            <input type="text" name="name" placeholder="Seu nome" required>
+                            <input type="email" name="email" placeholder="Seu e-mail" required>
+                            <textarea name="message" rows="5" placeholder="Sua mensagem" required></textarea>
+                            <button type="submit" class="btn">Enviar Mensagem</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="header-box">
+                    <img src="img/rfcc.jpg" alt="RFCC Logo" class="logo-rfcc">
+                    <div>
+                        <h2>Rede Feminina de <br> Combate ao Câncer</h2>
+                    </div>
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="senha">Senha:</label>
+                        <input type="password" id="senha" required>
+                    </div>
+
+                    <button type="submit" class="access-button">Acessar</button>
+                </form>
+
+                <div class="social-icons">
+                    <a href="#"><img src="img/google.jpg" alt="Google"></a>
+                    <a href="#"><img src="img/facebook.jpg" alt="Facebook"></a>
+                    <a href="#"><img src="img/instagram.jpg" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agenda Page -->
+    <div id="evento-page" class="page">
+        <div class="page-agenda">
+            <h2 class="title-eventos">Agenda de Eventos</h2>
+
+            <div class="calendar">
+                <div class="month-control">
+                    <button id="prev-month-btn" class="nav-btn"> &lt; </button>
+                    <h3 id="current-month-year">Mês/Ano Atual</h3>
+                    <button id="next-month-btn" class="nav-btn"> &gt; </button>
+                </div>
+
+                <div class="weekdays-grid">
+                    <span>Dom</span>
+                    <span>Seg</span>
+                    <span>Ter</span>
+                    <span>Qua</span>
+                    <span>Qui</span>
+                    <span>Sex</span>
+                    <span>Sáb</span>
+                </div>
+
+                <div id="calendar-days-grid" class="days-grid">
+                    <!-- Calendar days will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="event-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h3 id="modal-date"></h3>
+                <div id="modal-event-details">
+                    <!-- Event details will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuidados Page -->
+    <div id="cuidados-page" class="page">
+        <div class="details">
+            <h1>Cuidados e Prevenção contra o Câncer</h1>
+
+            <p>
+                A prevenção é uma das ferramentas mais poderosas no combate ao câncer. A Rede Feminina de Combate ao Câncer trabalha para conscientizar e orientar a população, principalmente as mulheres, sobre a importância de conhecer o próprio corpo e realizar exames de rotina.
+            </p>
+
+            <div class="highlight">
+                "Detectar o câncer em estágio inicial aumenta significativamente as chances de cura."
+            </div>
+
+            <h2>🩷 Autoexame das Mamas</h2>
+            <p>
+                O autoexame é um gesto simples que pode salvar vidas. Ele deve ser realizado mensalmente, de preferência alguns dias após o fim do ciclo menstrual. Observe alterações no tamanho, formato, textura da peau ou presença de secreções.
+            </p>
+
+            <h2>🩷 Exames de Rotina</h2>
+            <p>
+                Além do autoexame, é fundamental realizar consultas médicas periódicas. Entre os principais exames estão:
+            </p>
+            <ul>
+                <li><strong>Mamografia:</strong> indicada para mulheres acima de 40 anos ou conforme orientação médica.</li>
+                <li><strong>Papanicolau:</strong> essencial para a detecção precoce do câncer do colo do útero.</li>
+                <li><strong>Exames de sangue e ultrassonografias:</strong> ajudam no acompanhamento da saúde geral.</li>
+            </ul>
+
+            <h2>🩷 Alimentação e Hábitos Saudáveis</h2>
+            <p>
+                Uma dieta equilibrada rica em frutas, verduras e legumes contribui para o fortalecimento do sistema imunológico e ajuda na prevenção de diversos tipos de câncer.
+            </p>
+            <ul>
+                <li>Prefira alimentos naturais e evite processados.</li>
+                <li>Pratique atividades físicas regularmente.</li>
+                <li>Evite o tabagismo e o consumo excessivo de álcool.</li>
+            </ul>
+
+            <h2>🩷 A Importância do Apoio e da Conscientização</h2>
+            <p>
+                A Rede Feminina oferece apoio emocional, palestras educativas e ações comunitárias que buscam promover o bem-estar e a saúde das mulheres.
+                A prevenção é um ato de amor consigo mesma e com quem você ama.
+            </p>
+
+            <a href="#" class="btn-back" data-page="home">⬅ Voltar à Página Inicial</a>
+        </div>
+    </div>
+
+    <!-- Historia Page -->
+    <div id="historia-page" class="page">
+        <div class="details">
+            <h1>História da Rede Feminina de Combate ao Câncer de Orleans</h1>
+
+            <div class="history-image">
+                <img src="img/RFCCUnibave.jpeg" alt="Grupo RFCC Orleans">
+            </div>
+
+            <p>
+                A <strong>Rede Feminina de Combate ao Câncer (RFCC) de Orleans</strong> foi fundada em <strong>8 de maio de 1998</strong>, graças à dedicação e à união de um grupo de mulheres voluntárias que enxergaram a necessidade de promover a prevenção e o apoio às pessoas com diagnóstico de câncer em sua comunidade.
+            </p>
+
+            <p>
+                Desde o início, a RFCC de Orleans tem como missão principal a <strong>conscientização, a prevenção e o apoio emocional e social</strong> às mulheres que enfrentam o câncer. O trabalho é inteiramente voluntário e sem fins lucrativos, sendo sustentado por doações, eventos beneficentes e pelo esforço coletivo da comunidade local.
+            </p>
+
+            <div class="highlight">
+                "O amor ao próximo é o que move cada uma das voluntárias da Rede Feminina. Nossa força vem da união e da esperança."
+            </div>
+
+            <h2>📜 Primeiros Passos</h2>
+            <p>
+                No final da década de 1990, o câncer de mama e de colo do útero ainda eram temas pouco discutidos.
+                Foi então que um grupo de mulheres de Orleans decidiu agir, inspiradas por outras redes femininas existentes no estado de Santa Catarina.
+                O grupo começou realizando palestras em escolas, empresas e comunidades, buscando romper tabus e incentivar o autocuidado.
+            </p>
+
+            <h2>💗 Crescimento e Conquistas</h2>
+            <p>
+                Com o passar dos anos, a RFCC de Orleans estruturou seu trabalho, ampliando o número de voluntárias e fortalecendo parcerias com profissionais da saúde, prefeituras e instituições de ensino, como o <strong>Centro Universitário Barriga Verde (Unibave)</strong>.
+            </p>
+
+            <p>
+                Além das campanhas de prevenção, a rede oferece atendimento gratuito às mulheres que necessitam de exames preventivos, doação de lenços e próteses mamárias externas, além de apoio psicológico e emocional.
+            </p>
+
+            <div class="timeline">
+                <div>
+                    <h3>1998</h3>
+                    <p>Fundação oficial da RFCC de Orleans, com um pequeno grupo de voluntárias e apoio da comunidade.</p>
+                </div>
+                <div>
+                    <h3>2005</h3>
+                    <p>Criação de parcerias com unidades de saúde e campanhas anuais do Outubro Rosa.</p>
+                </div>
+                <div>
+                    <h3>2015</h3>
+                    <p>Ampliação das atividades com palestras educativas, eventos beneficentes e novos programas de prevenção.</p>
+                </div>
+                <div>
+                    <h3>Hoje</h3>
+                    <p>A RFCC Orleans segue firme, com dezenas de voluntárias comprometidas em levar esperança, informação e acolhimento às mulheres de toda a região.</p>
+                </div>
+            </div>
+
+            <h2>🌷 Um Legado de Amor e Dedicação</h2>
+            <p>
+                A história da Rede Feminina de Combate ao Câncer de Orleans é marcada por solidariedade, amor e comprometimento.
+                Cada ação, cada atendimento e cada palestra representam a missão maior de cuidar e salvar vidas.
+            </p>
+
+            <p>
+                A entidade continua crescendo e inspirando novas gerações de mulheres a fazerem a diferença, reforçando a importância da prevenção e do apoio ao próximo.
+            </p>
+
+            <a href="#" class="btn-back" data-page="home">⬅ Voltar à Página Inicial</a>
+        </div>
+    </div>
+</main>
+
+<script src="js/main.js"></script>
+<script src="js/calendar.js"></script>
+</body>
+</html>
