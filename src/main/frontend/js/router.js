@@ -113,20 +113,25 @@ class Router {
 
         if (pacientes && pacientes.length > 0) {
             pacientes.forEach(paciente => {
+                // Determinar classe CSS baseada na situação
+                const situacao = paciente.situacao || 'ATIVO';
+                const statusClass = situacao === 'ATIVO' ? 'status-ativo' : 'status-pendente';
+                const statusText = situacao === 'ATIVO' ? 'ATIVO' : 'PENDENTE';
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${paciente.nome || ''} ${paciente.sobrenome || ''}</td>
                 <td>${Utils.formatDate(paciente.dtNascimento)}</td>
                 <td>${paciente.email || ''}</td>
                 <td>${paciente.contato || ''}</td>
-                <td><span class="status-badge status-ativo">ATIVO</span></td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                 <td>
                     <div class="acoes-container">
                         <button class="btn-action btn-edit" onclick="app.editarPaciente(${paciente.id})" title="Editar paciente">
-                            ✏️ Editar
+                                Editar
                         </button>
                         <button class="btn-action btn-delete" onclick="app.deletarPaciente(${paciente.id})" title="Excluir paciente">
-                            🗑️ Excluir
+                                Excluir
                         </button>
                     </div>
                 </td>
@@ -145,27 +150,46 @@ class Router {
         if (agendamentos && agendamentos.length > 0) {
             agendamentos.forEach(agendamento => {
                 const arquivosCount = agendamento.arquivos ? agendamento.arquivos.length : 0;
+
+                // Determinar status baseado na data do agendamento
+                let status = 'AGENDADO';
+                let statusClass = 'status-agendado';
+
+                const dataAgendamento = app.parseBackendDate(agendamento.dtAgendamento);
+                const agora = new Date();
+
+                if (dataAgendamento && dataAgendamento < agora) {
+                    status = 'CONCLUIDO';
+                    statusClass = 'status-concluido';
+                }
+
+                // Se o agendamento já tiver um status definido, usar esse
+                if (agendamento.status) {
+                    status = agendamento.status;
+                    statusClass = `status-${agendamento.status.toLowerCase()}`;
+                }
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${agendamento.paciente?.nome || 'N/A'} ${agendamento.paciente?.sobrenome || ''}</td>
                 <td>${agendamento.tpVisita || ''}</td>
                 <td>${Utils.formatDateTime(agendamento.dtAgendamento)}</td>
-                <td><span class="status-badge status-ativo">AGENDADO</span></td>
+                <td><span class="status-badge ${statusClass}">${status}</span></td>
                 <td>${agendamento.observacoes || ''}</td>
                 <td>
                     <div class="arquivos-container">
                         <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
                         <div class="arquivos-actions">
-                            ${arquivosCount > 0 ? 
-                                `<button class="btn-action btn-view btn-small" onclick="app.verArquivosAgendamento(${agendamento.id})" title="Baixar arquivos">
-                                    📥 Download
+                            ${arquivosCount > 0 ?
+                        `       <button class="btn-action btn-view btn-small" onclick="app.verArquivosAgendamento(${agendamento.id})" title="Baixar arquivos">
+                                    Download
                                 </button>
                                 <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosAgendamento(${agendamento.id})" title="Excluir todos os arquivos">
-                                    🗑️ Excluir
-                                </button>` 
-                                : ''}
+                                     Excluir
+                                </button>`
+                        : ''}
                             <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoAgendamento(${agendamento.id})" title="Adicionar arquivo">
-                                ➕ Arquivo
+                                + Arquivo
                             </button>
                         </div>
                     </div>
@@ -173,10 +197,10 @@ class Router {
                 <td>
                     <div class="acoes-container">
                         <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})" title="Editar agendamento">
-                            ✏️ Editar
+                            Editar
                         </button>
                         <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})" title="Excluir agendamento">
-                            🗑️ Excluir
+                            Excluir
                         </button>
                     </div>
                 </td>
@@ -205,16 +229,16 @@ class Router {
                     <div class="arquivos-container">
                         <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
                         <div class="arquivos-actions">
-                            ${arquivosCount > 0 ? 
-                                `<button class="btn-action btn-view btn-small" onclick="app.verArquivosEvento(${evento.id})" title="Baixar arquivos">
-                                    📥 Download
+                            ${arquivosCount > 0 ?
+                        `<button class="btn-action btn-view btn-small" onclick="app.verArquivosEvento(${evento.id})" title="Baixar arquivos">
+                                    Download
                                 </button>
                                 <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosEvento(${evento.id})" title="Excluir todos os arquivos">
-                                    🗑️ Excluir
-                                </button>` 
-                                : ''}
+                                    Excluir
+                                </button>`
+                        : ''}
                             <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoEvento(${evento.id})" title="Adicionar arquivo">
-                                ➕ Arquivo
+                                + Arquivo
                             </button>
                         </div>
                     </div>
@@ -222,10 +246,10 @@ class Router {
                 <td>
                     <div class="acoes-container">
                         <button class="btn-action btn-edit" onclick="app.editarEvento(${evento.id})" title="Editar evento">
-                            ✏️ Editar
+                             Editar
                         </button>
                         <button class="btn-action btn-delete" onclick="app.deletarEvento(${evento.id})" title="Excluir evento">
-                            🗑️ Excluir
+                             Excluir
                         </button>
                     </div>
                 </td>

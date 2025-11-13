@@ -116,7 +116,7 @@
 
     <!-- Dashboard Principal -->
     <div id="dashboardScreen" class="screen">
-        <!-- Header -->
+        <!-- Header Fixo com Navbar Integrada -->
         <header class="dashboard-header">
             <div class="header-content">
                 <div class="logo">Lumina</div>
@@ -130,31 +130,19 @@
                     <div id="themeToggleDashboard" class="theme-toggle" title="Alternar tema"></div>
                 </div>
             </div>
+            
+            <!-- Navbar integrada ao header -->
+            <nav class="dashboard-nav">
+                <div class="nav-container">
+                    <div class="nav-buttons">
+                        <button class="nav-btn active" data-section="pacientes">Pacientes</button>
+                        <button class="nav-btn" data-section="agendamentos">Agendamentos</button>
+                        <button class="nav-btn" data-section="eventos">Eventos</button>
+                        <button class="nav-btn" data-section="relatorios">Relatórios</button>
+                    </div>
+                </div>
+            </nav>
         </header>
-
-        <!-- Navegação -->
-        <nav class="dashboard-nav">
-            <div class="nav-container">
-                <div class="nav-buttons">
-                    <button class="nav-btn active" data-section="pacientes">
-                        👥 Pacientes
-                    </button>
-                    <button class="nav-btn" data-section="agendamentos">
-                        📅 Agendamentos
-                    </button>
-                    <button class="nav-btn" data-section="eventos">
-                        🎯 Eventos
-                    </button>
-                    <button class="nav-btn" data-section="relatorios">
-                        📊 Relatórios
-                    </button>
-                </div>
-
-                <div class="nav-actions">
-                    <span id="currentDate" class="current-date"></span>
-                </div>
-            </div>
-        </nav>
 
         <!-- Conteúdo Principal -->
         <main class="dashboard-content">
@@ -174,7 +162,7 @@
                     <div class="card-header">
                         <h3>Lista de Pacientes</h3>
                         <div class="table-actions">
-                            <input type="text" id="searchPacientes" placeholder="🔍 Buscar paciente..."
+                            <input type="text" id="searchPacientes" placeholder="Buscar paciente..."
                                 class="search-input">
                             <button class="btn-secondary" id="exportPacientes">Exportar</button>
                         </div>
@@ -306,28 +294,28 @@
 
                     <div class="reports-grid">
                         <div class="report-card">
-                            <div class="report-icon">📈</div>
+                            <div class="report-icon">📊</div>
                             <h4>Relatório Mensal</h4>
                             <p>Análise completa do mês atual</p>
                             <button class="btn-action btn-view">Visualizar</button>
                         </div>
 
                         <div class="report-card">
-                            <div class="report-icon">👥</div>
+                            <div class="report-icon">👤</div>
                             <h4>Pacientes Ativos</h4>
                             <p>Lista e estatísticas de pacientes</p>
                             <button class="btn-action btn-view">Visualizar</button>
                         </div>
 
                         <div class="report-card">
-                            <div class="report-icon">💰</div>
+                            <div class="report-icon">💼</div>
                             <h4>Financeiro</h4>
                             <p>Relatório de receitas e despesas</p>
                             <button class="btn-action btn-view">Visualizar</button>
                         </div>
 
                         <div class="report-card">
-                            <div class="report-icon">🎯</div>
+                            <div class="report-icon">📋</div>
                             <h4>Desempenho</h4>
                             <p>Métricas de performance</p>
                             <button class="btn-action btn-view">Visualizar</button>

@@ -331,43 +331,50 @@ class LuminaApp {
     // ========== PACIENTES ==========
     showNovoPacienteModal() {
         const content = `
-            <form id="pacienteForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="pacienteNome">Nome *</label>
-                        <input type="text" id="pacienteNome" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteSobrenome">Sobrenome</label>
-                        <input type="text" id="pacienteSobrenome">
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteCpf">CPF *</label>
-                        <input type="text" id="pacienteCpf" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteEmail">Email</label>
-                        <input type="email" id="pacienteEmail">
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteDtNascimento">Data Nascimento *</label>
-                        <input type="date" id="pacienteDtNascimento" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteCrtSus">Cartão SUS</label>
-                        <input type="text" id="pacienteCrtSus">
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteContato">Contato</label>
-                        <input type="text" id="pacienteContato">
-                    </div>
+        <form id="pacienteForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="pacienteNome">Nome *</label>
+                    <input type="text" id="pacienteNome" required>
                 </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn-primary">Salvar</button>
-                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                <div class="form-group">
+                    <label for="pacienteSobrenome">Sobrenome</label>
+                    <input type="text" id="pacienteSobrenome">
                 </div>
-            </form>
-        `;
+                <div class="form-group">
+                    <label for="pacienteCpf">CPF *</label>
+                    <input type="text" id="pacienteCpf" required>
+                </div>
+                <div class="form-group">
+                    <label for="pacienteEmail">Email</label>
+                    <input type="email" id="pacienteEmail">
+                </div>
+                <div class="form-group">
+                    <label for="pacienteDtNascimento">Data Nascimento *</label>
+                    <input type="date" id="pacienteDtNascimento" required>
+                </div>
+                <div class="form-group">
+                    <label for="pacienteCrtSus">Cartão SUS</label>
+                    <input type="text" id="pacienteCrtSus">
+                </div>
+                <div class="form-group">
+                    <label for="pacienteContato">Contato</label>
+                    <input type="text" id="pacienteContato">
+                </div>
+                <div class="form-group">
+                    <label for="pacienteSituacao">Situação *</label>
+                    <select id="pacienteSituacao" required>
+                        <option value="ATIVO">Ativo</option>
+                        <option value="PENDENTE">Pendente</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" class="btn-primary">Salvar</button>
+                <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+            </div>
+        </form>
+    `;
         this.showModal('Novo Paciente', content);
 
         document.getElementById('pacienteForm').addEventListener('submit', (e) => this.salvarPaciente(e));
@@ -389,7 +396,8 @@ class LuminaApp {
             email: document.getElementById('pacienteEmail').value,
             dtNascimento: document.getElementById('pacienteDtNascimento').value,
             crtSus: document.getElementById('pacienteCrtSus').value,
-            contato: document.getElementById('pacienteContato').value
+            contato: document.getElementById('pacienteContato').value,
+            situacao: document.getElementById('pacienteSituacao').value
         };
 
         try {
@@ -418,43 +426,50 @@ class LuminaApp {
             }
 
             const content = `
-                <form id="pacienteForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="pacienteNome">Nome *</label>
-                            <input type="text" id="pacienteNome" value="${paciente.nome || ''}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pacienteSobrenome">Sobrenome</label>
-                            <input type="text" id="pacienteSobrenome" value="${paciente.sobrenome || ''}">
-                        </div>
-                        <div class="form-group">
-                            <label for="pacienteCpf">CPF *</label>
-                            <input type="text" id="pacienteCpf" value="${paciente.cpf || ''}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pacienteEmail">Email</label>
-                            <input type="email" id="pacienteEmail" value="${paciente.email || ''}">
-                        </div>
-                        <div class="form-group">
-                            <label for="pacienteDtNascimento">Data Nascimento *</label>
-                            <input type="date" id="pacienteDtNascimento" value="${paciente.dtNascimento || ''}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pacienteCrtSus">Cartão SUS</label>
-                            <input type="text" id="pacienteCrtSus" value="${paciente.crtSus || ''}">
-                        </div>
-                        <div class="form-group">
-                            <label for="pacienteContato">Contato</label>
-                            <input type="text" id="pacienteContato" value="${paciente.contato || ''}">
-                        </div>
+            <form id="pacienteForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pacienteNome">Nome *</label>
+                        <input type="text" id="pacienteNome" value="${paciente.nome || ''}" required>
                     </div>
-                    <div class="modal-actions">
-                        <button type="submit" class="btn-primary">Atualizar</button>
-                        <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                    <div class="form-group">
+                        <label for="pacienteSobrenome">Sobrenome</label>
+                        <input type="text" id="pacienteSobrenome" value="${paciente.sobrenome || ''}">
                     </div>
-                </form>
-            `;
+                    <div class="form-group">
+                        <label for="pacienteCpf">CPF *</label>
+                        <input type="text" id="pacienteCpf" value="${paciente.cpf || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteEmail">Email</label>
+                        <input type="email" id="pacienteEmail" value="${paciente.email || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteDtNascimento">Data Nascimento *</label>
+                        <input type="date" id="pacienteDtNascimento" value="${paciente.dtNascimento || ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteCrtSus">Cartão SUS</label>
+                        <input type="text" id="pacienteCrtSus" value="${paciente.crtSus || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteContato">Contato</label>
+                        <input type="text" id="pacienteContato" value="${paciente.contato || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteSituacao">Situação *</label>
+                        <select id="pacienteSituacao" required>
+                            <option value="ATIVO" ${paciente.situacao === 'ATIVO' ? 'selected' : ''}>Ativo</option>
+                            <option value="PENDENTE" ${paciente.situacao === 'PENDENTE' ? 'selected' : ''}>Pendente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Atualizar</button>
+                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                </div>
+            </form>
+        `;
             this.showModal('Editar Paciente', content);
 
             document.getElementById('pacienteForm').addEventListener('submit', async (e) => {
@@ -467,7 +482,8 @@ class LuminaApp {
                     email: document.getElementById('pacienteEmail').value,
                     dtNascimento: document.getElementById('pacienteDtNascimento').value,
                     crtSus: document.getElementById('pacienteCrtSus').value,
-                    contato: document.getElementById('pacienteContato').value
+                    contato: document.getElementById('pacienteContato').value,
+                    situacao: document.getElementById('pacienteSituacao').value
                 };
 
                 try {
@@ -483,19 +499,6 @@ class LuminaApp {
         } catch (error) {
             console.error('Erro ao carregar paciente:', error);
             Utils.showNotification('Erro ao carregar paciente', 'error');
-        }
-    }
-
-    async deletarPaciente(id) {
-        if (confirm('Tem certeza que deseja excluir este paciente?')) {
-            try {
-                await this.pacienteService.deletar(id);
-                Utils.showNotification('Paciente excluído com sucesso!');
-                this.router.loadPacientesData();
-            } catch (error) {
-                console.error('Erro ao excluir paciente:', error);
-                Utils.showNotification('Erro ao excluir paciente', 'error');
-            }
         }
     }
 
@@ -699,7 +702,7 @@ class LuminaApp {
         fileInput.type = 'file';
         fileInput.style.display = 'none';
         fileInput.accept = '*/*';
-        
+
         fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -726,7 +729,7 @@ class LuminaApp {
     async verArquivosAgendamento(agendamentoId) {
         try {
             const arquivos = await this.arquivoService.listarPorEntidade(agendamentoId, 'AGENDAMENTO');
-            
+
             if (arquivos.length === 0) {
                 Utils.showNotification('Nenhum arquivo encontrado para este agendamento', 'warning');
                 return;
@@ -902,7 +905,7 @@ class LuminaApp {
         fileInput.type = 'file';
         fileInput.style.display = 'none';
         fileInput.accept = '*/*';
-        
+
         fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -929,7 +932,7 @@ class LuminaApp {
     async verArquivosEvento(eventoId) {
         try {
             const arquivos = await this.arquivoService.listarPorEntidade(eventoId, 'EVENTO');
-            
+
             if (arquivos.length === 0) {
                 Utils.showNotification('Nenhum arquivo encontrado para este evento', 'warning');
                 return;
@@ -961,11 +964,11 @@ class LuminaApp {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            
+
             // Tenta obter o nome do arquivo do blob ou usa um padrão
             const fileName = `arquivo-${id}`;
             a.download = fileName;
-            
+
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -996,7 +999,7 @@ class LuminaApp {
     async downloadArquivoDireto(idEntidade, tipoEntidade) {
         try {
             const arquivos = await this.arquivoService.listarPorEntidade(idEntidade, tipoEntidade);
-            
+
             if (arquivos.length === 0) {
                 Utils.showNotification('Nenhum arquivo encontrado', 'warning');
                 return;

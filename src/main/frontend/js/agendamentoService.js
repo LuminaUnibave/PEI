@@ -19,7 +19,21 @@ class AgendamentoService {
 
             if (response.ok) {
                 const data = await response.json();
-                return Array.isArray(data) ? data : [data];
+                const agendamentos = Array.isArray(data) ? data : [data];
+
+                // Atualizar status baseado na data
+                return agendamentos.map(agendamento => {
+                    const dataAgendamento = this.parseAgendamentoDate(agendamento.dtAgendamento);
+                    const agora = new Date();
+
+                    if (dataAgendamento && dataAgendamento < agora && agendamento.status !== 'CONCLUIDO') {
+                        agendamento.status = 'CONCLUIDO';
+                    } else if (dataAgendamento && dataAgendamento >= agora && !agendamento.status) {
+                        agendamento.status = 'AGENDADO';
+                    }
+
+                    return agendamento;
+                });
             } else if (response.status === 401) {
                 throw new Error('Usuário não autenticado');
             } else {
@@ -28,6 +42,40 @@ class AgendamentoService {
         } catch (error) {
             console.error('Erro:', error);
             throw error;
+        }
+    }
+
+    parseAgendamentoDate(dateData) {
+        if (!dateData) return null;
+
+        try {
+            // Se for um array [ano, mês, dia, hora, minuto]
+            if (Array.isArray(dateData)) {
+                const [year, month, day, hour = 0, minute = 0] = dateData;
+                const jsMonth = month - 1;
+                return new Date(year, jsMonth, day, hour, minute);
+            }
+
+            // Se for uma string no formato "2025-11-29 00:06:00.000"
+            if (typeof dateData === 'string') {
+                const isoString = dateData.replace(' ', 'T');
+                const date = new Date(isoString);
+                if (!isNaN(date.getTime())) {
+                    return date;
+                }
+            }
+
+            // Se for um timestamp ou outro formato
+            const date = new Date(dateData);
+            if (!isNaN(date.getTime())) {
+                return date;
+            }
+
+            console.warn('Formato de data não reconhecido:', dateData);
+            return null;
+        } catch (error) {
+            console.error('Erro ao converter data:', error, dateData);
+            return null;
         }
     }
 
