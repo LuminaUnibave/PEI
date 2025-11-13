@@ -29,7 +29,7 @@ public class Evento extends Entidade implements Serializable {
     @Column(name = "nm_evento")
     protected String nmEvento;
 
-    @Column(name = "dsc_evento", length = 500)
+    @Column(name = "dsc_evento", length = 2000)
     protected String descricao;
 
     @ManyToOne(fetch = FetchType.LAZY)
