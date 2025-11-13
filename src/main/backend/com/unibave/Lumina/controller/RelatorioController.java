@@ -1,6 +1,9 @@
 package com.unibave.Lumina.controller;
 
 import com.unibave.Lumina.service.RelatorioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @RestController
@@ -19,11 +23,16 @@ public class RelatorioController {
     private RelatorioService relatorioService;
 
     @GetMapping("/eventos")
+    @Operation(summary = "Relatorio de Eventos", description = "Retorna um relatório dos eventos")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Retornou o relatório"),
+            @ApiResponse(responseCode = "500", description = "Erro no relatório")
+    })
     public ResponseEntity<byte[]> downloadRelatorioEventos() {
         try {
             byte[] relatorioBytes = relatorioService.relatorioEventos();
             String filename = "relatorio_eventos_" +
-                    new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".txt";
+                    LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".txt";
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
@@ -40,7 +49,7 @@ public class RelatorioController {
         try {
             byte[] relatorioBytes = relatorioService.relatorioAgendamentos();
             String filename = "relatorio_agendamentos_" +
-                    new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".txt";
+                    LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".txt";
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
@@ -57,7 +66,7 @@ public class RelatorioController {
         try {
             byte[] relatorioBytes = relatorioService.relatorioPacientes();
             String filename = "relatorio_pacientes_" +
-                    new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".txt";
+                    LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".txt";
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")

@@ -91,6 +91,6 @@ public class RelatorioService {
 
     private String formatDate(LocalDateTime date) {
         if (date == null) return "N/A";
-        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
+        return date.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 }
