@@ -967,6 +967,131 @@ tbody tr:last-child td {
     border-bottom: none;
 }
 
+/* ===== CORREÇÕES PARA COLUNA DE OBSERVAÇÕES ===== */
+.data-table th:nth-child(6),
+.data-table td:nth-child(6) {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+    overflow: hidden;
+}
+
+.observacao-cell {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    position: relative;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    display: block;
+    border-radius: 6px;
+    border: 1px solid transparent;
+}
+
+.observacao-cell:hover {
+    background: var(--primary-very-light);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.observacao-cell:active {
+    transform: translateY(0);
+}
+
+.observacao-empty {
+    color: var(--text-tertiary);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Garantir que o texto não quebre */
+.data-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ajustes específicos para colunas que podem ter texto longo */
+.data-table td:nth-child(6) {
+    /* Observações */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.data-table td:nth-child(2) {
+    /* Nome do Paciente */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+/* Ajuste para garantir que as colunas de arquivos e ações fiquem visíveis */
+.data-table th:nth-child(7),
+.data-table td:nth-child(7) {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+}
+
+.data-table th:nth-child(8),
+.data-table td:nth-child(8) {
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+}
+
+/* Garantir que a tabela seja responsiva */
+.table-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.data-table {
+    min-width: 1000px;
+    /* Largura mínima para evitar quebra */
+}
+
+/* Em telas menores, ajustar ainda mais as colunas */
+@media (max-width: 1200px) {
+
+    .data-table th:nth-child(6),
+    .data-table td:nth-child(6) {
+        width: 150px;
+        min-width: 150px;
+        max-width: 150px;
+    }
+
+    .data-table th:nth-child(2),
+    .data-table td:nth-child(2) {
+        width: 120px;
+        min-width: 120px;
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .data-table {
+        min-width: 800px;
+    }
+
+    .data-table th:nth-child(6),
+    .data-table td:nth-child(6) {
+        width: 120px;
+        min-width: 120px;
+        max-width: 120px;
+    }
+}
+
 /* ===== POP-UP DE OBSERVAÇÕES CORRIGIDO ===== */
 .observacao-popup {
     display: none;
@@ -1822,6 +1947,15 @@ tbody tr:last-child td {
     background: var(--primary-dark);
     color: var(--primary-light);
     border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .observacao-cell:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .observacao-empty {
+    color: var(--text-tertiary);
 }
 
 /* ===== RESPONSIVIDADE ===== */
