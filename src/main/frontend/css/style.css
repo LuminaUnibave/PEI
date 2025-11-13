@@ -546,6 +546,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -921,7 +922,7 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: auto;
+    table-layout: fixed;
 }
 
 thead {
@@ -964,6 +965,197 @@ tbody tr:hover td {
 
 tbody tr:last-child td {
     border-bottom: none;
+}
+
+/* ===== POP-UP DE OBSERVAÇÕES CORRIGIDO ===== */
+.observacao-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 20px;
+}
+
+.observacao-popup.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.observacao-popup-content {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-hover);
+    width: 100%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 3px solid var(--primary-color);
+    animation: modalSlideIn 0.3s ease;
+    position: relative;
+}
+
+.observacao-popup-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--primary-very-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--primary-color);
+    color: white;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.observacao-popup-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.observacao-popup-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.observacao-popup-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.observacao-popup-body {
+    padding: 2rem;
+}
+
+.observacao-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.observacao-empty {
+    color: var(--text-tertiary);
+    font-style: italic;
+}
+
+/* Remove o tooltip hover que estava causando problemas */
+.observacao-cell:hover::after {
+    display: none;
+}
+
+/* Estilo para célula de observação quando clicada */
+.observacao-cell.active {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border-radius: var(--radius-sm);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Para garantir que a tabela se comporte bem */
+.data-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.data-table th:nth-child(6),
+/* Coluna Observações */
+.data-table td:nth-child(6) {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+}
+
+/* Ajuste para outras colunas */
+.data-table th:nth-child(1),
+/* ID */
+.data-table td:nth-child(1) {
+    width: 60px;
+}
+
+.data-table th:nth-child(2),
+/* Paciente */
+.data-table td:nth-child(2) {
+    width: 150px;
+}
+
+.data-table th:nth-child(3),
+/* Tipo */
+.data-table td:nth-child(3) {
+    width: 100px;
+}
+
+.data-table th:nth-child(4),
+/* Data/Hora */
+.data-table td:nth-child(4) {
+    width: 150px;
+}
+
+.data-table th:nth-child(5),
+/* Status */
+.data-table td:nth-child(5) {
+    width: 100px;
+}
+
+.data-table th:nth-child(7),
+/* Arquivos */
+.data-table td:nth-child(7) {
+    width: 120px;
+}
+
+.data-table th:nth-child(8),
+/* Ações */
+.data-table td:nth-child(8) {
+    width: 140px;
 }
 
 /* Ajustes específicos para coluna de ações */
@@ -1053,6 +1245,7 @@ tbody tr:last-child td {
         opacity: 0;
         transform: scale(0.8) translateY(-50px);
     }
+
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -1215,6 +1408,7 @@ tbody tr:last-child td {
         transform: translateX(100%);
         opacity: 0;
     }
+
     to {
         transform: translateX(0);
         opacity: 1;
@@ -1252,8 +1446,13 @@ tbody tr:last-child td {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .btn-loading {
@@ -1626,34 +1825,48 @@ tbody tr:last-child td {
 }
 
 /* ===== RESPONSIVIDADE ===== */
+@media (max-width: 1200px) {
+
+    .data-table th:nth-child(6),
+    .data-table td:nth-child(6) {
+        width: 150px;
+        min-width: 150px;
+        max-width: 150px;
+    }
+
+    .observacao-cell:hover::after {
+        max-width: 300px;
+    }
+}
+
 @media (max-width: 768px) {
     .dashboard-header {
         height: auto;
         position: relative;
     }
-    
+
     .header-content {
         flex-direction: column;
         gap: 1rem;
         padding: 1rem;
     }
-    
+
     .dashboard-nav {
         position: relative;
     }
-    
+
     .nav-container {
         flex-direction: column;
         gap: 0.5rem;
         padding: 0.5rem 1rem;
     }
-    
+
     .nav-buttons {
         flex-wrap: wrap;
         justify-content: center;
         width: 100%;
     }
-    
+
     .nav-btn {
         padding: 12px 16px;
         font-size: 0.9rem;
@@ -1662,12 +1875,12 @@ tbody tr:last-child td {
         min-width: 120px;
         justify-content: center;
     }
-    
+
     .dashboard-content {
         margin-top: 0;
         padding: 1rem;
     }
-    
+
     .section-header {
         flex-direction: column;
         gap: 1rem;
@@ -1701,7 +1914,8 @@ tbody tr:last-child td {
         grid-template-columns: 1fr;
     }
 
-    th, td {
+    th,
+    td {
         padding: 1rem;
     }
 
@@ -1727,28 +1941,41 @@ tbody tr:last-child td {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .arquivos-actions {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .acoes-container {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .btn-action {
         width: 100%;
         justify-content: center;
     }
-    
+
     .arquivos-container {
         min-width: auto;
     }
 
     .data-table td:last-child {
         min-width: auto;
+    }
+
+    .data-table th:nth-child(6),
+    .data-table td:nth-child(6) {
+        width: 120px;
+        min-width: 120px;
+        max-width: 120px;
+    }
+
+    .observacao-cell:hover::after {
+        max-width: 250px;
+        font-size: 0.8rem;
+        padding: 8px;
     }
 }
 
@@ -1798,7 +2025,8 @@ tbody tr:last-child td {
         min-width: 100px;
     }
 
-    th, td {
+    th,
+    td {
         padding: 0.6rem 0.8rem;
         font-size: 0.9rem;
     }
@@ -1806,7 +2034,7 @@ tbody tr:last-child td {
     .section-header h2 {
         font-size: 1.8rem;
     }
-    
+
     .section-header p {
         font-size: 1rem;
     }
@@ -1818,11 +2046,57 @@ tbody tr:last-child td {
     .data-table td:nth-child(4) {
         display: none;
     }
+
+    .data-table th:nth-child(6),
+    .data-table td:nth-child(6) {
+        display: none;
+    }
 }
 
 /* Para telas muito grandes, limitar um pouco a largura máxima */
 @media (min-width: 1920px) {
     .dashboard-content {
         max-width: 95%;
+    }
+}
+
+/* Responsividade para pop-up de observações */
+@media (max-width: 768px) {
+    .observacao-popup-content {
+        max-width: 90%;
+        margin: 20px;
+    }
+
+    .observacao-popup-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .observacao-popup-body {
+        padding: 1.5rem;
+    }
+
+    .observacao-text {
+        max-height: 300px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .observacao-popup-content {
+        max-width: 95%;
+        margin: 10px;
+    }
+
+    .observacao-popup-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .observacao-popup-body {
+        padding: 1rem;
+    }
+
+    .observacao-text {
+        max-height: 250px;
+        padding: 0.8rem;
     }
 }

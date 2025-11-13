@@ -8,6 +8,85 @@ class Router {
         this.bindNavigation();
         this.bindSearchEvents();
         this.showSection('pacientes');
+        this.initObservacaoPopup();
+    }
+
+    initObservacaoPopup() {
+        // Cria o pop-up dinamicamente
+        const popupHTML = `
+            <div class="observacao-popup" id="observacaoPopup">
+                <div class="observacao-popup-content">
+                    <div class="observacao-popup-header">
+                        <h3>Observações do Agendamento</h3>
+                        <button class="observacao-popup-close" id="observacaoPopupClose">&times;</button>
+                    </div>
+                    <div class="observacao-popup-body">
+                        <div class="observacao-text" id="observacaoPopupText"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', popupHTML);
+
+        // Adiciona event listeners
+        document.getElementById('observacaoPopupClose').addEventListener('click', () => {
+            this.hideObservacaoPopup();
+        });
+
+        document.getElementById('observacaoPopup').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('observacaoPopup')) {
+                this.hideObservacaoPopup();
+            }
+        });
+
+        // Fecha com ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('observacaoPopup').classList.contains('active')) {
+                this.hideObservacaoPopup();
+            }
+        });
+    }
+
+    showObservacaoPopup(texto) {
+        const popupText = document.getElementById('observacaoPopupText');
+        const popup = document.getElementById('observacaoPopup');
+
+        if (!texto || texto.trim() === '') {
+            popupText.innerHTML = '<span class="observacao-empty">Nenhuma observação cadastrada</span>';
+        } else {
+            // Usar textContent para evitar problemas com HTML
+            popupText.textContent = texto;
+        }
+
+        popup.classList.add('active');
+
+        // Adiciona classe active à célula clicada
+        const activeCells = document.querySelectorAll('.observacao-cell.active');
+        activeCells.forEach(cell => cell.classList.remove('active'));
+
+        // Encontra e marca a célula que foi clicada
+        const cells = document.querySelectorAll('.observacao-cell');
+        cells.forEach(cell => {
+            if (cell.getAttribute('data-full-text') === texto) {
+                cell.classList.add('active');
+            }
+        });
+
+        // Foca no botão de fechar para melhor acessibilidade
+        setTimeout(() => {
+            const closeBtn = document.getElementById('observacaoPopupClose');
+            if (closeBtn) closeBtn.focus();
+        }, 100);
+    }
+
+    hideObservacaoPopup() {
+        const popup = document.getElementById('observacaoPopup');
+        popup.classList.remove('active');
+
+        // Remove classe active de todas as células
+        const activeCells = document.querySelectorAll('.observacao-cell.active');
+        activeCells.forEach(cell => cell.classList.remove('active'));
     }
 
     bindNavigation() {
@@ -170,6 +249,16 @@ class Router {
                     statusClass = `status-${agendamento.status.toLowerCase()}`;
                 }
 
+                // Tratar observações para evitar problemas com aspas e caracteres especiais
+                const observacao = agendamento.observacao || '';
+                const observacaoTruncada = observacao.length > 50 ? observacao.substring(0, 50) + '...' : observacao;
+
+                // Escapar aspas e quebras de linha para o atributo data-full-text
+                const observacaoEscapada = observacao
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;')
+                    .replace(/\n/g, ' ');
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${agendamento.id || ''}</td>
@@ -177,7 +266,11 @@ class Router {
                 <td>${agendamento.tpVisita || ''}</td>
                 <td>${Utils.formatDateTime(agendamento.dtAgendamento)}</td>
                 <td><span class="status-badge ${statusClass}">${status}</span></td>
-                <td>${agendamento.observacao || ''}</td> <!-- MUDADO DE observacoes PARA observacao -->
+                <td class="observacao-cell" 
+                    data-full-text="${observacaoEscapada}"
+                    onclick="app.router.showObservacaoPopup('${observacao.replace(/'/g, "\\'")}')">
+                    ${observacaoTruncada}
+                </td>
                 <td>
                     <div class="arquivos-container">
                         <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
@@ -188,8 +281,7 @@ class Router {
                                 </button>
                                 <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosAgendamento(${agendamento.id})" title="Excluir todos os arquivos">
                                      Excluir
-                                </button>`
-                        : ''}
+                                </button>` : ''}
                             <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoAgendamento(${agendamento.id})" title="Adicionar arquivo">
                                 + Arquivo
                             </button>
@@ -238,8 +330,7 @@ class Router {
                                 </button>
                                 <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosEvento(${evento.id})" title="Excluir todos os arquivos">
                                     Excluir
-                                </button>`
-                        : ''}
+                                </button>` : ''}
                             <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoEvento(${evento.id})" title="Adicionar arquivo">
                                 + Arquivo
                             </button>
