@@ -266,10 +266,13 @@ class Router {
                 <td>${agendamento.tpVisita || ''}</td>
                 <td>${Utils.formatDateTime(agendamento.dtAgendamento)}</td>
                 <td><span class="status-badge ${statusClass}">${status}</span></td>
-                <td class="observacao-cell" 
-                    data-full-text="${observacaoEscapada}"
-                    onclick="app.router.showObservacaoPopup('${observacao.replace(/'/g, "\\'")}')">
-                    ${observacaoTruncada}
+                <td>
+                    <div class="observacao-cell" 
+                        data-full-text="${observacaoEscapada}"
+                        onclick="app.router.showObservacaoPopup('${observacao.replace(/'/g, "\\'")}')"
+                        title="${observacao ? 'Clique para ver observação completa' : 'Sem observações'}">
+                        ${observacaoTruncada || '<span class="observacao-empty">Nenhuma</span>'}
+                    </div>
                 </td>
                 <td>
                     <div class="arquivos-container">
