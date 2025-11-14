@@ -7,9 +7,16 @@ class DashboardService {
 
     async atualizarDashboard() {
         try {
-            await this.atualizarPacientes();
-            await this.atualizarAgendamentos();
-            await this.atualizarEventos();
+            // Verifica se os elementos existem antes de tentar atualizar
+            if (document.getElementById('totalPacientes')) {
+                await this.atualizarPacientes();
+            }
+            if (document.getElementById('totalAgendamentos')) {
+                await this.atualizarAgendamentos();
+            }
+            if (document.getElementById('totalEventos')) {
+                await this.atualizarEventos();
+            }
         } catch (error) {
             console.error('Erro ao atualizar dashboard:', error);
         }
@@ -19,10 +26,10 @@ class DashboardService {
         try {
             const pacientes = await this.pacienteService.buscarTodos();
             const totalPacientes = pacientes.length;
-            
+
             // Calcular pacientes ativos (simulação - você pode ajustar conforme sua lógica)
             const pacientesAtivos = pacientes.filter(p => p.ativo !== false).length;
-            
+
             // Calcular novos pacientes este mês
             const mesAtual = new Date().getMonth();
             const anoAtual = new Date().getFullYear();
@@ -56,7 +63,7 @@ class DashboardService {
         try {
             const agendamentos = await this.agendamentoService.buscarTodos();
             const totalAgendamentos = agendamentos.length;
-            
+
             // Agendamentos para hoje
             const hoje = new Date().toDateString();
             const agendamentosHoje = agendamentos.filter(a => {
@@ -66,7 +73,7 @@ class DashboardService {
 
             // Agendamentos concluídos (simulação)
             const agendamentosConcluidos = agendamentos.filter(a => a.status === 'CONCLUIDO').length;
-            
+
             // Agendamentos pendentes
             const agendamentosPendentes = totalAgendamentos - agendamentosConcluidos;
 
@@ -95,13 +102,13 @@ class DashboardService {
         try {
             const eventos = await this.eventoService.buscarTodos();
             const totalEventos = eventos.length;
-            
+
             // Eventos ativos (não concluídos)
             const eventosAtivos = eventos.filter(e => e.situacao !== 'CONCLUIDO').length;
-            
+
             // Eventos concluídos
             const eventosConcluidos = eventos.filter(e => e.situacao === 'CONCLUIDO').length;
-            
+
             // Eventos futuros
             const agora = new Date();
             const eventosFuturos = eventos.filter(e => {

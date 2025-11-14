@@ -250,7 +250,7 @@ public class PacienteController {
             @ApiResponse(responseCode = "404", description = "Paciente não atualizado")
     })
     public ResponseEntity<PacienteRespostaDTO> atualizar(@RequestBody PacienteAtualizarDTO pacienteAtualizarDTO) {
-        // CORREÇÃO CRÍTICA: Buscar a entidade existente primeiro
+        // Buscar a entidade existente primeiro
         Paciente pacienteExistente = pacienteService.buscarPorId(pacienteAtualizarDTO.getId())
                 .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
 
@@ -262,6 +262,10 @@ public class PacienteController {
         pacienteExistente.setCrtSus(pacienteAtualizarDTO.getCrtSus());
         pacienteExistente.setEmail(pacienteAtualizarDTO.getEmail());
         pacienteExistente.setContato(pacienteAtualizarDTO.getContato());
+        
+        // Atualizar a situação usando o mapper
+        Situacao novaSituacao = pacienteMapper.stringToSituacao(pacienteAtualizarDTO.getSituacao());
+        pacienteExistente.setSituacao(novaSituacao);
 
         // Atualizar usuário se necessário
         if (!pacienteExistente.getUsuario().getId().equals(pacienteAtualizarDTO.getIdUsuario())) {
@@ -275,7 +279,7 @@ public class PacienteController {
     }
 
     @DeleteMapping("/deletar/id")
-    @Operation(summary = "Deletar paciente", description = "Deleta o paciente")
+    @Operation(summary = "Deletar paciente", description = "Deleta o paciente (marca como EXCLUIDO)")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Paciente deletado"),
             @ApiResponse(responseCode = "404", description = "Paciente não deletado")

@@ -45,6 +45,10 @@ public class PacienteRequisicaoDTO {
     @Schema(description = "Contato do paciente", example = "(44) 93434-5019")
     private String contato;
 
+    @Schema(description = "Situação do paciente", example = "ATIVO")
+    @NotNull
+    private String situacao;
+
     @Schema(description = "Id do usuário cadastrante", example = "1")
     @NotNull
     private Long idUsuario;

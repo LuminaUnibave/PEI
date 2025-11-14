@@ -782,6 +782,12 @@ body {
     border: 2px solid;
 }
 
+.status-excluido {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
 .status-agendado {
     background: #FEF3C7;
     color: #D97706;
@@ -810,6 +816,12 @@ body {
     background: #E0E7FF;
     color: #3730A3;
     border-color: #4F46E5;
+}
+
+.status-cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
 /* ===== CARDS DE CONTEÚDO ===== */

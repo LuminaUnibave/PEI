@@ -311,10 +311,6 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-// Função para navegar para a página de contato (substitui a scrollToContact)
-function navigateToContact() {
-    navigateToPage('contact');
-}
 
 function navigateToPage(pageId) {
     console.log('🔄 Navegando para página:', pageId);
@@ -882,7 +878,10 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Adiciona a função global para substituir a scrollToContact
-window.scrollToContact = function() {
-    navigateToPage('contact');
-};
+
+function scrollToContact() {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}

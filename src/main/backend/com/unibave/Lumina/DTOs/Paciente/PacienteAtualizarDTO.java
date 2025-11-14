@@ -36,7 +36,6 @@ public class PacienteAtualizarDTO {
     private String cpf;
 
     @Schema(description = "Data de nascimento do paciente", example = "2000-01-01")
-    @NotNull
     private LocalDate dtNascimento;
 
     @Schema(description = "Cartão do SUS do paciente", example = "212174936760000")
@@ -48,6 +47,10 @@ public class PacienteAtualizarDTO {
 
     @Schema(description = "Contato do paciente", example = "(44) 93434-5019")
     private String contato;
+
+    @Schema(description = "Situação do paciente", example = "ATIVO")
+    @NotNull
+    private String situacao;
 
     @Schema(description = "Id do usuário cadastrante", example = "1")
     @NotNull

@@ -347,55 +347,56 @@ class LuminaApp {
     // ========== PACIENTES ==========
     showNovoPacienteModal() {
         const content = `
-        <form id="pacienteForm">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="pacienteNome">Nome *</label>
-                    <input type="text" id="pacienteNome" required>
-                </div>
-                <div class="form-group">
-                    <label for="pacienteSobrenome">Sobrenome</label>
-                    <input type="text" id="pacienteSobrenome">
-                </div>
-                <div class="form-group">
-                    <label for="pacienteCpf">CPF *</label>
-                    <input type="text" id="pacienteCpf" required>
-                </div>
-                <div class="form-group">
-                    <label for="pacienteEmail">Email</label>
-                    <input type="email" id="pacienteEmail">
-                </div>
-                <div class="form-group">
-                    <label for="pacienteDtNascimento">Data Nascimento *</label>
-                    <input type="date" id="pacienteDtNascimento" required>
-                </div>
-                <div class="form-group">
-                    <label for="pacienteCrtSus">Cartão SUS</label>
-                    <input type="text" id="pacienteCrtSus">
-                </div>
-                <div class="form-group">
-                    <label for="pacienteContato">Contato</label>
-                    <input type="text" id="pacienteContato">
-                </div>
-                <div class="form-group">
-                    <label for="pacienteSituacao">Situação *</label>
-                    <select id="pacienteSituacao" required>
-                        <option value="ATIVO">Ativo</option>
-                        <option value="PENDENTE">Pendente</option>
-                    </select>
-                </div>
+    <form id="pacienteForm">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="pacienteNome">Nome *</label>
+                <input type="text" id="pacienteNome" required>
             </div>
-            <div class="modal-actions">
-                <button type="submit" class="btn-primary">Salvar</button>
-                <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+            <div class="form-group">
+                <label for="pacienteSobrenome">Sobrenome</label>
+                <input type="text" id="pacienteSobrenome">
             </div>
-        </form>
-    `;
+            <div class="form-group">
+                <label for="pacienteCpf">CPF *</label>
+                <input type="text" id="pacienteCpf" required>
+            </div>
+            <div class="form-group">
+                <label for="pacienteEmail">Email</label>
+                <input type="email" id="pacienteEmail">
+            </div>
+            <div class="form-group">
+                <label for="pacienteDtNascimento">Data Nascimento *</label>
+                <input type="date" id="pacienteDtNascimento" required>
+            </div>
+            <div class="form-group">
+                <label for="pacienteCrtSus">Cartão SUS</label>
+                <input type="text" id="pacienteCrtSus">
+            </div>
+            <div class="form-group">
+                <label for="pacienteContato">Contato</label>
+                <input type="text" id="pacienteContato">
+            </div>
+            <div class="form-group">
+                <label for="pacienteSituacao">Situação *</label>
+                <select id="pacienteSituacao" required>
+                    <option value="ATIVO">Ativo</option>
+                    <option value="INATIVO">Inativo</option>
+                    <option value="EXCLUIDO">Excluído</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button type="submit" class="btn-primary">Salvar</button>
+            <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+        </div>
+    </form>
+`;
         this.showModal('Novo Paciente', content);
 
         document.getElementById('pacienteForm').addEventListener('submit', (e) => this.salvarPaciente(e));
-    }
-
+    } 
+    
     async salvarPaciente(event) {
         event.preventDefault();
 
@@ -413,7 +414,7 @@ class LuminaApp {
             dtNascimento: document.getElementById('pacienteDtNascimento').value,
             crtSus: document.getElementById('pacienteCrtSus').value,
             contato: document.getElementById('pacienteContato').value,
-            situacao: document.getElementById('pacienteSituacao').value
+            situacao: document.getElementById('pacienteSituacao').value // Adiciona a situação
         };
 
         try {
@@ -442,50 +443,51 @@ class LuminaApp {
             }
 
             const content = `
-            <form id="pacienteForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="pacienteNome">Nome *</label>
-                        <input type="text" id="pacienteNome" value="${paciente.nome || ''}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteSobrenome">Sobrenome</label>
-                        <input type="text" id="pacienteSobrenome" value="${paciente.sobrenome || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteCpf">CPF *</label>
-                        <input type="text" id="pacienteCpf" value="${paciente.cpf || ''}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteEmail">Email</label>
-                        <input type="email" id="pacienteEmail" value="${paciente.email || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteDtNascimento">Data Nascimento *</label>
-                        <input type="date" id="pacienteDtNascimento" value="${paciente.dtNascimento || ''}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteCrtSus">Cartão SUS</label>
-                        <input type="text" id="pacienteCrtSus" value="${paciente.crtSus || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteContato">Contato</label>
-                        <input type="text" id="pacienteContato" value="${paciente.contato || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="pacienteSituacao">Situação *</label>
-                        <select id="pacienteSituacao" required>
-                            <option value="ATIVO" ${paciente.situacao === 'ATIVO' ? 'selected' : ''}>Ativo</option>
-                            <option value="PENDENTE" ${paciente.situacao === 'PENDENTE' ? 'selected' : ''}>Pendente</option>
-                        </select>
-                    </div>
+        <form id="pacienteForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="pacienteNome">Nome *</label>
+                    <input type="text" id="pacienteNome" value="${paciente.nome || ''}" required>
                 </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn-primary">Atualizar</button>
-                    <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+                <div class="form-group">
+                    <label for="pacienteSobrenome">Sobrenome</label>
+                    <input type="text" id="pacienteSobrenome" value="${paciente.sobrenome || ''}">
                 </div>
-            </form>
-        `;
+                <div class="form-group">
+                    <label for="pacienteCpf">CPF *</label>
+                    <input type="text" id="pacienteCpf" value="${paciente.cpf || ''}" required>
+                </div>
+                <div class="form-group">
+                    <label for="pacienteEmail">Email</label>
+                    <input type="email" id="pacienteEmail" value="${paciente.email || ''}">
+                </div>
+                <div class="form-group">
+                    <label for="pacienteDtNascimento">Data Nascimento *</label>
+                    <input type="date" id="pacienteDtNascimento" value="${paciente.dtNascimento || ''}" required>
+                </div>
+                <div class="form-group">
+                    <label for="pacienteCrtSus">Cartão SUS</label>
+                    <input type="text" id="pacienteCrtSus" value="${paciente.crtSus || ''}">
+                </div>
+                <div class="form-group">
+                    <label for="pacienteContato">Contato</label>
+                    <input type="text" id="pacienteContato" value="${paciente.contato || ''}">
+                </div>
+                <div class="form-group">
+                    <label for="pacienteSituacao">Situação *</label>
+                    <select id="pacienteSituacao" required>
+                        <option value="ATIVO" ${paciente.situacao === 'ATIVO' ? 'selected' : ''}>Ativo</option>
+                        <option value="INATIVO" ${paciente.situacao === 'INATIVO' ? 'selected' : ''}>Inativo</option>
+                        <option value="EXCLUIDO" ${paciente.situacao === 'EXCLUIDO' ? 'selected' : ''}>Excluído</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" class="btn-primary">Atualizar</button>
+                <button type="button" class="btn-secondary" onclick="app.hideModal()">Cancelar</button>
+            </div>
+        </form>
+    `;
             this.showModal('Editar Paciente', content);
 
             document.getElementById('pacienteForm').addEventListener('submit', async (e) => {
@@ -520,10 +522,10 @@ class LuminaApp {
 
     // ========== EXCLUIR PACIENTE ==========
     async deletarPaciente(id) {
-        if (confirm('Tem certeza que deseja excluir este paciente?')) {
+        if (confirm('Tem certeza que deseja excluir este paciente? Esta ação marcará o paciente como EXCLUIDO.')) {
             try {
                 await this.pacienteService.deletar(id);
-                Utils.showNotification('Paciente excluído com sucesso!', 'success');
+                Utils.showNotification('Paciente marcado como excluído com sucesso!', 'success');
 
                 // Atualizar os dados do dashboard
                 await this.dashboardService.atualizarDashboard();

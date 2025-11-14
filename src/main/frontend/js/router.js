@@ -273,32 +273,54 @@ class Router {
             pacientes.forEach(paciente => {
                 // Determinar classe CSS baseada na situação
                 const situacao = paciente.situacao || 'ATIVO';
-                const statusClass = situacao === 'ATIVO' ? 'status-ativo' : 'status-pendente';
-                const statusText = situacao === 'ATIVO' ? 'ATIVO' : 'PENDENTE';
+                let statusClass = 'status-ativo';
+                let statusText = 'ATIVO';
+
+                switch (situacao) {
+                    case 'ATIVO':
+                        statusClass = 'status-ativo';
+                        statusText = 'ATIVO';
+                        break;
+                    case 'INATIVO':
+                        statusClass = 'status-inativo';
+                        statusText = 'INATIVO';
+                        break;
+                    case 'EXCLUIDO':
+                        statusClass = 'status-excluido';
+                        statusText = 'EXCLUIDO';
+                        break;
+                    case 'PENDENTE':
+                        statusClass = 'status-pendente';
+                        statusText = 'PENDENTE';
+                        break;
+                    default:
+                        statusClass = 'status-ativo';
+                        statusText = 'ATIVO';
+                }
 
                 // Formatar CPF se existir
                 const cpfFormatado = paciente.cpf ? this.formatarCPF(paciente.cpf) : '';
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                <td>${paciente.id || ''}</td>
-                <td>${paciente.nome || ''} ${paciente.sobrenome || ''}</td>
-                <td>${cpfFormatado}</td>
-                <td>${Utils.formatDate(paciente.dtNascimento)}</td>
-                <td>${paciente.email || ''}</td>
-                <td>${paciente.contato || ''}</td>
-                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                <td>
-                    <div class="acoes-container">
-                        <button class="btn-action btn-edit" onclick="app.editarPaciente(${paciente.id})" title="Editar paciente">
-                            Editar
-                        </button>
-                        <button class="btn-action btn-delete" onclick="app.deletarPaciente(${paciente.id})" title="Excluir paciente">
-                            Excluir
-                        </button>
-                    </div>
-                </td>
-            `;
+            <td>${paciente.id || ''}</td>
+            <td>${paciente.nome || ''} ${paciente.sobrenome || ''}</td>
+            <td>${cpfFormatado}</td>
+            <td>${Utils.formatDate(paciente.dtNascimento)}</td>
+            <td>${paciente.email || ''}</td>
+            <td>${paciente.contato || ''}</td>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            <td>
+                <div class="acoes-container">
+                    <button class="btn-action btn-edit" onclick="app.editarPaciente(${paciente.id})" title="Editar paciente">
+                        Editar
+                    </button>
+                    <button class="btn-action btn-delete" onclick="app.deletarPaciente(${paciente.id})" title="Excluir paciente">
+                        Excluir
+                    </button>
+                </div>
+            </td>
+        `;
                 tbody.appendChild(row);
             });
         } else {
@@ -329,22 +351,35 @@ class Router {
             agendamentos.forEach(agendamento => {
                 const arquivosCount = agendamento.arquivos ? agendamento.arquivos.length : 0;
 
-                // Determinar status baseado na data do agendamento
-                let status = 'AGENDADO';
-                let statusClass = 'status-agendado';
+                // Usa o status do backend ou calcula se não existir
+                let status = agendamento.status || 'PENDENTE';
+                let statusClass = 'status-pendente';
 
                 const dataAgendamento = app.parseBackendDate(agendamento.dtAgendamento);
                 const agora = new Date();
 
-                if (dataAgendamento && dataAgendamento < agora) {
-                    status = 'CONCLUIDO';
-                    statusClass = 'status-concluido';
+                // Fallback: se não tem status, calcula baseado na data
+                if (!agendamento.status) {
+                    if (dataAgendamento && dataAgendamento < agora) {
+                        status = 'CONCLUIDO';
+                    } else {
+                        status = 'PENDENTE';
+                    }
                 }
 
-                // Se o agendamento já tiver um status definido, usar esse
-                if (agendamento.status) {
-                    status = agendamento.status;
-                    statusClass = `status-${agendamento.status.toLowerCase()}`;
+                // Define a classe CSS baseada no status
+                switch (status) {
+                    case 'CONCLUIDO':
+                        statusClass = 'status-concluido';
+                        break;
+                    case 'PENDENTE':
+                        statusClass = 'status-pendente';
+                        break;
+                    case 'CANCELADO':
+                        statusClass = 'status-cancelado';
+                        break;
+                    default:
+                        statusClass = 'status-pendente';
                 }
 
                 // Formatar data/hora de forma mais legível
@@ -372,47 +407,47 @@ class Router {
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-            <td>${agendamento.id || ''}</td>
-            <td>${agendamento.paciente?.nome || 'N/A'} ${agendamento.paciente?.sobrenome || ''}</td>
-            <td>${agendamento.tpVisita || ''}</td>
-            <td class="datetime-cell">${dataFormatada}</td>
-            <td><span class="status-badge ${statusClass}">${status}</span></td>
-            <td>
-                <div class="observacao-cell" 
-                    data-full-text="${observacaoEscapada}"
-                    onclick="app.router.showObservacaoPopup('${observacao.replace(/'/g, "\\'")}')"
-                    title="${observacao ? 'Clique para ver observação completa' : 'Sem observações'}">
-                    ${observacaoTruncada || '<span class="observacao-empty">Nenhuma</span>'}
-                </div>
-            </td>
-            <td>
-                <div class="arquivos-container">
-                    <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
-                    <div class="arquivos-actions">
-                        ${arquivosCount > 0 ?
+                <td>${agendamento.id || ''}</td>
+                <td>${agendamento.paciente?.nome || 'N/A'} ${agendamento.paciente?.sobrenome || ''}</td>
+                <td>${agendamento.tpVisita || ''}</td>
+                <td class="datetime-cell">${dataFormatada}</td>
+                <td><span class="status-badge ${statusClass}">${status}</span></td>
+                <td>
+                    <div class="observacao-cell" 
+                        data-full-text="${observacaoEscapada}"
+                        onclick="app.router.showObservacaoPopup('${observacao.replace(/'/g, "\\'")}')"
+                        title="${observacao ? 'Clique para ver observação completa' : 'Sem observações'}">
+                        ${observacaoTruncada || '<span class="observacao-empty">Nenhuma</span>'}
+                    </div>
+                </td>
+                <td>
+                    <div class="arquivos-container">
+                        <div class="arquivos-count">${arquivosCount} arquivo(s)</div>
+                        <div class="arquivos-actions">
+                            ${arquivosCount > 0 ?
                         `       <button class="btn-action btn-view btn-small" onclick="app.verArquivosAgendamento(${agendamento.id})" title="Baixar arquivos">
-                                Download
+                                    Download
+                                </button>
+                                <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosAgendamento(${agendamento.id})" title="Excluir todos os arquivos">
+                                     Excluir
+                                </button>` : ''}
+                            <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoAgendamento(${agendamento.id})" title="Adicionar arquivo">
+                                + Arquivo
                             </button>
-                            <button class="btn-action btn-delete btn-small" onclick="app.deletarTodosArquivosAgendamento(${agendamento.id})" title="Excluir todos os arquivos">
-                                 Excluir
-                            </button>` : ''}
-                        <button class="btn-action btn-file btn-small" onclick="app.adicionarArquivoAgendamento(${agendamento.id})" title="Adicionar arquivo">
-                            + Arquivo
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="acoes-container">
+                        <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})" title="Editar agendamento">
+                            Editar
+                        </button>
+                        <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})" title="Excluir agendamento">
+                            Excluir
                         </button>
                     </div>
-                </div>
-            </td>
-            <td>
-                <div class="acoes-container">
-                    <button class="btn-action btn-edit" onclick="app.editarAgendamento(${agendamento.id})" title="Editar agendamento">
-                        Editar
-                    </button>
-                    <button class="btn-action btn-delete" onclick="app.deletarAgendamento(${agendamento.id})" title="Excluir agendamento">
-                        Excluir
-                    </button>
-                </div>
-            </td>
-        `;
+                </td>
+            `;
                 tbody.appendChild(row);
             });
         } else {
@@ -563,7 +598,7 @@ class Router {
             if (termo.trim() === '') {
                 pacientes = await pacienteService.buscarTodos();
             } else {
-                // Busca por ID, nome, CPF (formatado e não formatado), email, contato
+                // Busca por ID, nome, CPF (formatado e não formatado), email, contato, situação
                 const todosPacientes = await pacienteService.buscarTodos();
                 const termoLower = termo.toLowerCase();
                 const isNumericTerm = !isNaN(termo) && termo.trim() !== '';
@@ -586,7 +621,9 @@ class Router {
                         // Busca por email (case insensitive)
                         (paciente.email && paciente.email.toLowerCase().includes(termoLower)) ||
                         // Busca por contato
-                        (paciente.contato && paciente.contato.includes(termo))
+                        (paciente.contato && paciente.contato.includes(termo)) ||
+                        // Busca por situação
+                        (paciente.situacao && paciente.situacao.toLowerCase().includes(termoLower))
                     );
                 });
             }
