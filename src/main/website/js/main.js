@@ -132,6 +132,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Formulário de Contato - Agora usando o endpoint de email
+    const contactForm = document.querySelector('#contact-page form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await enviarMensagemContato();
+        });
+    }
+
     // Login automático como visitante ao carregar a página
     setTimeout(async () => {
         await fazerLoginVisitante();
@@ -214,7 +223,102 @@ async function registrarUsuario(nome, email, senha) {
     }
 }
 
+// Função para enviar mensagem de contato usando o endpoint de email
+async function enviarMensagemContato() {
+    try {
+        const nameInput = document.querySelector('#contact-page input[name="name"]');
+        const emailInput = document.querySelector('#contact-page input[name="email"]');
+        const messageInput = document.querySelector('#contact-page textarea[name="message"]');
+
+        if (!nameInput || !emailInput || !messageInput) {
+            console.error('❌ Campos do formulário não encontrados');
+            alert('Erro: Campos do formulário não encontrados');
+            return;
+        }
+
+        const name = nameInput.value;
+        const email = emailInput.value;
+        const message = messageInput.value;
+
+        console.log('📝 Dados do formulário:', { name, email, message });
+
+        // Validações básicas
+        if (!name || !email || !message) {
+            alert('Por favor, preencha todos os campos!');
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            alert('Por favor, insira um email válido!');
+            return;
+        }
+
+        // Prepara os dados para o email
+        const assunto = `Contato do Site Lumina - ${name}`;
+        const conteudo = `
+Nome: ${name}
+Email: ${email}
+
+Mensagem:
+${message}
+
+---
+Enviado através do sistema Lumina
+        `.trim();
+
+        console.log('📧 Enviando mensagem de contato:', { assunto, conteudo });
+
+        // Envia para o endpoint de email
+        const formData = new FormData();
+        formData.append('remetente', email);
+        formData.append('assunto', assunto);
+        formData.append('conteudo', conteudo);
+
+        console.log('🔄 Enviando requisição para /email/receber...');
+
+        const response = await fetch('http://localhost:8081/email/receber', {
+            method: 'POST',
+            body: formData
+        });
+
+        console.log('📨 Resposta do servidor:', response.status, response.statusText);
+
+        if (response.ok) {
+            const resultado = await response.text();
+            console.log('✅ Email enviado com sucesso:', resultado);
+            alert('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.');
+
+            // Limpa o formulário
+            nameInput.value = '';
+            emailInput.value = '';
+            messageInput.value = '';
+
+        } else {
+            const errorText = await response.text();
+            console.error('❌ Erro na resposta:', errorText);
+            throw new Error(errorText || 'Erro ao enviar mensagem');
+        }
+
+    } catch (error) {
+        console.error('❌ Erro ao enviar mensagem:', error);
+        alert('❌ Erro ao enviar mensagem: ' + error.message);
+    }
+}
+
+// Função para validar email
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Função para navegar para a página de contato (substitui a scrollToContact)
+function navigateToContact() {
+    navigateToPage('contact');
+}
+
 function navigateToPage(pageId) {
+    console.log('🔄 Navegando para página:', pageId);
+
     // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => {
@@ -239,6 +343,8 @@ function navigateToPage(pageId) {
                 }
             }, 100);
         }
+    } else {
+        console.error('❌ Página não encontrada:', `${pageId}-page`);
     }
 }
 
@@ -250,8 +356,24 @@ function updateUIForAuthenticatedUser() {
             const usuario = authService.getUsuario();
             console.log('👤 Usuário autenticado:', usuario);
 
-            // Você pode adicionar lógica aqui para atualizar a interface
-            // Por exemplo, mostrar o nome do usuário no header
+            // Atualiza o header para mostrar que está logado
+            const header = document.querySelector('.header');
+            const existingUserInfo = header.querySelector('.user-info');
+
+            if (existingUserInfo) {
+                existingUserInfo.remove();
+            }
+
+            const userInfo = document.createElement('div');
+            userInfo.className = 'user-info';
+            userInfo.innerHTML = `
+                <span style="color: white; margin-right: 15px;">👋 Olá, ${usuario.nome || 'Usuário'}</span>
+            `;
+
+            const nav = header.querySelector('.nav');
+            if (nav) {
+                header.insertBefore(userInfo, nav);
+            }
         }
     } catch (error) {
         console.log('Erro ao atualizar UI:', error);
@@ -706,13 +828,6 @@ function formatarTamanho(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-function scrollToContact() {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
 // Adiciona estilos dinâmicos para melhor UX
 const style = document.createElement('style');
 style.textContent = `
@@ -746,12 +861,28 @@ style.textContent = `
         transition: opacity 0.5s ease, transform 0.5s ease;
     }
     
+    .user-info {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+    
     @media (max-width: 768px) {
         .event-time-title {
             flex-direction: column;
             align-items: flex-start;
             gap: 5px;
         }
+        
+        .user-info {
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
     }
 `;
 document.head.appendChild(style);
+
+// Adiciona a função global para substituir a scrollToContact
+window.scrollToContact = function() {
+    navigateToPage('contact');
+};
