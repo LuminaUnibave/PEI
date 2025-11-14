@@ -405,7 +405,7 @@ body {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-image: url('../../resources/static/img/luminaIcon.jpg');
+    background-image: url('../../website/img/luminaIcon.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -488,7 +488,7 @@ body {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-image: url(../../resources/static/img/luminaIcon.jpg);
+    background-image: url(../../website/img/luminaIcon.jpg);
     background-size: cover;
     align-items: center;
     justify-content: center;
