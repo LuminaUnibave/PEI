@@ -2,7 +2,9 @@ package com.unibave.Lumina.service;
 
 import com.unibave.Lumina.enums.Situacao;
 import com.unibave.Lumina.exception.http.ResourceNotFoundException;
+import com.unibave.Lumina.model.entidades.Usuario;
 import com.unibave.Lumina.repository.EventoRepository;
+import com.unibave.Lumina.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.unibave.Lumina.model.entidades.Evento;
@@ -14,10 +16,14 @@ import java.util.Optional;
 @Service
 public class EventoService {
     private final EventoRepository eventoRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final EmailService emailService;
 
     @Autowired
-    public EventoService(EventoRepository eventoRepository) {
+    public EventoService(EventoRepository eventoRepository, EmailService emailService, UsuarioRepository usuarioRepository) {
         this.eventoRepository = eventoRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.emailService = emailService;
     }
 
     @Transactional(readOnly = true)
@@ -83,7 +89,7 @@ public class EventoService {
         if(evento.getDtEvento().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Evento não pode ser no passado.");
         }
-
+        enviarEmailEvento(evento);
         return eventoRepository.save(evento);
     }
 
@@ -95,4 +101,10 @@ public class EventoService {
         eventoRepository.deleteById(id);
     }
 
+    public void enviarEmailEvento (Evento evento) {
+        List<Usuario> destinatario = usuarioRepository.findAll();
+        for (Usuario usuario : destinatario) {
+            emailService.enviarEmail(usuario.getEmail(), evento.getNmEvento(), evento.getDescricao());
+        }
+    }
 }

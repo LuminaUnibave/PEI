@@ -29,12 +29,4 @@ public class EventoRespostaDTO {
     public static class UsuarioDTO {
         private Long id;
     }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ArquivoListDTO {
-        private Long id;
-    }
 }
