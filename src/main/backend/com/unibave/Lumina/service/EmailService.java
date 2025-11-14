@@ -51,33 +51,15 @@ public class EmailService { // Realiza o envio dos emails
         }
     }
 
-    public void enviarEmail(String remetente,String destinatario, String assunto, String conteudo) { // Sem anexo
+    public void receberEmail(String remetente, String assunto, String conteudo) { // Sem anexo
         try {
             MimeMessage mensagem = javaMailService.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");
 
             helper.setFrom(remetente);
-            helper.setTo(destinatario);
+            helper.setTo("lumina.unibave@gmail.com");
             helper.setSubject(assunto);
             helper.setText(conteudo, true);
-            javaMailService.send(mensagem);
-
-        } catch (MessagingException e) {
-            throw new RuntimeException("Erro ao enviar e-mail " + e.getMessage());
-        }
-    }
-
-    public void enviarEmail(String remetente, String destinatario, String assunto, String conteudo, MultipartFile anexo) { // Com anexo
-        try {
-            MimeMessage mensagem = javaMailService.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");
-
-            helper.setFrom(remetente);
-            helper.setTo(destinatario);
-            helper.setSubject(assunto);
-            helper.setText(conteudo, true);
-            helper.addAttachment(Objects.requireNonNull(anexo.getOriginalFilename()), anexo);
-
             javaMailService.send(mensagem);
 
         } catch (MessagingException e) {
