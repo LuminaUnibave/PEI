@@ -33,6 +33,7 @@ public class Usuario extends Entidade implements Serializable {
     protected  String senha;
 
     @Column(name = "tp_usuario", nullable = false)
+    @Enumerated(EnumType.STRING)
     protected TpUsuario tpUsuario;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)

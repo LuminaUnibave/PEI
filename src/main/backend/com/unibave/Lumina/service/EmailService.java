@@ -21,7 +21,11 @@ public class EmailService { // Realiza o envio dos emails
 
     @Autowired
     private JavaMailSender javaMailService;
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public EmailService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public void enviarEmail(String destinatario, String assunto, String conteudo) { // Sem anexo
         try {
@@ -74,22 +78,22 @@ public class EmailService { // Realiza o envio dos emails
     }
 
     public void enviarEmailEvento(Evento evento) {
-        List<Usuario> destinatario = usuarioRepository.findByTpUsuario(TpUsuario.VISITANTE);
-        for (Usuario usuario : destinatario) {
-            try {
-                MimeMessage mensagem = javaMailService.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");
+        List<Usuario> destinatarios = usuarioRepository.findByTpUsuario(TpUsuario.VISITANTE);
+            for (Usuario destinatario : destinatarios) {
+                try {
+                    MimeMessage mensagem = javaMailService.createMimeMessage();
+                    MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");
 
-                helper.setFrom(usuario.getEmail());
-                helper.setTo("lumina.unibave@gmail.com");
-                helper.setSubject(evento.getNmEvento());
-                helper.setText(evento.getDescricao(), true);
-                javaMailService.send(mensagem);
+                    helper.setFrom("lumina.unibave@gmail.com");
+                    helper.setTo(destinatario.getEmail());
+                    helper.setSubject(evento.getNmEvento());
+                    helper.setText("<p><h4><strong>Data do Evento: " + evento.getDtEventoFormatado() + "</strong></h4></p>" + "<p><strong><h4>Descrição:</h4></strong><br />" + evento.getDescricao()+ "</p>", true);
+                    javaMailService.send(mensagem);
 
-            } catch (MessagingException e) {
-                throw new RuntimeException("Erro ao enviar e-mail " + e.getMessage());
+                } catch (MessagingException e) {
+                    throw new RuntimeException("Erro ao enviar e-mail " + e.getMessage());
+                }
             }
-        }
     }
 }
 

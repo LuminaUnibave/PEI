@@ -36,12 +36,12 @@ public class Arquivo extends Entidade implements Serializable {
     @Column(name = "id_entidade")
     private Long idEntidade;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "tp_entidade", length = 50)
+    @Enumerated(EnumType.STRING)
     private TpEntidade tpEntidade;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "extensao", length = 10)
+    @Enumerated(EnumType.STRING)
     private Extensao extensao;
 
     @Column(name = "content_type", length = 100)

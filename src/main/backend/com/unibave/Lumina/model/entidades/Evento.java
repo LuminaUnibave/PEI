@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -36,6 +37,12 @@ public class Evento extends Entidade implements Serializable {
     @JoinColumn(name = "id_usuario", nullable = false)
     @JsonBackReference
     private Usuario usuario;
+
+    public String getDtEventoFormatado() {
+        DateTimeFormatter formatterCompleto = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dataHoraFormatada = dtEvento.format(formatterCompleto);
+        return dataHoraFormatada;
+    }
 }
 
 
