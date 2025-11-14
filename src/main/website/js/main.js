@@ -1,9 +1,9 @@
 // SPA Navigation and Carousel functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Navigation
     const navButtons = document.querySelectorAll('.nav-button, .btn, .btn-back');
     navButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             e.preventDefault();
             const targetPage = this.getAttribute('data-page');
             if (targetPage) {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resetAutoSlide();
     }
 
-    window.currentSlide = function(index) {
+    window.currentSlide = function (index) {
         showSlide(index);
     };
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Login form handling
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
-        loginForm.addEventListener('submit', async function(e) {
+        loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const senha = document.getElementById('senha').value;
@@ -105,6 +105,13 @@ function navigateToPage(pageId) {
                 }
             }, 100);
         }
+    }
+}
+
+function scrollToContact() {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
@@ -389,7 +396,7 @@ async function initializeCalendar() {
                 let situacaoClass = 'situacao-';
                 let situacaoText = '';
 
-                switch(event.situacao) {
+                switch (event.situacao) {
                     case 'AGENDADO':
                         situacaoClass += 'agendado';
                         situacaoText = 'Agendado';
