@@ -1,5 +1,9 @@
 package com.unibave.Lumina.service;
 
+import com.unibave.Lumina.enums.TpUsuario;
+import com.unibave.Lumina.model.entidades.Evento;
+import com.unibave.Lumina.model.entidades.Usuario;
+import com.unibave.Lumina.repository.UsuarioRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -16,6 +21,7 @@ public class EmailService { // Realiza o envio dos emails
 
     @Autowired
     private JavaMailSender javaMailService;
+    private UsuarioRepository usuarioRepository;
 
     public void enviarEmail(String destinatario, String assunto, String conteudo) { // Sem anexo
         try {
@@ -64,6 +70,25 @@ public class EmailService { // Realiza o envio dos emails
 
         } catch (MessagingException e) {
             throw new RuntimeException("Erro ao enviar e-mail " + e.getMessage());
+        }
+    }
+
+    public void enviarEmailEvento(Evento evento) {
+        List<Usuario> destinatario = usuarioRepository.findByTpUsuario(TpUsuario.VISITANTE);
+        for (Usuario usuario : destinatario) {
+            try {
+                MimeMessage mensagem = javaMailService.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");
+
+                helper.setFrom(usuario.getEmail());
+                helper.setTo("lumina.unibave@gmail.com");
+                helper.setSubject(evento.getNmEvento());
+                helper.setText(evento.getDescricao(), true);
+                javaMailService.send(mensagem);
+
+            } catch (MessagingException e) {
+                throw new RuntimeException("Erro ao enviar e-mail " + e.getMessage());
+            }
         }
     }
 }

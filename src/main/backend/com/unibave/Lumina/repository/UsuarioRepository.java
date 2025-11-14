@@ -1,6 +1,7 @@
 package com.unibave.Lumina.repository;
 
 import com.unibave.Lumina.enums.Situacao;
+import com.unibave.Lumina.enums.TpUsuario;
 import com.unibave.Lumina.model.entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,6 +18,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findBySituacao(Situacao situacao);
     //Find By email;
     Optional<Usuario> findByEmail(String email);
+    //Find By tpUsuario
+    List<Usuario> findByTpUsuario(TpUsuario tpUsuario);
     //Find By dtCadastro
     List<Usuario> findByDtCadastro(LocalDateTime dtCadastro);
     List<Usuario> findByDtCadastroBefore(LocalDateTime dtCadastroBefore);

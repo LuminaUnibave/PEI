@@ -16,13 +16,11 @@ import java.util.Optional;
 @Service
 public class EventoService {
     private final EventoRepository eventoRepository;
-    private final UsuarioRepository usuarioRepository;
     private final EmailService emailService;
 
     @Autowired
-    public EventoService(EventoRepository eventoRepository, EmailService emailService, UsuarioRepository usuarioRepository) {
+    public EventoService(EventoRepository eventoRepository, EmailService emailService) {
         this.eventoRepository = eventoRepository;
-        this.usuarioRepository = usuarioRepository;
         this.emailService = emailService;
     }
 
@@ -89,7 +87,7 @@ public class EventoService {
         if(evento.getDtEvento().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Evento não pode ser no passado.");
         }
-        enviarEmailEvento(evento);
+        emailService.enviarEmailEvento(evento);
         return eventoRepository.save(evento);
     }
 
@@ -99,12 +97,5 @@ public class EventoService {
             throw new ResourceNotFoundException("Evento não encontrato com  o ID: " + id);
         }
         eventoRepository.deleteById(id);
-    }
-
-    public void enviarEmailEvento (Evento evento) {
-        List<Usuario> destinatario = usuarioRepository.findAll();
-        for (Usuario usuario : destinatario) {
-            emailService.enviarEmail(usuario.getEmail(), evento.getNmEvento(), evento.getDescricao());
-        }
     }
 }
