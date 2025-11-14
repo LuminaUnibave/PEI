@@ -706,6 +706,13 @@ function formatarTamanho(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
+function scrollToContact() {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
 // Adiciona estilos dinâmicos para melhor UX
 const style = document.createElement('style');
 style.textContent = `
