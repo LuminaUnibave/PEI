@@ -19,10 +19,11 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        criarUsuarioAdmin();
+        criarUsuarioAdministrador();
+        criarUsuarioVisitante();
     }
 
-    private void criarUsuarioAdmin() {
+    private void criarUsuarioAdministrador() {
         String emailAdmin = "admin@lumina.com";
 
         // Verificar se o admin já existe
@@ -40,6 +41,27 @@ public class DataLoader implements CommandLineRunner {
             log.info("Senha: admin");
         } else {
             log.info("Usuário administrador já existe no sistema");
+        }
+    }
+
+    private void criarUsuarioVisitante() {
+        String emailVisitante = "visitante@lumina.com";
+
+        // Verificar se o admin já existe
+        if (usuarioRepository.findByEmail(emailVisitante).isEmpty()) {
+            Usuario admin = Usuario.builder()
+                    .nome("Visitante")
+                    .email(emailVisitante)
+                    .senha(passwordEncoder.encode("@@@@@"))
+                    .tpUsuario(TpUsuario.VISITANTE)
+                    .build();
+
+            usuarioRepository.save(admin);
+            log.info("Usuário visitante criado com sucesso!");
+            log.info("Email: {}", emailVisitante);
+            log.info("Senha: @@@@@");
+        } else {
+            log.info("Usuário visitante já existe no sistema");
         }
     }
 }

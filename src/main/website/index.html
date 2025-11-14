@@ -189,6 +189,7 @@
                     </div>
                 </div>
 
+                <!-- Formulário de Login -->
                 <form id="login-form">
                     <div class="form-group">
                         <label for="email">Email:</label>
@@ -202,6 +203,40 @@
 
                     <button type="submit" class="access-button">Acessar</button>
                 </form>
+
+                <div class="login-options">
+                    <button id="show-register" class="btn-link">Criar uma conta</button>
+                    <button id="show-visitante" class="btn-link">Entrar como Visitante</button>
+                </div>
+
+                <!-- Formulário de Registro -->
+                <form id="register-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="reg-nome">Nome completo:</label>
+                        <input type="text" id="reg-nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-email">Email:</label>
+                        <input type="email" id="reg-email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-senha">Senha:</label>
+                        <input type="password" id="reg-senha" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-confirmar-senha">Confirmar senha:</label>
+                        <input type="password" id="reg-confirmar-senha" required>
+                    </div>
+
+                    <button type="submit" class="access-button">Criar Conta</button>
+                </form>
+
+                <div class="back-to-login" style="display: none;">
+                    <button id="show-login" class="btn-link">Voltar para o Login</button>
+                </div>
 
                 <div class="social-icons">
                     <a href="#"><img src="img/google.jpg" alt="Google"></a>

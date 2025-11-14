@@ -1,11 +1,13 @@
 // AuthService.js
 class AuthService {
     constructor() {
-        this.baseURL = 'http://localhost:8081/auth/login';
+        this.baseURL = 'http://localhost:8081/auth';
     }
 
     async login(email, senha) {
         try {
+            console.log('🔐 Tentando login:', email);
+
             const response = await fetch(`${this.baseURL}/login`, {
                 method: 'POST',
                 headers: {
@@ -19,11 +21,13 @@ class AuthService {
             }
 
             const data = await response.json();
+            console.log('✅ Login response:', data);
 
-            // Armazena o token (ajuste conforme sua resposta da API)
+            // Armazena o token e dados do usuário
             if (data.token) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('usuario', JSON.stringify(data.usuario));
+                console.log('🔑 Token armazenado');
             }
 
             return data;
@@ -36,10 +40,12 @@ class AuthService {
     logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('usuario');
+        console.log('🚪 Usuário deslogado');
     }
 
     isAuthenticated() {
-        return !!localStorage.getItem('token');
+        const token = localStorage.getItem('token');
+        return !!token;
     }
 
     getToken() {
