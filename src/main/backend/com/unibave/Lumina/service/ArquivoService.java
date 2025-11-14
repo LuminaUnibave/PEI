@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import static com.unibave.Lumina.enums.Extensao.*;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -64,10 +66,18 @@ public class ArquivoService {
                 .contentType(file.getContentType())
                 .build();
 
+        // Validar se é EVENTO e se a extensão é permitida
+        if (arquivo.getTpEntidade() == TpEntidade.EVENTO) {
+            if (arquivo.getExtensao() != JPEG && arquivo.getExtensao() != PNG && arquivo.getExtensao() != JPG) {
+                // Deletar o arquivo salvo fisicamente
+                Files.deleteIfExists(filePath);
+                throw new RuntimeException("Para eventos, apenas arquivos JPEG, JPG e PNG são permitidos");
+            }
+        }
+
         // Salvar metadados no banco
         Arquivo arquivoSalvo = arquivoRepository.save(arquivo);
         log.info("Arquivo upload realizado: ID {}, Nome: {}", arquivoSalvo.getId(), nomeOriginal);
-
         return arquivoSalvo;
     }
 

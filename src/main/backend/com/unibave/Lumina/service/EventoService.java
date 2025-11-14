@@ -74,7 +74,7 @@ public class EventoService {
         if(evento.getNmEvento().length() > 255) {
             throw new IllegalArgumentException("Título não pode exceder o tamanho.");
         }
-        if(evento.getDescricao() != null &&  evento.getDescricao().length() > 255) {
+        if(evento.getDescricao() != null &&  evento.getDescricao().length() > 2000) {
             throw new IllegalArgumentException("Descrição não pode exceder o tamanho.");
         }
         if(evento.getDtEvento() == null) {
