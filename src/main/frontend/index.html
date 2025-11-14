@@ -283,11 +283,8 @@
                 <div class="section-header">
                     <div>
                         <h2>Relatórios e Estatísticas</h2>
-                        <p>Análises e insights do sistema</p>
+                        <p>Relatórios do sistema Lumina</p>
                     </div>
-                    <button class="btn-new" id="gerarRelatorioBtn">
-                        Gerar Relatório
-                    </button>
                 </div>
 
                 <div class="content-card">
@@ -297,31 +294,38 @@
 
                     <div class="reports-grid">
                         <div class="report-card">
-                            <div class="report-icon">📊</div>
-                            <h4>Relatório Mensal</h4>
-                            <p>Análise completa do mês atual</p>
-                            <button class="btn-action btn-view">Visualizar</button>
-                        </div>
-
-                        <div class="report-card">
-                            <div class="report-icon">👤</div>
-                            <h4>Pacientes Ativos</h4>
-                            <p>Lista e estatísticas de pacientes</p>
-                            <button class="btn-action btn-view">Visualizar</button>
-                        </div>
-
-                        <div class="report-card">
-                            <div class="report-icon">💼</div>
-                            <h4>Financeiro</h4>
-                            <p>Relatório de receitas e despesas</p>
-                            <button class="btn-action btn-view">Visualizar</button>
-                        </div>
-
-                        <div class="report-card">
                             <div class="report-icon">📋</div>
-                            <h4>Desempenho</h4>
-                            <p>Métricas de performance</p>
-                            <button class="btn-action btn-view">Visualizar</button>
+                            <h4>Relatório de Pacientes</h4>
+                            <p>Lista completa de pacientes cadastrados</p>
+                            <button class="btn-action btn-view" onclick="app.gerarRelatorioPacientes()">
+                                Gerar Relatório
+                            </button>
+                        </div>
+
+                        <div class="report-card">
+                            <div class="report-icon">📅</div>
+                            <h4>Relatório de Agendamentos</h4>
+                            <p>Agendamentos e consultas do sistema</p>
+                            <button class="btn-action btn-view" onclick="app.gerarRelatorioAgendamentos()">
+                                Gerar Relatório
+                            </button>
+                        </div>
+
+                        <div class="report-card">
+                            <div class="report-icon">🎯</div>
+                            <h4>Relatório de Eventos</h4>
+                            <p>Eventos e atividades cadastradas</p>
+                            <button class="btn-action btn-view" onclick="app.gerarRelatorioEventos()">
+                                Gerar Relatório
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Status do Download -->
+                    <div id="relatorioStatus" class="relatorio-status" style="display: none;">
+                        <div class="status-content">
+                            <div class="loading-spinner"></div>
+                            <p id="statusMessage">Preparando relatório...</p>
                         </div>
                     </div>
                 </div>

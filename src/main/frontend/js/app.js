@@ -1147,6 +1147,157 @@ class LuminaApp {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
+    // ========== RELATÓRIOS ==========
+    async gerarRelatorioPacientes() {
+        try {
+            this.mostrarStatusRelatorio('Gerando relatório de pacientes...');
+
+            const response = await fetch('http://localhost:8081/relatorios/pacientes', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.authService.getToken()}`
+                }
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+
+                // Extrair nome do arquivo do header Content-Disposition
+                const contentDisposition = response.headers.get('Content-Disposition');
+                let filename = 'relatorio_pacientes.txt';
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                    if (filenameMatch) {
+                        filename = filenameMatch[1];
+                    }
+                }
+
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+
+                this.esconderStatusRelatorio();
+                Utils.showNotification('Relatório de pacientes gerado com sucesso!', 'success');
+            } else {
+                throw new Error('Erro ao gerar relatório');
+            }
+        } catch (error) {
+            console.error('Erro ao gerar relatório de pacientes:', error);
+            this.esconderStatusRelatorio();
+            Utils.showNotification('Erro ao gerar relatório de pacientes', 'error');
+        }
+    }
+
+    async gerarRelatorioAgendamentos() {
+        try {
+            this.mostrarStatusRelatorio('Gerando relatório de agendamentos...');
+
+            const response = await fetch('http://localhost:8081/relatorios/agendamentos', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.authService.getToken()}`
+                }
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+
+                const contentDisposition = response.headers.get('Content-Disposition');
+                let filename = 'relatorio_agendamentos.txt';
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                    if (filenameMatch) {
+                        filename = filenameMatch[1];
+                    }
+                }
+
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+
+                this.esconderStatusRelatorio();
+                Utils.showNotification('Relatório de agendamentos gerado com sucesso!', 'success');
+            } else {
+                throw new Error('Erro ao gerar relatório');
+            }
+        } catch (error) {
+            console.error('Erro ao gerar relatório de agendamentos:', error);
+            this.esconderStatusRelatorio();
+            Utils.showNotification('Erro ao gerar relatório de agendamentos', 'error');
+        }
+    }
+
+    async gerarRelatorioEventos() {
+        try {
+            this.mostrarStatusRelatorio('Gerando relatório de eventos...');
+
+            const response = await fetch('http://localhost:8081/relatorios/eventos', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.authService.getToken()}`
+                }
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+
+                const contentDisposition = response.headers.get('Content-Disposition');
+                let filename = 'relatorio_eventos.txt';
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                    if (filenameMatch) {
+                        filename = filenameMatch[1];
+                    }
+                }
+
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+
+                this.esconderStatusRelatorio();
+                Utils.showNotification('Relatório de eventos gerado com sucesso!', 'success');
+            } else {
+                throw new Error('Erro ao gerar relatório');
+            }
+        } catch (error) {
+            console.error('Erro ao gerar relatório de eventos:', error);
+            this.esconderStatusRelatorio();
+            Utils.showNotification('Erro ao gerar relatório de eventos', 'error');
+        }
+    }
+
+    mostrarStatusRelatorio(mensagem) {
+        const statusElement = document.getElementById('relatorioStatus');
+        const messageElement = document.getElementById('statusMessage');
+
+        if (statusElement && messageElement) {
+            messageElement.textContent = mensagem;
+            statusElement.style.display = 'block';
+        }
+    }
+
+    esconderStatusRelatorio() {
+        const statusElement = document.getElementById('relatorioStatus');
+        if (statusElement) {
+            statusElement.style.display = 'none';
+        }
+    }
+
     // ========== ARQUIVOS - FUNÇÕES GERAIS ==========
     async downloadArquivo(id) {
         try {

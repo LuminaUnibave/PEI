@@ -1707,6 +1707,95 @@ tbody tr:last-child td {
     transform: scale(1.1);
 }
 
+/* ===== ESTILOS PARA RELATÓRIOS ===== */
+.relatorio-status {
+    background: var(--primary-very-light);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.status-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.status-content .loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-light);
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.status-content p {
+    margin: 0;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Melhorar visual dos cards de relatório */
+.report-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius);
+    padding: 2rem;
+    border: 2px solid var(--primary-very-light);
+    transition: var(--transition);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 220px;
+}
+
+.report-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-hover);
+}
+
+.report-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.report-card h4 {
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.report-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    flex-grow: 1;
+}
+
+.report-card .btn-action {
+    margin-top: auto;
+}
+
+/* Responsividade para relatórios */
+@media (max-width: 768px) {
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .report-card {
+        min-height: 200px;
+        padding: 1.5rem;
+    }
+}
+
 /* ===== NOTIFICAÇÕES ===== */
 .notification {
     position: fixed;
