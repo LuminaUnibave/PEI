@@ -26,5 +26,18 @@ public class EmailController {
             throw new RuntimeException("Erro inesperado ao enviar o e-mail\n" + e.getMessage());
         }
     }
+
+    @PostMapping(value = "/receber")
+    public ResponseEntity<String> receber(
+            @RequestParam String remetente,
+            @RequestParam String assunto,
+            @RequestParam String conteudo) {
+        try {
+            emailService.receberEmail(remetente, assunto, conteudo);
+            return ResponseEntity.ok("E-mail enviado");
+        } catch (Exception e) {
+            throw new RuntimeException("Erro inesperado ao enviar o e-mail\n" + e.getMessage());
+        }
+    }
 }
 // consumes = "multpart/form-data" --> Informa que o spring vai receber dados em vários formatos
