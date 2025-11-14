@@ -288,7 +288,7 @@ section {
     max-width: 100%;
     height: auto;
     border-radius: 0;
-    box-shadow: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .about-text {
@@ -384,7 +384,7 @@ section {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .event {
@@ -461,7 +461,7 @@ section {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .address {
@@ -525,7 +525,7 @@ section {
 
 .address-map iframe {
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .contact {
