@@ -1,9 +1,9 @@
 // SPA Navigation and Carousel functionality
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     // Navigation
     const navButtons = document.querySelectorAll('.nav-button, .btn, .btn-back');
     navButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
+        button.addEventListener('click', function(e) {
             e.preventDefault();
             const targetPage = this.getAttribute('data-page');
             if (targetPage) {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         resetAutoSlide();
     }
 
-    window.currentSlide = function (index) {
+    window.currentSlide = function(index) {
         showSlide(index);
     };
 
@@ -60,25 +60,159 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Login form handling
     const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const showRegisterBtn = document.getElementById('show-register');
+    const showLoginBtn = document.getElementById('show-login');
+    const showVisitanteBtn = document.getElementById('show-visitante');
+    const loginOptions = document.querySelector('.login-options');
+    const backToLogin = document.querySelector('.back-to-login');
+
+    // Toggle entre formulários de login e registro
+    if (showRegisterBtn) {
+        showRegisterBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginForm.style.display = 'none';
+            loginOptions.style.display = 'none';
+            registerForm.style.display = 'block';
+            backToLogin.style.display = 'block';
+        });
+    }
+
+    if (showLoginBtn) {
+        showLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            registerForm.style.display = 'none';
+            backToLogin.style.display = 'none';
+            loginForm.style.display = 'block';
+            loginOptions.style.display = 'block';
+        });
+    }
+
+    // Login automático como visitante
+    if (showVisitanteBtn) {
+        showVisitanteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            fazerLoginVisitante();
+        });
+    }
+
+    // Login form
     if (loginForm) {
-        loginForm.addEventListener('submit', async function (e) {
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const senha = document.getElementById('senha').value;
 
-            try {
-                const services = await window.servicesLoader.loadServices();
-                const authService = services.auth;
-
-                await authService.login(email, senha);
-                alert('Login realizado com sucesso!');
-                navigateToPage('home');
-            } catch (error) {
-                alert('Erro no login: ' + error.message);
-            }
+            await fazerLogin(email, senha);
         });
     }
+
+    // Registro de novo usuário usando o endpoint existente /usuario/salvar
+    if (registerForm) {
+        registerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('reg-nome').value;
+            const email = document.getElementById('reg-email').value;
+            const senha = document.getElementById('reg-senha').value;
+            const confirmarSenha = document.getElementById('reg-confirmar-senha').value;
+
+            // Validações básicas
+            if (senha !== confirmarSenha) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+
+            if (senha.length < 6) {
+                alert('A senha deve ter pelo menos 6 caracteres!');
+                return;
+            }
+
+            await registrarUsuario(nome, email, senha);
+        });
+    }
+
+    // Login automático como visitante ao carregar a página
+    setTimeout(async () => {
+        await fazerLoginVisitante();
+    }, 1000);
 });
+
+// Função para fazer login automático como visitante
+async function fazerLoginVisitante() {
+    try {
+        console.log('🔄 Tentando login automático como visitante...');
+        await fazerLogin('visitante@lumina.com', '@@@@@');
+    } catch (error) {
+        console.log('⚠️ Login automático falhou:', error.message);
+        // Preenche os campos mas não faz login automático
+        if (document.getElementById('email')) {
+            document.getElementById('email').value = 'visitante@lumina.com';
+            document.getElementById('senha').value = '@@@@@';
+        }
+    }
+}
+
+// Função para fazer login
+async function fazerLogin(email, senha) {
+    try {
+        const services = await window.servicesLoader.loadServices();
+        const authService = services.auth;
+
+        await authService.login(email, senha);
+        console.log('✅ Login realizado com sucesso!');
+
+        // Atualiza a UI
+        updateUIForAuthenticatedUser();
+
+        // Navega para a home
+        navigateToPage('home');
+
+    } catch (error) {
+        console.error('❌ Erro no login:', error);
+        alert('Erro no login: ' + error.message);
+    }
+}
+
+// Função para registrar usuário
+async function registrarUsuario(nome, email, senha) {
+    try {
+        const response = await fetch('http://localhost:8081/usuario/salvar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nome: nome,
+                email: email,
+                senha: senha,
+                tpUsuario: "VISITANTE"
+            })
+        });
+
+        if (response.status === 201) {
+            alert('Conta criada com sucesso! Faça login para continuar.');
+
+            // Volta para o formulário de login
+            document.getElementById('register-form').style.display = 'none';
+            document.querySelector('.back-to-login').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.querySelector('.login-options').style.display = 'block';
+
+            // Preenche o email no formulário de login
+            document.getElementById('email').value = email;
+
+        } else if (response.status === 409) {
+            alert('Este email já está cadastrado!');
+        } else {
+            throw new Error('Erro ao criar conta');
+        }
+
+    } catch (error) {
+        console.error('❌ Erro no registro:', error);
+        alert('Erro ao criar conta: ' + error.message);
+    }
+}
 
 function navigateToPage(pageId) {
     // Hide all pages
@@ -108,10 +242,19 @@ function navigateToPage(pageId) {
     }
 }
 
-function scrollToContact() {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
+// Função para atualizar a UI quando o usuário está autenticado
+function updateUIForAuthenticatedUser() {
+    try {
+        const authService = window.servicesLoader.getService('auth');
+        if (authService && authService.isAuthenticated()) {
+            const usuario = authService.getUsuario();
+            console.log('👤 Usuário autenticado:', usuario);
+
+            // Você pode adicionar lógica aqui para atualizar a interface
+            // Por exemplo, mostrar o nome do usuário no header
+        }
+    } catch (error) {
+        console.log('Erro ao atualizar UI:', error);
     }
 }
 
@@ -396,7 +539,7 @@ async function initializeCalendar() {
                 let situacaoClass = 'situacao-';
                 let situacaoText = '';
 
-                switch (event.situacao) {
+                switch(event.situacao) {
                     case 'AGENDADO':
                         situacaoClass += 'agendado';
                         situacaoText = 'Agendado';

@@ -708,6 +708,59 @@ section {
     background-color: #c2185b;
 }
 
+/* Estilos para os botões de opções de login */
+.login-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--primary-pink);
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+    padding: 5px;
+    transition: color 0.3s;
+}
+
+.btn-link:hover {
+    color: #c2185b;
+}
+
+.back-to-login {
+    margin: 15px 0;
+    text-align: center;
+}
+
+/* Estilos para o formulário de registro */
+#register-form .form-group {
+    margin-bottom: 15px;
+}
+
+#register-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+#register-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Auto-preenchimento das credenciais do visitante */
+#login-form input {
+    background-color: #f9f9f9;
+}
+
 .social-icons {
     margin-top: 20px;
 }
@@ -1385,6 +1438,12 @@ section {
     .outro-arquivo-item {
         padding: 12px 15px;
     }
+
+    /* Login responsivo */
+    .login-box {
+        width: 90%;
+        margin: 0 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1418,5 +1477,13 @@ section {
 
     .arquivo-tamanho {
         margin-left: 0;
+    }
+
+    .login-options {
+        gap: 8px;
+    }
+
+    .btn-link {
+        font-size: 13px;
     }
 }
