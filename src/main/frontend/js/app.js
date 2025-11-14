@@ -579,6 +579,17 @@ class LuminaApp {
                             <label for="agendamentoObservacao">Observações</label>
                             <textarea id="agendamentoObservacao" rows="3" placeholder="Observações sobre o agendamento..."></textarea>
                         </div>
+                        <div class="form-group full-width">
+                            <div class="file-upload-section">
+                                <label>Arquivos</label>
+                                <div class="file-upload-area" id="agendamentoFileUpload">
+                                    <div class="upload-icon">📎</div>
+                                    <p>Clique para adicionar arquivos ou arraste e solte</p>
+                                    <input type="file" id="agendamentoArquivo" multiple style="display: none;">
+                                    <div class="file-preview" id="agendamentoFilePreview"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-actions">
                         <button type="submit" class="btn-primary">Salvar</button>
@@ -589,6 +600,9 @@ class LuminaApp {
             this.showModal('Novo Agendamento', content);
 
             document.getElementById('agendamentoForm').addEventListener('submit', (e) => this.salvarAgendamento(e));
+
+            // Configurar upload de arquivos
+            this.setupFileUpload('agendamentoFileUpload', 'agendamentoArquivo', 'agendamentoFilePreview');
         } catch (error) {
             console.error('Erro ao carregar pacientes:', error);
             Utils.showNotification('Erro ao carregar lista de pacientes', 'error');
@@ -633,14 +647,26 @@ class LuminaApp {
 
             await this.dashboardService.atualizarDashboard();
 
-            // Pergunta se deseja adicionar arquivo
-            if (confirm('Deseja adicionar um arquivo a este agendamento?')) {
-                this.hideModal();
-                this.adicionarArquivoAgendamento(agendamentoSalvo.id);
-            } else {
-                this.hideModal();
-                this.router.loadAgendamentosData();
+            // Upload de arquivos se houver
+            const fileInput = document.getElementById('agendamentoArquivo');
+            if (fileInput && fileInput.files.length > 0) {
+                Utils.showNotification(`Enviando ${fileInput.files.length} arquivo(s)...`, 'success');
+
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    try {
+                        await this.arquivoService.uploadArquivo(fileInput.files[i], agendamentoSalvo.id, 'AGENDAMENTO');
+                    } catch (error) {
+                        console.error(`Erro ao enviar arquivo ${i + 1}:`, error);
+                        Utils.showNotification(`Erro ao enviar arquivo ${fileInput.files[i].name}`, 'error');
+                    }
+                }
+
+                Utils.showNotification('Arquivos adicionados com sucesso!', 'success');
             }
+
+            this.hideModal();
+            this.router.loadAgendamentosData();
+
         } catch (error) {
             console.error('Erro ao salvar agendamento:', error);
             Utils.showNotification('Erro ao salvar agendamento: ' + error.message, 'error');
@@ -823,6 +849,17 @@ class LuminaApp {
                     <label for="eventoDescricao">Descrição *</label>
                     <textarea id="eventoDescricao" rows="3" placeholder="Descrição do evento..." required></textarea>
                 </div>
+                <div class="form-group full-width">
+                    <div class="file-upload-section">
+                        <label>Arquivos</label>
+                        <div class="file-upload-area" id="eventoFileUpload">
+                            <div class="upload-icon">📎</div>
+                            <p>Clique para adicionar arquivos ou arraste e solte</p>
+                            <input type="file" id="eventoArquivo" multiple style="display: none;">
+                            <div class="file-preview" id="eventoFilePreview"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-actions">
                 <button type="submit" class="btn-primary">Salvar</button>
@@ -833,6 +870,9 @@ class LuminaApp {
         this.showModal('Novo Evento', content);
 
         document.getElementById('eventoForm').addEventListener('submit', (e) => this.salvarEvento(e));
+
+        // Configurar upload de arquivos
+        this.setupFileUpload('eventoFileUpload', 'eventoArquivo', 'eventoFilePreview');
     }
 
     async salvarEvento(event) {
@@ -858,14 +898,26 @@ class LuminaApp {
 
             await this.dashboardService.atualizarDashboard();
 
-            // Pergunta se deseja adicionar arquivo
-            if (confirm('Deseja adicionar um arquivo a este evento?')) {
-                this.hideModal();
-                this.adicionarArquivoEvento(eventoSalvo.id);
-            } else {
-                this.hideModal();
-                this.router.loadEventosData();
+            // Upload de arquivos se houver
+            const fileInput = document.getElementById('eventoArquivo');
+            if (fileInput && fileInput.files.length > 0) {
+                Utils.showNotification(`Enviando ${fileInput.files.length} arquivo(s)...`, 'success');
+
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    try {
+                        await this.arquivoService.uploadArquivo(fileInput.files[i], eventoSalvo.id, 'EVENTO');
+                    } catch (error) {
+                        console.error(`Erro ao enviar arquivo ${i + 1}:`, error);
+                        Utils.showNotification(`Erro ao enviar arquivo ${fileInput.files[i].name}`, 'error');
+                    }
+                }
+
+                Utils.showNotification('Arquivos adicionados com sucesso!', 'success');
             }
+
+            this.hideModal();
+            this.router.loadEventosData();
+
         } catch (error) {
             console.error('Erro ao salvar evento:', error);
             Utils.showNotification('Erro ao salvar evento: ' + error.message, 'error');
@@ -1007,6 +1059,92 @@ class LuminaApp {
             console.error('Erro ao carregar arquivos:', error);
             Utils.showNotification('Erro ao carregar arquivos: ' + error.message, 'error');
         }
+    }
+
+    // ========== FUNÇÕES PARA UPLOAD DE ARQUIVOS ==========
+    setupFileUpload(uploadAreaId, fileInputId, previewAreaId) {
+        const uploadArea = document.getElementById(uploadAreaId);
+        const fileInput = document.getElementById(fileInputId);
+        const previewArea = document.getElementById(previewAreaId);
+
+        if (!uploadArea || !fileInput) return;
+
+        // Clique na área de upload
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Arrastar e soltar
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                this.updateFilePreview(fileInput, previewArea);
+            }
+        });
+
+        // Mudança no input de arquivo
+        fileInput.addEventListener('change', () => {
+            this.updateFilePreview(fileInput, previewArea);
+        });
+    }
+
+    updateFilePreview(fileInput, previewArea) {
+        if (!previewArea) return;
+
+        previewArea.innerHTML = '';
+
+        if (fileInput.files.length > 0) {
+            Array.from(fileInput.files).forEach((file, index) => {
+                const fileElement = document.createElement('div');
+                fileElement.className = 'file-item';
+                fileElement.innerHTML = `
+                    <span class="file-name">${file.name}</span>
+                    <span class="file-size">(${this.formatFileSize(file.size)})</span>
+                    <button type="button" class="btn-remove-file" data-index="${index}">×</button>
+                `;
+                previewArea.appendChild(fileElement);
+            });
+
+            // Adicionar event listeners para remover arquivos
+            previewArea.querySelectorAll('.btn-remove-file').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const index = parseInt(btn.getAttribute('data-index'));
+                    this.removeFileFromInput(fileInput, index);
+                    this.updateFilePreview(fileInput, previewArea);
+                });
+            });
+        }
+    }
+
+    removeFileFromInput(fileInput, index) {
+        const files = Array.from(fileInput.files);
+        files.splice(index, 1);
+
+        // Criar novo DataTransfer para atualizar os arquivos
+        const dataTransfer = new DataTransfer();
+        files.forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
+    }
+
+    formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
     // ========== ARQUIVOS - FUNÇÕES GERAIS ==========

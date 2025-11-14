@@ -1610,6 +1610,103 @@ tbody tr:last-child td {
     box-shadow: 0 8px 25px var(--shadow-primary);
 }
 
+/* ===== ESTILOS PARA UPLOAD DE ARQUIVOS ===== */
+.file-upload-section {
+    margin-top: 1rem;
+}
+
+.file-upload-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.file-upload-area {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--bg-secondary);
+    position: relative;
+}
+
+.file-upload-area:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-very-light);
+}
+
+.file-upload-area.drag-over {
+    border-color: var(--primary-color);
+    background: var(--primary-very-light);
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.file-upload-area p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.file-preview {
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.file-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 0.5rem;
+}
+
+.file-size {
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+.btn-remove-file {
+    background: var(--error-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: var(--transition);
+}
+
+.btn-remove-file:hover {
+    background: #DC2626;
+    transform: scale(1.1);
+}
+
 /* ===== NOTIFICAÇÕES ===== */
 .notification {
     position: fixed;
