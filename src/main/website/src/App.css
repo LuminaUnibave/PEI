@@ -1,38 +1,214 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.site-shell {
   min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background:
+    radial-gradient(circle at top left, rgba(194, 24, 91, 0.1), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 152, 0, 0.08), transparent 25%),
+    #fffaf7;
+}
+
+.site-header,
+.site-footer,
+.site-nav,
+.hero-actions {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-header,
+.site-footer,
+.hero,
+.page-block,
+.grid-section {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header,
+.site-footer {
+  justify-content: space-between;
+  padding: 1.2rem 0;
+}
+
+.brand,
+.hero-card,
+.info-card,
+.agenda-card,
+.timeline-item,
+.notice {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(73, 45, 90, 0.08);
+}
+
+.brand {
+  padding: 0.9rem 1.1rem;
+  display: grid;
+}
+
+.badge,
+.eyebrow,
+.chip {
+  display: inline-flex;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.badge,
+.chip {
+  background: #fde4ee;
+  color: #a41d54;
+}
+
+.eyebrow {
+  padding-left: 0;
+  color: #8f7297;
+}
+
+.site-nav a {
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  color: #5e4967;
+  text-decoration: none;
+}
+
+.site-nav a.active,
+.site-nav a:hover {
+  background: #f6e6ef;
+  color: #a41d54;
+}
+
+.site-main {
+  padding-bottom: 3rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.4fr .9fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 3rem 0 2rem;
+}
+
+.hero h1,
+.page-block h1 {
+  font-size: clamp(2rem, 3.6vw, 4rem);
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+
+.hero p,
+.info-card p,
+.agenda-card p,
+.timeline-item p,
+.page-block p,
+.site-footer span {
+  color: #6d5a76;
+  line-height: 1.7;
+}
+
+.hero-card,
+.info-card,
+.agenda-card,
+.timeline-item,
+.notice {
+  padding: 1.4rem;
+}
+
+.grid-section,
+.agenda-grid,
+.reading-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.cta-card {
+  display: grid;
+  align-content: space-between;
+  gap: 1rem;
+}
+
+.map-card {
+  min-height: 220px;
+}
+
+.map-placeholder {
+  min-height: 140px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #f8dfe9, #f5edf4);
+  color: #a41d54;
+  font-weight: 700;
+}
+
+.page-block {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.timeline {
+  display: grid;
+  gap: 1rem;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.timeline-item span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #c2185b;
+}
+
+.primary-btn,
+.secondary-btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border-radius: 999px;
+  padding: 0.9rem 1.25rem;
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+.primary-btn {
+  background: linear-gradient(135deg, #c2185b, #ef6c8f);
+  color: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.secondary-btn {
+  background: #f5edf4;
+  color: #71446d;
+}
+
+.notice.warning {
+  background: #fff0d9;
+}
+
+@media (max-width: 900px) {
+  .site-header,
+  .site-footer,
+  .hero {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  to {
-    transform: rotate(360deg);
+
+  .site-nav {
+    flex-wrap: wrap;
   }
 }
