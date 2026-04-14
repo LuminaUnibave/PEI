@@ -69,3 +69,25 @@ src/main/frontend/.env.production.local
 src/main/frontend/npm-debug.log*
 src/main/frontend/yarn-debug.log*
 src/main/frontend/yarn-error.log*
+
+# dependencies
+src/main/website/node_modules
+src/main/website//.pnp
+src/main/website/.pnp.js
+
+# testing
+src/main/website//coverage
+
+# production
+src/main/website//build
+
+# misc
+src/main/website/.DS_Store
+src/main/website/.env.local
+src/main/website/.env.development.local
+src/main/website/.env.test.local
+src/main/website/.env.production.local
+
+src/main/website/npm-debug.log*
+src/main/website/yarn-debug.log*
+src/main/website/yarn-error.log*
