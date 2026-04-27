@@ -1,0 +1,2 @@
+para que os modals funcionem corretamente, ainda é necessário fazer a validação a partir de auth
+desenvolver máscaras de formatação
