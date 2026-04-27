@@ -24,8 +24,7 @@ public class EventoRequisicaoDTO {
     private String nmEvento;
 
     @Schema(description = "Descrição do Evento", example = "Descrição do evento")
-    @NotBlank
-    @NotNull
+    // A descrição pode ser opcional, então não é anotada com @NotNull ou @NotBlank
     private String descricao;
 
     @Schema(description = "Id do usuário cadastrante", example = "1")
