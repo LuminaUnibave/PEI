@@ -1,0 +1,1 @@
+export { AgendamentosFeature } from './AgendamentosFeature';

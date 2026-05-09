@@ -1,0 +1,1 @@
+export { PacientesFeature } from './PacientesFeature';
