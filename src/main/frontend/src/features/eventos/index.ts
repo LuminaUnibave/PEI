@@ -1,0 +1,1 @@
+export { EventosFeature } from './EventosFeature';

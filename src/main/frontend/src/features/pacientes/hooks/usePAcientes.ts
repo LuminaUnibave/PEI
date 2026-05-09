@@ -9,6 +9,7 @@ import {
   deletePaciente,
   fetchPacientes,
 } from '../../../core/api';
+import { useFeatureModal } from '../../shared/useFeatureModal';
 
 type UsePacientesParams = {
   onToast: (tone: ToastTone, text: string) => void;
@@ -17,9 +18,13 @@ type UsePacientesParams = {
 export function usePacientes({ onToast }: UsePacientesParams) {
   const [pacientes, setPacientes] = useState<PacienteRespostaDTO[]>([]);
   const [carregando, setCarregando] = useState(false);
-  const [modalAberto, setModalAberto] = useState(false);
-  const [pacienteSelecionado, setPacienteSelecionado] =
-    useState<PacienteRespostaDTO | null>(null);
+  const {
+    modalAberto,
+    itemSelecionado: pacienteSelecionado,
+    abrirCadastro,
+    abrirEdicao,
+    fecharModal,
+  } = useFeatureModal<PacienteRespostaDTO>();
 
   const carregarPacientes = useCallback(async () => {
     try {
@@ -39,21 +44,6 @@ export function usePacientes({ onToast }: UsePacientesParams) {
   useEffect(() => {
     carregarPacientes();
   }, [carregarPacientes]);
-
-  function abrirCadastro() {
-    setPacienteSelecionado(null);
-    setModalAberto(true);
-  }
-
-  function abrirEdicao(paciente: PacienteRespostaDTO) {
-    setPacienteSelecionado(paciente);
-    setModalAberto(true);
-  }
-
-  function fecharModal() {
-    setModalAberto(false);
-    setPacienteSelecionado(null);
-  }
 
   async function salvarPaciente(payload: PacientePayload) {
     try {

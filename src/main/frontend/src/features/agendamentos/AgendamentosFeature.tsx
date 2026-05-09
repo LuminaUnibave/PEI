@@ -1,26 +1,27 @@
 import { ToastTone } from '../../core/types';
 import { useAuth } from '../../core/auth';
-import { EventoModal } from './components/EventoModal';
-import { EventosTable } from './components/EventosTable';
-import { useEventos } from './hooks/useEventos';
+import { AgendamentoModal } from './components/AgendamentoModal';
+import { AgendamentosTable } from './components/AgendamentosTable';
+import { useAgendamentos } from './hooks/useAgendamentos';
 
-type EventosFeatureProps = {
+type AgendamentosFeatureProps = {
   onToast: (tone: ToastTone, text: string) => void;
 };
 
-export function EventosFeature({ onToast }: EventosFeatureProps) {
+export function AgendamentosFeature({ onToast }: AgendamentosFeatureProps) {
   const { user } = useAuth();
   const {
-    eventos,
+    agendamentos,
+    pacientes,
     carregando,
     modalAberto,
-    eventoSelecionado,
+    agendamentoSelecionado,
     abrirCadastro,
     abrirEdicao,
     fecharModal,
-    salvarEvento,
-    excluirEvento,
-  } = useEventos({ onToast });
+    salvarAgendamento,
+    excluirAgendamento,
+  } = useAgendamentos({ onToast });
 
   if (!user) {
     return <p>Usuario nao autenticado.</p>;
@@ -30,30 +31,31 @@ export function EventosFeature({ onToast }: EventosFeatureProps) {
     <section className="page-section">
       <div className="page-header">
         <div>
-          <h1>Eventos</h1>
-          <p>Gerencie os eventos cadastrados no sistema.</p>
+          <h1>Agendamentos</h1>
+          <p>Gerencie os agendamentos cadastrados no sistema.</p>
         </div>
 
         <button className="primary-btn" type="button" onClick={abrirCadastro}>
-          Novo evento
+          Novo agendamento
         </button>
       </div>
 
       <div className="content-card">
-        <EventosTable
-          eventos={eventos}
+        <AgendamentosTable
+          agendamentos={agendamentos}
           carregando={carregando}
           onEditar={abrirEdicao}
-          onExcluir={excluirEvento}
+          onExcluir={excluirAgendamento}
         />
       </div>
 
-      <EventoModal
+      <AgendamentoModal
         idUsuario={user.id}
-        initial={eventoSelecionado}
+        initial={agendamentoSelecionado}
         isOpen={modalAberto}
+        pacientes={pacientes}
         onClose={fecharModal}
-        onSave={salvarEvento}
+        onSave={salvarAgendamento}
       />
     </section>
   );
