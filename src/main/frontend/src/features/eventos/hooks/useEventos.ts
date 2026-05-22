@@ -1,79 +1,38 @@
-import { useCallback, useEffect, useState } from 'react';
 import { EventoPayload, EventoRespostaDTO, ToastTone } from '../../../core/types';
 import { deleteEvento, fetchEventos, saveEvento } from '../../../core/api';
-import { useFeatureModal } from '../../shared/useFeatureModal';
+import { useCrudFeature } from '../../../hooks/useCrudFeature';
 
 type UseEventosParams = {
   onToast: (tone: ToastTone, text: string) => void;
 };
 
 export function useEventos({ onToast }: UseEventosParams) {
-  const [eventos, setEventos] = useState<EventoRespostaDTO[]>([]);
-  const [carregando, setCarregando] = useState(false);
-  const {
-    modalAberto,
-    itemSelecionado: eventoSelecionado,
-    abrirCadastro,
-    abrirEdicao,
-    fecharModal,
-  } = useFeatureModal<EventoRespostaDTO>();
-
-  const carregarEventos = useCallback(async () => {
-    try {
-      setCarregando(true);
-      const resposta = await fetchEventos();
-      setEventos(resposta);
-    } catch (error) {
-      console.error(error);
-      onToast('error', 'Erro ao carregar eventos.');
-    } finally {
-      setCarregando(false);
-    }
-  }, [onToast]);
-
-  useEffect(() => {
-    carregarEventos();
-  }, [carregarEventos]);
-
-  async function salvarEvento(payload: EventoPayload) {
-    try {
-      await saveEvento(payload);
-      onToast(
-        'success',
+  const crud = useCrudFeature<EventoRespostaDTO, EventoPayload>({
+    loadItems: fetchEventos,
+    saveItem: saveEvento,
+    deleteItem: deleteEvento,
+    onToast,
+    messages: {
+      loadError: 'Erro ao carregar eventos.',
+      saveError: 'Erro ao salvar evento.',
+      deleteError: 'Erro ao excluir evento.',
+      deleteSuccess: 'Evento excluido com sucesso.',
+      deleteConfirm: 'Tem certeza que deseja excluir este evento?',
+      saveSuccess: (payload) =>
         payload.id ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.',
-      );
-      fecharModal();
-      await carregarEventos();
-    } catch (error) {
-      console.error(error);
-      onToast('error', 'Erro ao salvar evento.');
-    }
-  }
-
-  async function excluirEvento(id: number) {
-    const confirmou = window.confirm('Tem certeza que deseja excluir este evento?');
-    if (!confirmou) return;
-
-    try {
-      await deleteEvento(id);
-      onToast('success', 'Evento excluido com sucesso.');
-      await carregarEventos();
-    } catch (error) {
-      console.error(error);
-      onToast('error', 'Erro ao excluir evento.');
-    }
-  }
+    },
+  });
 
   return {
-    eventos,
-    carregando,
-    modalAberto,
-    eventoSelecionado,
-    carregarEventos,
-    abrirCadastro,
-    abrirEdicao,
-    fecharModal,
-    salvarEvento,
-    excluirEvento,
+    eventos: crud.items,
+    carregando: crud.carregando,
+    modalAberto: crud.modalAberto,
+    eventoSelecionado: crud.itemSelecionado,
+    carregarEventos: crud.carregarItens,
+    abrirCadastro: crud.abrirCadastro,
+    abrirEdicao: crud.abrirEdicao,
+    fecharModal: crud.fecharModal,
+    salvarEvento: crud.salvar,
+    excluirEvento: crud.excluir,
   };
 }
