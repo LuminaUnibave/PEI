@@ -1,95 +1,38 @@
-import { useCallback, useEffect, useState } from 'react';
-import {
-  PacientePayload,
-  PacienteRespostaDTO,
-  ToastTone,
-} from '../../../core/types';
-import {
-  savePaciente,
-  deletePaciente,
-  fetchPacientes,
-} from '../../../core/api';
-import { useFeatureModal } from '../../shared/useFeatureModal';
+import { deletePaciente, fetchPacientes, savePaciente } from '../../../core/api';
+import { PacientePayload, PacienteRespostaDTO, ToastTone } from '../../../core/types';
+import { useCrudFeature } from '../../../hooks/useCrudFeature';
 
 type UsePacientesParams = {
   onToast: (tone: ToastTone, text: string) => void;
 };
 
 export function usePacientes({ onToast }: UsePacientesParams) {
-  const [pacientes, setPacientes] = useState<PacienteRespostaDTO[]>([]);
-  const [carregando, setCarregando] = useState(false);
-  const {
-    modalAberto,
-    itemSelecionado: pacienteSelecionado,
-    abrirCadastro,
-    abrirEdicao,
-    fecharModal,
-  } = useFeatureModal<PacienteRespostaDTO>();
-
-  const carregarPacientes = useCallback(async () => {
-    try {
-      setCarregando(true);
-
-      const resposta = await fetchPacientes();
-
-      setPacientes(resposta);
-    } catch (error) {
-      console.error(error);
-      onToast('error', 'Erro ao carregar pacientes.');
-    } finally {
-      setCarregando(false);
-    }
-  }, [onToast]);
-
-  useEffect(() => {
-    carregarPacientes();
-  }, [carregarPacientes]);
-
-  async function salvarPaciente(payload: PacientePayload) {
-    try {
-      if (payload.id) {
-        await savePaciente(payload);
-        onToast('success', 'Paciente atualizado com sucesso.');
-      } else {
-        await savePaciente(payload);
-        onToast('success', 'Paciente cadastrado com sucesso.');
-      }
-
-      fecharModal();
-      await carregarPacientes();
-    } catch (error) {
-      console.error(error);
-      onToast('error', 'Erro ao salvar paciente.');
-    }
-  }
-
-  async function excluirPaciente(id: number) {
-    const confirmou = window.confirm(
-      'Tem certeza que deseja excluir este paciente?',
-    );
-
-    if (!confirmou) return;
-
-    try {
-      await deletePaciente(id);
-      onToast('success', 'Paciente excluído com sucesso.');
-      await carregarPacientes();
-    } catch (error) {
-      console.error(error);
-      onToast('error', 'Erro ao excluir paciente.');
-    }
-  }
+  const crud = useCrudFeature<PacienteRespostaDTO, PacientePayload>({
+    loadItems: fetchPacientes,
+    saveItem: savePaciente,
+    deleteItem: deletePaciente,
+    onToast,
+    messages: {
+      loadError: 'Erro ao carregar pacientes.',
+      saveError: 'Erro ao salvar paciente.',
+      deleteError: 'Erro ao excluir paciente.',
+      deleteSuccess: 'Paciente excluido com sucesso.',
+      deleteConfirm: 'Tem certeza que deseja excluir este paciente?',
+      saveSuccess: (payload) =>
+        payload.id ? 'Paciente atualizado com sucesso.' : 'Paciente cadastrado com sucesso.',
+    },
+  });
 
   return {
-    pacientes,
-    carregando,
-    modalAberto,
-    pacienteSelecionado,
-    carregarPacientes,
-    abrirCadastro,
-    abrirEdicao,
-    fecharModal,
-    salvarPaciente,
-    excluirPaciente,
+    pacientes: crud.items,
+    carregando: crud.carregando,
+    modalAberto: crud.modalAberto,
+    pacienteSelecionado: crud.itemSelecionado,
+    carregarPacientes: crud.carregarItens,
+    abrirCadastro: crud.abrirCadastro,
+    abrirEdicao: crud.abrirEdicao,
+    fecharModal: crud.fecharModal,
+    salvarPaciente: crud.salvar,
+    excluirPaciente: crud.excluir,
   };
 }
