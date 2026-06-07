@@ -1,31 +1,42 @@
 import { useEffect, useState } from 'react';
 import { fetchDashboardCounts } from '../core/api';
+import { useAuth } from '../core/auth';
 import { DashboardCounts, ToastTone } from '../core/types';
 
-export function DashboardPage({ onToast }: { onToast: (tone: ToastTone, text: string) => void }) {
+type DashboardPageProps = {
+  onToast: (tone: ToastTone, text: string) => void;
+};
+
+const CARDS: Array<{ key: keyof DashboardCounts; label: string }> = [
+  { key: 'pacientes', label: 'Pacientes' },
+  { key: 'agendamentos', label: 'Agendamentos' },
+  { key: 'eventos', label: 'Eventos' },
+  { key: 'usuarios', label: 'Usuários' },
+];
+
+export function DashboardPage({ onToast }: DashboardPageProps) {
+  const { user } = useAuth();
   const [counts, setCounts] = useState<DashboardCounts | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
-    let mounted = true;
+    let cancelado = false;
 
-    fetchDashboardCounts()
-      .then((data) => {
-        if (mounted) {
-          setCounts(data);
-        }
-      })
-      .catch(() => {
-        onToast('error', 'Não foi possível carregar os dados do dashboard.');
-      })
-      .finally(() => {
-        if (mounted) {
-          setLoading(false);
-        }
-      });
+    (async () => {
+      try {
+        setCarregando(true);
+        const resposta = await fetchDashboardCounts();
+        if (!cancelado) setCounts(resposta);
+      } catch (error) {
+        console.error(error);
+        if (!cancelado) onToast('error', 'Erro ao carregar indicadores.');
+      } finally {
+        if (!cancelado) setCarregando(false);
+      }
+    })();
 
     return () => {
-      mounted = false;
+      cancelado = true;
     };
   }, [onToast]);
 
@@ -33,37 +44,24 @@ export function DashboardPage({ onToast }: { onToast: (tone: ToastTone, text: st
     <section className="page-section">
       <div className="page-header">
         <div>
-          <h1>Dashboard</h1>
-          <p>Visão geral rápida do sistema Lumina.</p>
+          <span className="brand-kicker">Visão geral</span>
+          <h1>Olá, {user?.nome ?? 'usuário'}</h1>
+          <p className="lead small">Indicadores atuais do sistema Lumina.</p>
         </div>
       </div>
 
-      <div className="dashboard-grid">
-        {loading ? (
-          <p>Carregando dados...</p>
-        ) : counts ? (
-          <>
-            <div className="dashboard-card">
-              <strong>{counts.pacientes}</strong>
-              <span>Pacientes</span>
+      {carregando ? (
+        <div className="loading-card">Carregando indicadores...</div>
+      ) : (
+        <div className="stats-grid">
+          {CARDS.map((card) => (
+            <div className="stat-card" key={card.key}>
+              <span className="eyebrow">{card.label}</span>
+              <strong>{counts?.[card.key] ?? 0}</strong>
             </div>
-            <div className="dashboard-card">
-              <strong>{counts.agendamentos}</strong>
-              <span>Agendamentos</span>
-            </div>
-            <div className="dashboard-card">
-              <strong>{counts.eventos}</strong>
-              <span>Eventos</span>
-            </div>
-            <div className="dashboard-card">
-              <strong>{counts.usuarios}</strong>
-              <span>Usuários</span>
-            </div>
-          </>
-        ) : (
-          <p>Não há dados disponíveis no momento.</p>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -1,6 +1,10 @@
-import { PacientesFeature } from '../features/pacientes';
 import { ToastTone } from '../core/types';
+import { PacientesFeature } from '../features/pacientes';
 
-export function PacientesPage({ onToast }: { onToast: (tone: ToastTone, text: string) => void }) {
+type PacientesPageProps = {
+  onToast: (tone: ToastTone, text: string) => void;
+};
+
+export function PacientesPage({ onToast }: PacientesPageProps) {
   return <PacientesFeature onToast={onToast} />;
 }

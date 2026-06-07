@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AdminLayout } from '../layouts/AdminLayout';
 import { ProtectedRoute } from '../layouts/ProtectedRoute';
-import { AgendamentosPage, DashboardPage, EventosPage, LoginPage, PacientesPage, RelatoriosPage, UsuariosPage } from '../pages';
 import { ToastTone } from '../core/types';
+import { AgendamentosPage, DashboardPage, EventosPage, LoginPage, PacientesPage, RelatoriosPage, UsuariosPage } from '../pages';
 
 export function AppRoutes({ onToast }: { onToast: (tone: ToastTone, text: string) => void }) {
   return (

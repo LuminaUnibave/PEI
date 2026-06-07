@@ -1,35 +1,59 @@
+import { useState } from 'react';
 import { downloadRelatorio } from '../core/api';
 import { ToastTone } from '../core/types';
 
-export function RelatoriosPage({ onToast }: { onToast: (tone: ToastTone, text: string) => void }) {
-  const handleDownload = async (tipo: 'pacientes' | 'agendamentos' | 'eventos') => {
+type RelatoriosPageProps = {
+  onToast: (tone: ToastTone, text: string) => void;
+};
+
+type TipoRelatorio = 'pacientes' | 'agendamentos' | 'eventos';
+
+const RELATORIOS: Array<{ tipo: TipoRelatorio; titulo: string; descricao: string }> = [
+  { tipo: 'pacientes', titulo: 'Pacientes', descricao: 'Lista completa de pacientes cadastrados.' },
+  { tipo: 'agendamentos', titulo: 'Agendamentos', descricao: 'Histórico de agendamentos do sistema.' },
+  { tipo: 'eventos', titulo: 'Eventos', descricao: 'Eventos registrados no Lumina.' },
+];
+
+export function RelatoriosPage({ onToast }: RelatoriosPageProps) {
+  const [baixando, setBaixando] = useState<TipoRelatorio | null>(null);
+
+  async function baixar(tipo: TipoRelatorio) {
     try {
+      setBaixando(tipo);
       await downloadRelatorio(tipo);
-      onToast('success', `Relatório de ${tipo} baixado com sucesso.`);
+      onToast('success', 'Relatório baixado com sucesso.');
     } catch (error) {
+      console.error(error);
       onToast('error', `Falha ao baixar relatório de ${tipo}.`);
+    } finally {
+      setBaixando(null);
     }
-  };
+  }
 
   return (
     <section className="page-section">
       <div className="page-header">
         <div>
           <h1>Relatórios</h1>
-          <p>Baixe relatórios gerenciais do sistema.</p>
+          <p className="lead small">Exporte os dados do sistema em formato de relatório.</p>
         </div>
       </div>
 
-      <div className="content-card report-actions">
-        <button className="primary-btn" type="button" onClick={() => handleDownload('pacientes')}>
-          Pacientes
-        </button>
-        <button className="primary-btn" type="button" onClick={() => handleDownload('agendamentos')}>
-          Agendamentos
-        </button>
-        <button className="primary-btn" type="button" onClick={() => handleDownload('eventos')}>
-          Eventos
-        </button>
+      <div className="report-grid">
+        {RELATORIOS.map((item) => (
+          <div className="report-card" key={item.tipo}>
+            <span className="eyebrow">{item.titulo}</span>
+            <p>{item.descricao}</p>
+            <button
+              className="primary-btn"
+              disabled={baixando === item.tipo}
+              onClick={() => baixar(item.tipo)}
+              type="button"
+            >
+              {baixando === item.tipo ? 'Gerando...' : 'Baixar relatório'}
+            </button>
+          </div>
+        ))}
       </div>
     </section>
   );

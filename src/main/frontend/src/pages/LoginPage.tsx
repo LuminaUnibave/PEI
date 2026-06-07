@@ -1,68 +1,80 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../core/auth';
 import { ToastTone } from '../core/types';
 
-export function LoginPage({ onToast }: { onToast: (tone: ToastTone, text: string) => void }) {
+type LoginPageProps = {
+  onToast: (tone: ToastTone, text: string) => void;
+};
+
+type LocationState = { from?: string } | null;
+
+export function LoginPage({ onToast }: LoginPageProps) {
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [enviando, setEnviando] = useState(false);
 
-  const from = (location.state as { from?: string } | null)?.from ?? '/admin';
+  const destino = (location.state as LocationState)?.from ?? '/admin';
 
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      navigate('/admin');
-    }
-  }, [auth.isAuthenticated, navigate]);
-
-  const handleSubmit = async (event: FormEvent) => {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoading(true);
-    try {
-      await auth.login(email, senha);
-      onToast('success', 'Login realizado com sucesso');
-      navigate(from, { replace: true });
-    } catch (error) {
-      onToast('error', 'Falha ao autenticar. Verifique e-mail e senha.');
-    } finally {
-      setLoading(false);
+    if (!email || !senha) {
+      onToast('warning', 'Informe email e senha.');
+      return;
     }
-  };
+
+    try {
+      setEnviando(true);
+      await auth.login(email, senha);
+      onToast('success', 'Login realizado com sucesso.');
+      navigate(destino, { replace: true });
+    } catch (error) {
+      console.error(error);
+      onToast('error', 'Falha no login. Verifique suas credenciais.');
+    } finally {
+      setEnviando(false);
+    }
+  }
 
   return (
-    <section className="page-section login-page">
-      <div className="content-card login-card">
-        <h1>Entrar</h1>
-        <form onSubmit={handleSubmit}>
+    <div className="login-shell">
+      <form className="login-card" onSubmit={handleSubmit}>
+        <header>
+          <span className="brand-kicker">Lumina</span>
+          <h1>Acessar painel</h1>
+          <p className="lead small">Entre com sua conta para gerenciar o sistema.</p>
+        </header>
+
+        <div className="stack-form">
           <label>
-            E-mail
+            Email
             <input
-              type="email"
-              value={email}
+              autoComplete="email"
               onChange={(event) => setEmail(event.target.value)}
               required
-              disabled={loading}
+              type="email"
+              value={email}
             />
           </label>
           <label>
             Senha
             <input
-              type="password"
-              value={senha}
+              autoComplete="current-password"
               onChange={(event) => setSenha(event.target.value)}
               required
-              disabled={loading}
+              type="password"
+              value={senha}
             />
           </label>
-          <button className="primary-btn" type="submit" disabled={loading}>
-            {loading ? 'Entrando...' : 'Entrar'}
-          </button>
-        </form>
-      </div>
-    </section>
+        </div>
+
+        <button className="primary-btn" disabled={enviando} type="submit">
+          {enviando ? 'Entrando...' : 'Entrar'}
+        </button>
+      </form>
+    </div>
   );
 }

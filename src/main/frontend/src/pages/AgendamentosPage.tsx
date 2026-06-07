@@ -1,6 +1,10 @@
-import { AgendamentosFeature } from '../features/agendamentos';
 import { ToastTone } from '../core/types';
+import { AgendamentosFeature } from '../features/agendamentos';
 
-export function AgendamentosPage({ onToast }: { onToast: (tone: ToastTone, text: string) => void }) {
+type AgendamentosPageProps = {
+  onToast: (tone: ToastTone, text: string) => void;
+};
+
+export function AgendamentosPage({ onToast }: AgendamentosPageProps) {
   return <AgendamentosFeature onToast={onToast} />;
 }

@@ -1,6 +1,10 @@
-import { EventosFeature } from '../features/eventos';
 import { ToastTone } from '../core/types';
+import { EventosFeature } from '../features/eventos';
 
-export function EventosPage({ onToast }: { onToast: (tone: ToastTone, text: string) => void }) {
+type EventosPageProps = {
+  onToast: (tone: ToastTone, text: string) => void;
+};
+
+export function EventosPage({ onToast }: EventosPageProps) {
   return <EventosFeature onToast={onToast} />;
 }
