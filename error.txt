@@ -1,0 +1,281 @@
+lumina_backend  | 
+lumina_backend  | 
+lumina_backend  |   .   ____          _            __ _ _
+lumina_backend  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+lumina_backend  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+lumina_backend  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+lumina_backend  |   '  |____| .__|_| |_|_| |_\__, | / / / /
+lumina_backend  |  =========|_|==============|___/=/_/_/_/
+lumina_backend  | 
+lumina_backend  |  :: Spring Boot ::                (v3.4.4)
+lumina_backend  | 
+lumina_backend  | 00:04:30.244 [main] INFO  com.unibave.Lumina.LuminaApplication - Starting LuminaApplication v0.0.1-SNAPSHOT using Java 21.0.11 with PID 1 (/app/app.jar started by root in /app)
+lumina_backend  | 00:04:30.275 [main] DEBUG com.unibave.Lumina.LuminaApplication - Running with Spring Boot v3.4.4, Spring v6.2.5
+lumina_backend  | 00:04:30.287 [main] INFO  com.unibave.Lumina.LuminaApplication - No active profile set, falling back to 1 default profile: "default"
+lumina_backend  | 00:04:32.272 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+lumina_backend  | 00:04:32.278 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+lumina_backend  | 00:04:32.431 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+lumina_backend  | 00:04:32.436 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+lumina_backend  | 00:04:32.439 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+lumina_backend  | 00:04:32.446 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+lumina_backend  | 00:04:32.452 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+lumina_backend  | 00:04:32.454 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 145 ms. Found 0 JDBC repository interfaces.
+lumina_backend  | 00:04:32.510 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+lumina_backend  | 00:04:32.513 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+lumina_backend  | 00:04:32.741 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 213 ms. Found 5 JPA repository interfaces.
+lumina_backend  | 00:04:32.751 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+lumina_backend  | 00:04:32.752 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data LDAP repositories in DEFAULT mode.
+lumina_backend  | 00:04:32.764 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.AgendamentoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+lumina_backend  | 00:04:32.767 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.ArquivoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+lumina_backend  | 00:04:32.770 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.EventoRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+lumina_backend  | 00:04:32.771 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.PacienteRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+lumina_backend  | 00:04:32.773 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport - Spring Data LDAP - Could not safely identify store assignment for repository candidate interface com.unibave.Lumina.repository.UsuarioRepository; If you want this repository to be a LDAP repository, consider annotating your entities with one of these annotations: org.springframework.ldap.odm.annotations.Entry (preferred), or consider extending one of the following types with your repository: org.springframework.data.ldap.repository.LdapRepository
+lumina_backend  | 00:04:32.773 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 LDAP repository interfaces.
+lumina_backend  | 00:04:34.378 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+lumina_backend  | 00:04:34.412 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+lumina_backend  | 00:04:34.423 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+lumina_backend  | 00:04:34.426 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+lumina_backend  | 00:04:34.584 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+lumina_backend  | 00:04:34.598 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4167 ms
+lumina_backend  | 00:04:34.838 [main] DEBUG com.unibave.Lumina.model.component.JwtFilter - Filter 'jwtFilter' configured for use
+lumina_backend  | 00:04:35.139 [main] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+lumina_backend  | 00:04:35.249 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+lumina_backend  | 00:04:35.339 [main] INFO  org.hibernate.cache.internal.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+lumina_backend  | 00:04:35.928 [main] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+lumina_backend  | 00:04:36.052 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+lumina_backend  | 00:04:39.435 [main] WARN  org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 0, SQLState: 28P01
+lumina_backend  | 00:04:39.436 [main] ERROR org.hibernate.engine.jdbc.spi.SqlExceptionHelper - FATAL: password authentication failed for user "postgres"
+lumina_backend  | 00:04:39.437 [main] WARN  org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator - HHH000342: Could not obtain connection to query metadata
+lumina_backend  | org.hibernate.exception.GenericJDBCException: unable to obtain isolated JDBC connection [FATAL: password authentication failed for user "postgres"] [n/a]
+lumina_backend  |       at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:63)
+lumina_backend  |       at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+lumina_backend  |       at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
+lumina_backend  |       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:116)
+lumina_backend  |       at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:320)
+lumina_backend  |       at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
+lumina_backend  |       at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
+lumina_backend  |       at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+lumina_backend  |       at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+lumina_backend  |       at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+lumina_backend  |       at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+lumina_backend  |       at org.hibernate.boot.model.relational.Database.<init>(Database.java:45)
+lumina_backend  |       at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:226)
+lumina_backend  |       at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:194)
+lumina_backend  |       at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171)
+lumina_backend  |       at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1442)
+lumina_backend  |       at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1513)
+lumina_backend  |       at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+lumina_backend  |       at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+lumina_backend  |       at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+lumina_backend  |       at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+lumina_backend  |       at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+lumina_backend  |       at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:347)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+lumina_backend  |       at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+lumina_backend  |       at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+lumina_backend  |       at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+lumina_backend  |       at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+lumina_backend  |       at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+lumina_backend  |       at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+lumina_backend  |       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+lumina_backend  |       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+lumina_backend  |       at com.unibave.Lumina.LuminaApplication.main(LuminaApplication.java:12)
+lumina_backend  |       at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+lumina_backend  |       at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+lumina_backend  |       at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+lumina_backend  |       at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+lumina_backend  |       at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+lumina_backend  | Caused by: org.postgresql.util.PSQLException: FATAL: password authentication failed for user "postgres"
+lumina_backend  |       at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:704)
+lumina_backend  |       at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:213)
+lumina_backend  |       at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:268)
+lumina_backend  |       at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54)
+lumina_backend  |       at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:273)
+lumina_backend  |       at org.postgresql.Driver.makeConnection(Driver.java:446)
+lumina_backend  |       at org.postgresql.Driver.connect(Driver.java:298)
+lumina_backend  |       at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137)
+lumina_backend  |       at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360)
+lumina_backend  |       at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202)
+lumina_backend  |       at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461)
+lumina_backend  |       at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550)
+lumina_backend  |       at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98)
+lumina_backend  |       at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+lumina_backend  |       at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:126)
+lumina_backend  |       at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:467)
+lumina_backend  |       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:61)
+lumina_backend  |       ... 40 common frames omitted
+lumina_backend  | 00:04:39.480 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+lumina_backend  | 00:04:39.505 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: Database info:
+lumina_backend  |       Database JDBC URL [Connecting through datasource 'HikariDataSource (null)']
+lumina_backend  |       Database driver: undefined/unknown
+lumina_backend  |       Database version: 12.0
+lumina_backend  |       Autocommit mode: undefined/unknown
+lumina_backend  |       Isolation level: undefined/unknown
+lumina_backend  |       Minimum pool size: undefined/unknown
+lumina_backend  |       Maximum pool size: undefined/unknown
+lumina_backend  | 00:04:40.868 [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+lumina_backend  | 00:04:40.941 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+lumina_backend  | 00:04:43.228 [main] WARN  org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 0, SQLState: 28P01
+lumina_backend  | 00:04:43.228 [main] ERROR org.hibernate.engine.jdbc.spi.SqlExceptionHelper - FATAL: password authentication failed for user "postgres"
+lumina_backend  | 00:04:43.241 [main] ERROR org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [FATAL: password authentication failed for user "postgres"] [n/a]
+lumina_backend  | 00:04:43.247 [main] WARN  org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [FATAL: password authentication failed for user "postgres"] [n/a]
+lumina_backend  | 00:04:43.257 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+lumina_backend  | 00:04:43.287 [main] INFO  org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger - 
+lumina_backend  | 
+lumina_backend  | Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+lumina_backend  | 00:04:43.349 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+lumina_backend  | org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [FATAL: password authentication failed for user "postgres"] [n/a]
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1812)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+lumina_backend  |       at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:347)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+lumina_backend  |       at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+lumina_backend  |       at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+lumina_backend  |       at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+lumina_backend  |       at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+lumina_backend  |       at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+lumina_backend  |       at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+lumina_backend  |       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+lumina_backend  |       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+lumina_backend  |       at com.unibave.Lumina.LuminaApplication.main(LuminaApplication.java:12)
+lumina_backend  |       at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+lumina_backend  |       at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+lumina_backend  |       at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+lumina_backend  |       at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+lumina_backend  |       at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+lumina_backend  | Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [FATAL: password authentication failed for user "postgres"] [n/a]
+lumina_backend  |       at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:431)
+lumina_backend  |       at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+lumina_backend  |       at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+lumina_backend  |       at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+lumina_backend  |       ... 20 common frames omitted
+lumina_backend  | Caused by: org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [FATAL: password authentication failed for user "postgres"] [n/a]
+lumina_backend  |       at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:63)
+lumina_backend  |       at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+lumina_backend  |       at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
+lumina_backend  |       at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:74)
+lumina_backend  |       at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:39)
+lumina_backend  |       at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:63)
+lumina_backend  |       at org.hibernate.tool.schema.extract.spi.ExtractionContext.getQueryResults(ExtractionContext.java:43)
+lumina_backend  |       at org.hibernate.tool.schema.extract.internal.SequenceInformationExtractorLegacyImpl.extractMetadata(SequenceInformationExtractorLegacyImpl.java:39)
+lumina_backend  |       at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.initializeSequences(DatabaseInformationImpl.java:66)
+lumina_backend  |       at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.<init>(DatabaseInformationImpl.java:60)
+lumina_backend  |       at org.hibernate.tool.schema.internal.Helper.buildDatabaseInformation(Helper.java:185)
+lumina_backend  |       at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:93)
+lumina_backend  |       at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+lumina_backend  |       at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+lumina_backend  |       at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+lumina_backend  |       at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+lumina_backend  |       at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+lumina_backend  |       at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+lumina_backend  |       at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
+lumina_backend  |       at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
+lumina_backend  |       at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1517)
+lumina_backend  |       at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+lumina_backend  |       at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+lumina_backend  |       at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+lumina_backend  |       ... 24 common frames omitted
+lumina_backend  | Caused by: org.postgresql.util.PSQLException: FATAL: password authentication failed for user "postgres"
+lumina_backend  |       at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:704)
+lumina_backend  |       at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:213)
+lumina_backend  |       at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:268)
+lumina_backend  |       at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54)
+lumina_backend  |       at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:273)
+lumina_backend  |       at org.postgresql.Driver.makeConnection(Driver.java:446)
+lumina_backend  |       at org.postgresql.Driver.connect(Driver.java:298)
+lumina_backend  |       at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137)
+lumina_backend  |       at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360)
+lumina_backend  |       at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202)
+lumina_backend  |       at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461)
+lumina_backend  |       at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550)
+lumina_backend  |       at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98)
+lumina_backend  |       at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+lumina_backend  |       at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:126)
+lumina_backend  |       at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:467)
+lumina_backend  |       at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46)
+lumina_backend  |       ... 44 common frames omitted
+lumina_backend exited with code 1 (restarting)
+lumina_backend  | 00:04:45,007 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.18
+lumina_backend  | 00:04:45,011 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - Here is a list of configurators discovered as a service, by rank: op   o View Config   w Enable Watch   d Detach
+lumina_backend  | 00:04:45,011 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 -   org.springframework.boot.logging.logback.RootLogLevelConfigurator
+lumina_backend  | 00:04:45,011 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - They will be invoked in order until ExecutionStatus.DO_NOT_INVOKE_NEXT_IF_ANY is returned.
+lumina_backend  | 00:04:45,011 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - Constructed configurator of type class org.springframework.boot.logging.logback.RootLogLevelConfigurator
+lumina_backend  | 00:04:45,030 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - org.springframework.boot.logging.logback.RootLogLevelConfigurator.configure() call lasted 1 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+lumina_backend  | 00:04:45,030 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+lumina_backend  | 00:04:45,031 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+lumina_backend  | 00:04:45,036 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+lumina_backend  | 00:04:45,037 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+lumina_backend  | 00:04:45,037 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 6 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+lumina_backend  | 00:04:45,037 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+lumina_backend  | 00:04:45,039 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+lumina_backend  | 00:04:45,041 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+lumina_backend  | 00:04:45,043 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.xml]
+lumina_backend  | 00:04:45,044 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 4 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+lumina_backend  | 00:04:45,044 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - Trying to configure with ch.qos.logback.classic.BasicConfigurator
+lumina_backend  | 00:04:45,050 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - Constructed configurator of type class ch.qos.logback.classic.BasicConfigurator
+lumina_backend  | 00:04:45,050 |-INFO in ch.qos.logback.classic.BasicConfigurator@6d511b5f - Setting up default configuration.
+lumina_backend  | 00:04:45,085 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - BEWARE: Writing to the console can be very slow. Avoid logging to the 
+lumina_backend  | 00:04:45,085 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - console in production environments, especially in high volume systems.
+lumina_backend  | 00:04:45,085 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - See also https://logback.qos.ch/codes.html#slowConsole
+lumina_backend  | 00:04:45,086 |-INFO in ch.qos.logback.classic.util.ContextInitializer@72efb5c1 - ch.qos.logback.classic.BasicConfigurator.configure() call lasted 36 milliseconds. ExecutionStatus=NEUTRAL
+lumina_backend  | 00:04:45,996 |-INFO in ConfigurationWatchList(mainURL=jar:nested:/app/app.jar/!BOOT-INF/classes/!/logback-spring.xml, fileWatchList={}, urlWatchList=[}) - URL [jar:nested:/app/app.jar/!BOOT-INF/classes/!/logback-spring.xml] is not of type file
+lumina_backend  | 00:04:46,154 |-INFO in ch.qos.logback.core.model.processor.TimestampModelHandler - Using current interpretation time, i.e. now, as time reference.
+lumina_backend  | 00:04:46,156 |-INFO in ch.qos.logback.core.model.processor.TimestampModelHandler - Adding property to the context with key="currentDate" and value="2026-06" to the LOCAL scope
+lumina_backend  | 00:04:46,164 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [FILE_JSON]
+lumina_backend  | 00:04:46,164 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+lumina_backend  | 00:04:46,179 |-INFO in ch.qos.logback.core.model.processor.ModelInterpretationContext@4fbdc0f0 - value "LOG_PATH_FINAL_IS_UNDEFINED/json/app-log-%d{yyyy-MM}.json" substituted for "${LOG_PATH_FINAL}/json/app-log-%d{yyyy-MM}.json"
+lumina_backend  | 00:04:46,187 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@718512571 - No compression will be used
+lumina_backend  | 00:04:46,194 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@718512571 - Will use the pattern LOG_PATH_FINAL_IS_UNDEFINED/json/app-log-%d{yyyy-MM}.json for the active file
+lumina_backend  | 00:04:46,222 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM' from file name pattern 'LOG_PATH_FINAL_IS_UNDEFINED/json/app-log-%d{yyyy-MM}.json'.
+lumina_backend  | 00:04:46,222 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Rollover at start of every month.
+lumina_backend  | 00:04:46,223 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2026-06-19T00:04:46.222Z
+lumina_backend  | 00:04:46,253 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders] for [providers] property
+lumina_backend  | 00:04:46,266 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.LoggingEventFormattedTimestampJsonProvider] for [timestamp] property
+lumina_backend  | 00:04:46,268 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.LogLevelJsonProvider] for [logLevel] property
+lumina_backend  | 00:04:46,269 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.LoggerNameJsonProvider] for [loggerName] property
+lumina_backend  | 00:04:46,270 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.LoggingEventThreadNameJsonProvider] for [threadName] property
+lumina_backend  | 00:04:46,271 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.MessageJsonProvider] for [message] property
+lumina_backend  | 00:04:46,272 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.StackTraceJsonProvider] for [stackTrace] property
+lumina_backend  | 00:04:46,273 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.MdcJsonProvider] for [mdc] property
+lumina_backend  | 00:04:46,274 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [mdcKey] in [net.logstash.logback.composite.loggingevent.MdcJsonProvider]
+lumina_backend  | 00:04:46,275 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.MdcJsonProvider] for [mdc] property
+lumina_backend  | 00:04:46,275 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [mdcKey] in [net.logstash.logback.composite.loggingevent.MdcJsonProvider]
+lumina_backend  | 00:04:46,275 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.MdcJsonProvider] for [mdc] property
+lumina_backend  | 00:04:46,275 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [mdcKey] in [net.logstash.logback.composite.loggingevent.MdcJsonProvider]
+lumina_backend  | 00:04:46,531 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[FILE_JSON] - Active log file name: LOG_PATH_FINAL_IS_UNDEFINED/json/app-log-2026-06.json
+lumina_backend  | 00:04:46,532 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[FILE_JSON] - File property is set to [null]
+lumina_backend  | 00:04:46,533 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [FILE_LOG]
+lumina_backend  | 00:04:46,533 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+lumina_backend  | 00:04:46,533 |-INFO in ch.qos.logback.core.model.processor.ModelInterpretationContext@4fbdc0f0 - value "LOG_PATH_FINAL_IS_UNDEFINED/txt/app-log-%d{yyyy-MM}.txt" substituted for "${LOG_PATH_FINAL}/txt/app-log-%d{yyyy-MM}.txt"
+lumina_backend  | 00:04:46,533 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@626393072 - No compression will be used
+lumina_backend  | 00:04:46,534 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@626393072 - Will use the pattern LOG_PATH_FINAL_IS_UNDEFINED/txt/app-log-%d{yyyy-MM}.txt for the active file
+lumina_backend  | 00:04:46,534 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM' from file name pattern 'LOG_PATH_FINAL_IS_UNDEFINED/txt/app-log-%d{yyyy-MM}.txt'.
+lumina_backend  | 00:04:46,534 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Rollover at start of every month.
+lumina_backend  | 00:04:46,534 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2026-06-19T00:04:46.534Z
+lumina_backend  | 00:04:46,590 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[FILE_LOG] - Active log file name: LOG_PATH_FINAL_IS_UNDEFINED/txt/app-log-2026-06.txt
+lumina_backend  | 00:04:46,590 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[FILE_LOG] - File property is set to [null]
+lumina_backend  | 00:04:46,590 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [CONSOLE]
+lumina_backend  | 00:04:46,590 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+lumina_backend  | 00:04:46,592 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+lumina_backend  | 00:04:46,593 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - BEWARE: Writing to the console can be very slow. Avoid logging to the 
+lumina_backend  | 00:04:46,593 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - console in production environments, especially in high volume systems.
+lumina_backend  | 00:04:46,593 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - See also https://logback.qos.ch/codes.html#slowConsole
+lumina_backend  | 00:04:46,593 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [com.unibave.Lumina] to INFO
+lumina_backend  | 00:04:46,595 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@70d2e40b - Propagating INFO level on Logger[com.unibave.Lumina] onto the JUL framework
+lumina_backend  | 00:04:46,596 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+lumina_backend  | 00:04:46,596 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@70d2e40b - Propagating INFO level on Logger[ROOT] onto the JUL framework
+lumina_backend  | 00:04:46,597 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [CONSOLE] to Logger[ROOT]
+lumina_backend  | 00:04:46,597 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [FILE_JSON] to Logger[ROOT]
+lumina_backend  | 00:04:46,597 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [FILE_LOG] to Logger[ROOT]
+lumina_backend  | 00:04:46,598 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@120f38e6 - End of configuration.
+lumina_backend  | 00:04:46,599 |-INFO in org.springframework.boot.logging.logback.SpringBootJoranConfigurator@7a0e1b5e - Registering current configuration as safe fallback point
