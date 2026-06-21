@@ -1,22 +1,4 @@
 services:
-  lumina-db:
-    image: postgres:16-alpine
-    container_name: lumina_postgres_16
-    restart: always
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "5433:5432"
-    volumes:
-      - lumina_pg_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   lumina-app:
     build: .
     user: root
@@ -39,11 +21,6 @@ services:
       MAIL_PASSWORD: ${MAIL_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
       LOG_PATH: ${LOG_PATH}
-    depends_on:
-      lumina-db:
-        condition: service_healthy
+      LOG_PATH_FINAL: ${LOG_PATH}
     volumes:
       - ./logs:/app/logs
-
-volumes:
-  lumina_pg_data:
