@@ -16,7 +16,8 @@ public class WebConfig implements WebMvcConfigurer {
                             "http://localhost:8000",
                             "http://127.0.0.1:5500",
                             "http://localhost:5500",
-                            "http://localhost:3000"
+                            "http://localhost:3000",
+                            "https://pei-production.up.railway.app"
                     )
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*")
