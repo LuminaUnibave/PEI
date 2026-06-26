@@ -13,12 +13,29 @@ import {
 } from './types';
 
 const API_BASE = process.env.REACT_APP_API_BASE_URL ?? '';
+const AUTH_STORAGE_KEY = 'lumina.auth';
+
+function getAuthToken(): string | null {
+  const saved = localStorage.getItem(AUTH_STORAGE_KEY);
+  if (!saved) {
+    return null;
+  }
+
+  try {
+    return (JSON.parse(saved) as { token?: string }).token ?? null;
+  } catch {
+    return null;
+  }
+}
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = getAuthToken();
+
   const response = await fetch(`${API_BASE}${path}`, {
     headers: {
       Accept: 'application/json',
       ...(init?.body instanceof FormData ? {} : { 'Content-Type': 'application/json' }),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...init?.headers,
     },
     ...init,
