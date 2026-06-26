@@ -17,7 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
                             "http://127.0.0.1:5500",
                             "http://localhost:5500",
                             "http://localhost:3000",
-                            "https://pei-production.up.railway.app"
+                            "https://pei-production.up.railway.app",
+                            "https://lumina-roan-sigma-19.vercel.app"
                     )
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*")
